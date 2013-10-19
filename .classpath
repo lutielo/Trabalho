@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/genericConsoleUI"/>
-	<classpathentry kind="lib" path="C:/Java/postgresql-9.2-1003.jdbc4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Black/Documents/GitHub/Trabalho/postgresql-9.2-1003.jdbc4.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/genericConsoleUI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
