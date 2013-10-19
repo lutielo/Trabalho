@@ -1,0 +1,9 @@
+additionIndicationColor=0,0,255
+additionIndicationInOverviewRuler=true
+changeIndicationColor=0,255,0
+changeIndicationInOverviewRuler=true
+deletionIndicationColor=255,0,0
+deletionIndicationInOverviewRuler=true
+eclipse.preferences.version=1
+overviewRuler_migration=migrated_3.1
+quickdiff.defaultProvider=org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider
