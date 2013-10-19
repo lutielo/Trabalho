@@ -1,5 +1,0 @@
-package br.unisul.dados;
-
-public class Teste {
-
-}
