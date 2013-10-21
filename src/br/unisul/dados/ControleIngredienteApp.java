@@ -12,6 +12,8 @@ import br.unisul.dao.IngredienteDAO;
 
 public class ControleIngredienteApp {
 	
+	
+	
 	private GenericConsoleUI ui;
 	private PrintWriter logErro;
 
