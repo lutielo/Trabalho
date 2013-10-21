@@ -11,9 +11,7 @@ import br.unisul.dao.DAOException;
 import br.unisul.dao.IngredienteDAO;
 
 public class ControleIngredienteApp {
-	
-	//Teste lucas OAJDASFJSKF
-	
+
 	private GenericConsoleUI ui;
 	private PrintWriter logErro;
 
