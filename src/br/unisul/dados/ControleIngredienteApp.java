@@ -12,7 +12,7 @@ import br.unisul.dao.IngredienteDAO;
 
 public class ControleIngredienteApp {
 	
-	//PAU NO SEU CU LUTIELO VIADO
+	//Teste lucas
 	
 	private GenericConsoleUI ui;
 	private PrintWriter logErro;
