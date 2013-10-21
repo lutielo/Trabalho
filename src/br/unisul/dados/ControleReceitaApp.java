@@ -15,6 +15,8 @@ public class ControleReceitaApp {
 
 	private GenericConsoleUI ui;
 	private PrintWriter logErro;
+	
+	//TESTE
 
 	public static void main(String[] args) {
 		new ControleReceitaApp().run();
