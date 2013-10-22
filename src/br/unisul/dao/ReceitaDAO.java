@@ -8,23 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unisul.Constantes;
 import br.unisul.dados.Autor;
 import br.unisul.dados.Receita;
 
 public class ReceitaDAO extends GenericDAO {
-
-	private final String QUERY_INSERT_RECEITA = "INSERT INTO receita (nm_receita, cd_autor, dt_criacao, tx_modo_preparo) " + "values (?, ?, ?, ?)";
-	private final String QUERY_LIST_TODAS_RECEITAS = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor" + " FROM receita " + " JOIN autor ON receita.cd_autor = autor.cd_autor " + " ORDER BY nm_receita ";
-	private final String QUERY_LIST_RECEITAS_NOME = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" + " FROM receita " + " JOIN autor ON receita.cd_autor = autor.cd_autor " + " WHERE upper(nm_receita) LIKE  upper(?) ORDER BY nm_receita ";
-	private final String QUERY_LIST_RECEITA_COD = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" + " FROM receita " + " JOIN autor ON receita.cd_autor = autor.cd_autor " + " WHERE cd_receita = ? ";
-	private final String QUUERY_DELETE_RECEITA = "DELETE FROM receita WHERE cd_receita = ?";
 
 	public void cadastreReceita(Receita receita) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_INSERT_RECEITA);
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_INSERT_RECEITA);
 			pstmt.setString(1, receita.getNome());
 			pstmt.setInt(2, receita.getAutor().getCodigo());
 			pstmt.setDate(3, toSQLDate(receita.getDt_criacao()));
@@ -44,7 +39,7 @@ public class ReceitaDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_TODAS_RECEITAS);
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_LIST_TODAS_RECEITAS);
 			rs = pstmt.executeQuery();
 			List<Receita> lista = new ArrayList<Receita>();
 			while (rs.next()) {
@@ -74,7 +69,7 @@ public class ReceitaDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_RECEITAS_NOME);
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_LIST_RECEITAS_NOME);
 			pstmt.setString(1, "%" + nomeRecebido + "%");
 
 			rs = pstmt.executeQuery();
@@ -109,7 +104,7 @@ public class ReceitaDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_RECEITA_COD);
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_LIST_RECEITA_COD);
 			pstmt.setInt(1, codigoRecebido);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -138,7 +133,7 @@ public class ReceitaDAO extends GenericDAO {
 		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUUERY_DELETE_RECEITA);
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_DELETE_RECEITA);
 			pstmt.setInt(1, receita.getCodigo());
 			pstmt.executeUpdate();
 		} catch (Exception e) {

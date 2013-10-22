@@ -7,15 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unisul.Constantes;
 import br.unisul.dados.Unidade;
 
 public class UnidadeDAO extends GenericDAO {
-
-	private final String QUERY_INSERT_UNIDADE = "INSERT INTO unidade (tp_unidade) values (?)";
-	private final String QUERY_LIST_TODAS_UNIDADES = "SELECT cd_unidade, tp_unidade FROM unidade ORDER BY tp_unidade";
-	private final String QUERY_LIST_UNIDADES_NOME = "SELECT cd_unidade, tp_unidade" + " FROM unidade" + " WHERE upper(tp_unidade)  LIKE  upper(?)" + " ORDER BY tp_unidade";
-	private final String QUERY_LIST_UNIDADE_COD = "SELECT cd_unidade, tp_unidade" + " FROM unidade" + " WHERE cd_unidade = ? ";
-	private final String QUERY_DELETE_UNIDADE = "DELETE FROM unidade WHERE cd_unidade = ?";
 
 	public void cadastreUnidade(Unidade unidade) throws DAOException {
 
@@ -23,7 +18,7 @@ public class UnidadeDAO extends GenericDAO {
 		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_INSERT_UNIDADE);
+			pstmt = connection.prepareStatement(Constantes.Unidade.QUERY_INSERT_UNIDADE);
 			pstmt.setString(1, unidade.getTipo());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -40,7 +35,7 @@ public class UnidadeDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_TODAS_UNIDADES);
+			pstmt = connection.prepareStatement(Constantes.Unidade.QUERY_LIST_TODAS_UNIDADES);
 			rs = pstmt.executeQuery();
 			List<Unidade> lista = new ArrayList<Unidade>();
 			while (rs.next()) {
@@ -66,7 +61,7 @@ public class UnidadeDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_UNIDADES_NOME);
+			pstmt = connection.prepareStatement(Constantes.Unidade.QUERY_LIST_UNIDADES_NOME);
 			pstmt.setString(1, "%" + nomeRecebido + "%");
 			rs = pstmt.executeQuery();
 			List<Unidade> lista = new ArrayList<Unidade>();
@@ -93,7 +88,7 @@ public class UnidadeDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_UNIDADE_COD);
+			pstmt = connection.prepareStatement(Constantes.Unidade.QUERY_LIST_UNIDADE_COD);
 			pstmt.setInt(1, codigoRecebido);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -118,7 +113,7 @@ public class UnidadeDAO extends GenericDAO {
 
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_DELETE_UNIDADE);
+			pstmt = connection.prepareStatement(Constantes.Unidade.QUERY_DELETE_UNIDADE);
 			pstmt.setInt(1, unidade.getCodigo());
 			pstmt.executeUpdate();
 		} catch (Exception e) {

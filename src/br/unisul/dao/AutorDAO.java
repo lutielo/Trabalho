@@ -7,22 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unisul.Constantes;
 import br.unisul.dados.Autor;
 
 public class AutorDAO extends GenericDAO {
-
-	private final String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor) values (?)";
-	private final String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor FROM autor ORDER BY nm_autor";
-	private final String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor FROM autor WHERE upper(nm_autor) LIKE  upper(?) ORDER BY nm_autor ";
-	private final String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_autor FROM autor WHERE cd_autor = (?) ";
-	private final String QUERY_DELETE_AUTOR = "DELETE FROM autor WHERE cd_autor = (?)";
 
 	public void cadastreAutor(Autor autor) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_INSERT_AUTOR);
+			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_INSERT_AUTOR);
 			pstmt.setString(1, autor.getNome());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -39,7 +34,7 @@ public class AutorDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_TODOS_AUTORES);
+			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_LIST_TODOS_AUTORES);
 			rs = pstmt.executeQuery();
 			List<Autor> lista = new ArrayList<Autor>();
 			while (rs.next()) {
@@ -65,7 +60,7 @@ public class AutorDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_AUTORES_NOME);
+			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_LIST_AUTORES_NOME);
 			pstmt.setString(1, "%" + nomeRecebido + "%");
 			rs = pstmt.executeQuery();
 			List<Autor> lista = new ArrayList<Autor>();
@@ -92,7 +87,7 @@ public class AutorDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_AUTOR_COD);
+			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_LIST_AUTOR_COD);
 			pstmt.setInt(1, codigoRecebido);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -116,7 +111,7 @@ public class AutorDAO extends GenericDAO {
 		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_DELETE_AUTOR);
+			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_DELETE_AUTOR);
 			pstmt.setInt(1, autor.getCodigo());
 			pstmt.executeUpdate();
 		} catch (Exception e) {

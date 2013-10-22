@@ -7,23 +7,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unisul.Constantes;
 import br.unisul.dados.Ingrediente;
 import br.unisul.dados.Unidade;
 
 public class IngredienteDAO extends GenericDAO {
-
-	private final String QUERY_INSERT_INGREDIENTE = "INSERT INTO ingrediente (nm_ingrediente, cd_unidade) values (?, ?)";
-	private final String QUERY_LIST_TODOS_INGREDIENTES = "SELECT cd_ingrediente, nm_ingrediente, unidade.cd_unidade, unidade.tp_unidade " + " FROM ingrediente " + " JOIN unidade ON ingrediente.cd_unidade = unidade.cd_unidade " + " ORDER BY tp_unidade";
-	private final String QUERY_LIST_INGREDIENTES_NOME = "SELECT cd_ingrediente, nm_ingrediente, unidade.cd_unidade, unidade.tp_unidade " + " FROM ingrediente " + " JOIN unidade ON ingrediente.cd_unidade = unidade.cd_unidade " + " WHERE upper(nm_ingrediente) LIKE  upper(?) ORDER BY nm_ingrediente ";
-	private final String QUERY_LIST_INGREDIENTE_COD = "SELECT cd_ingrediente, nm_ingrediente, cd_unidade FROM ingrediente WHERE cd_ingrediente = (?) ";
-	private final String QUERY_DELETE_INGREDIENTE = "DELETE FROM ingrediente WHERE cd_ingrediente = (?)";
 
 	public void cadastreIngrediente(Ingrediente ingrediente) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_INSERT_INGREDIENTE);
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_INSERT_INGREDIENTE);
 			pstmt.setString(1, ingrediente.getNome());
 			pstmt.setInt(2, ingrediente.getUnidade().getCodigo());
 			pstmt.executeUpdate();
@@ -41,7 +36,7 @@ public class IngredienteDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_TODOS_INGREDIENTES);
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_TODOS_INGREDIENTES);
 			rs = pstmt.executeQuery();
 			List<Ingrediente> lista = new ArrayList<Ingrediente>();
 			while (rs.next()) {
@@ -70,7 +65,7 @@ public class IngredienteDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_INGREDIENTES_NOME);
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_INGREDIENTES_NOME);
 			pstmt.setString(1, "%" + nomeRecebido + "%");
 			rs = pstmt.executeQuery();
 			List<Ingrediente> lista = new ArrayList<Ingrediente>();
@@ -101,7 +96,7 @@ public class IngredienteDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_LIST_INGREDIENTE_COD);
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_INGREDIENTE_COD);
 			pstmt.setInt(1, codigoRecebido);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -128,7 +123,7 @@ public class IngredienteDAO extends GenericDAO {
 
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(QUERY_DELETE_INGREDIENTE);
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_DELETE_INGREDIENTE);
 			pstmt.setInt(1, ingrediente.getCodigo());
 			pstmt.executeUpdate();
 		} catch (Exception e) {

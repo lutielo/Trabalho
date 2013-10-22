@@ -8,7 +8,7 @@ import java.util.List;
 
 import br.gov.geracaotecsc.ui.console.GenericConsoleUI;
 import br.unisul.dao.DAOException;
-import br.unisul.dao.Receita_IngredientesDAO;
+import br.unisul.dao.Receita_IngredienteDAO;
 
 public class ControleReceitaIngredienteApp {
 	
@@ -104,9 +104,9 @@ public class ControleReceitaIngredienteApp {
 	// }
 
 	private void abrirListagemIngredientesReceita() {
-		Receita_IngredientesDAO receita_IngredientesDAO = new Receita_IngredientesDAO();
+		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
 		try {
-			List<Receita_Ingrediente> listaReceita_Ingredientes = receita_IngredientesDAO.listeTodosIngredientesDasReceitas();
+			List<Receita_Ingrediente> listaReceita_Ingredientes = receita_IngredienteDAO.listeTodosIngredientesDasReceitas();
 			if (listaReceita_Ingredientes.isEmpty()) {
 				System.err.println("Não há registros");
 			} else {
@@ -126,9 +126,9 @@ public class ControleReceitaIngredienteApp {
 	}
 	
 	private void abrirListagemIngredientesMaisUtilizados() {
-		Receita_IngredientesDAO receita_IngredientesDAO = new Receita_IngredientesDAO();
+		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
 		try {
-			List<Receita_Ingrediente> listaReceita_Ingredientes = receita_IngredientesDAO.listeIngredientesMaisUtilizados();
+			List<Receita_Ingrediente> listaReceita_Ingredientes = receita_IngredienteDAO.listeIngredientesMaisUtilizados();
 			if (listaReceita_Ingredientes.isEmpty()) {
 				System.err.println("Não há registros");
 			} else {
@@ -155,9 +155,9 @@ public class ControleReceitaIngredienteApp {
 		Double quantidade = ui.facaPerguntaDouble("Digite a quantidade do ingrediente");
 
 		Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, receita, ingrediente, quantidade);
-		Receita_IngredientesDAO Receita_IngredientesDAO = new Receita_IngredientesDAO();
+		Receita_IngredienteDAO Receita_IngredienteDAO = new Receita_IngredienteDAO();
 		try {
-			Receita_IngredientesDAO.cadastreIngredienteNaReceita(receita_Ingrediente);
+			Receita_IngredienteDAO.cadastreIngredienteNaReceita(receita_Ingrediente);
 			System.out.println("Ingrediente cadastrado na receita com sucesso");
 		} catch (DAOException e) {
 			System.err.println("Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");
