@@ -7,14 +7,17 @@ public interface Constantes {
 								  + " VALUES (?)";
 		
 		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor" 
-										+ " FROM autor ORDER BY nm_autor";
+										+ " FROM autor" 
+										+ " ORDER BY nm_autor";
 		
-		String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor " +
-										 " FROM autor WHERE upper(nm_autor) LIKE  upper(?) " +
-										 " ORDER BY nm_autor ";
+		String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor " 
+									   + " FROM autor " 
+									   + " WHERE upper(nm_autor) LIKE  upper(?) "
+									   + " ORDER BY nm_autor ";
 		
 		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_autor" 
-									+ " FROM autor WHERE cd_autor = (?) ";
+									+ " FROM autor"
+									+ " WHERE cd_autor = (?) ";
 		
 		String QUERY_DELETE_AUTOR = "DELETE FROM autor WHERE cd_autor = (?)";
 	}
@@ -33,8 +36,9 @@ public interface Constantes {
 											+ " JOIN unidade ON ingrediente.cd_unidade = unidade.cd_unidade "
 											+ " WHERE upper(nm_ingrediente) LIKE  upper(?) ORDER BY nm_ingrediente ";
 		
-		String QUERY_LIST_INGREDIENTE_COD = "SELECT cd_ingrediente, nm_ingrediente, cd_unidade FROM ingrediente " +
-											" WHERE cd_ingrediente = (?) ";
+		String QUERY_LIST_INGREDIENTE_COD = "SELECT cd_ingrediente, nm_ingrediente, cd_unidade" 
+										  + " FROM ingrediente "
+										  +	" WHERE cd_ingrediente = (?) ";
 		
 		String QUERY_DELETE_INGREDIENTE = "DELETE FROM ingrediente WHERE cd_ingrediente = (?)";
 	}
@@ -81,8 +85,8 @@ public interface Constantes {
 			 						 + " VALUES (?)";
 		 
 		 String QUERY_LIST_TODAS_UNIDADES = "SELECT cd_unidade, tp_unidade" 
-			 							  + "FROM unidade" 
-			 							  + "ORDER BY tp_unidade";
+			 							  + " FROM unidade" 
+			 							  + " ORDER BY tp_unidade";
 		 
 		 String QUERY_LIST_UNIDADES_NOME = "SELECT cd_unidade, tp_unidade" 
 			 							 + " FROM unidade" 
