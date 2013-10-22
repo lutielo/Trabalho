@@ -25,11 +25,11 @@ public class MenuTrab2 {
 										"\n*4-Sair\t\t\t\t\t*"+
 										"\n*****************************************");
 			if (opcao == 1){
-				new ControleLivrosApp().run();
+				//new ControleLivrosApp().run();
 			} else if (opcao == 2){
-				new ControleAlunosApp().run();
+				//new ControleAlunosApp().run();
 			} else if (opcao == 3){
-				new ControleProfessoresApp().run();
+				//new ControleProfessoresApp().run();
 			} else if (opcao != 4){
 				System.out.println("Opção invalida, tente novamente");
 			} else{
