@@ -31,10 +31,10 @@ public class ControleAutorApp {
 	public void run() {
 		int opcao = 0;
 		while (opcao != 7) {
-			opcao = ui.facaPerguntaInt("\n************  MENU  AUTOR ***************" + "\n*Oque voce quer fazer?\t\t\t*"
-				+ "\n*1-Cadastrar Autor\t\t\t*" + "\n*2-Listar todos autores\t\t\t*" + "\n*3-Listar autores pelo nome\t\t*"
-				+ "\n*4-Listar autor pelo codigo\t\t*" + "\n*5-Deletar autor \t\t\t*" + "\n*6-Altera - n funfa \t\t\t*"
-				+ "\n*7-Voltar ao menu principal\t\t*" + "\n*****************************************");
+			opcao = ui.facaPerguntaInt("\n************  MENU  AUTOR ***************" + "\n*1-Cadastrar Autor\t\t\t*"
+				+ "\n*2-Listar todos autores\t\t\t*" + "\n*3-Listar autores pelo nome\t\t*" + "\n*4-Listar autor pelo codigo\t\t*"
+				+ "\n*5-Deletar autor \t\t\t*" + "\n*6-Altera - n funfa \t\t\t*" + "\n*7-Voltar ao menu principal\t\t*"
+				+ "\n*****************************************");
 			if (opcao == 1) {
 				abrirCadastroAutor();
 			} else if (opcao == 2) {
