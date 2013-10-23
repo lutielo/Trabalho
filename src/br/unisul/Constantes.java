@@ -10,6 +10,8 @@ public interface Constantes {
 										+ " FROM autor" 
 										+ " ORDER BY nm_autor";
 		
+		//TESTE
+		
 		String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor " 
 									   + " FROM autor " 
 									   + " WHERE upper(nm_autor) LIKE  upper(?) "
