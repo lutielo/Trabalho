@@ -3,8 +3,8 @@ package br.unisul;
 public interface Constantes {
 
 	public interface Autor {
-		String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor)" 
-								  + " VALUES (?)";
+		String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor, cd_sexo)" 
+								  + " VALUES (?, ?)";
 		
 		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor, cd_sexo" 
 										+ " FROM autor" 

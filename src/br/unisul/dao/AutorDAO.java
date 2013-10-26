@@ -19,6 +19,7 @@ public class AutorDAO extends GenericDAO {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_INSERT_AUTOR);
 			pstmt.setString(1, autor.getNome());
+			pstmt.setInt(2, autor.getSexo());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Ocorreu um erro no banco de dados " + "ao cadastrar o autor da receita", e);

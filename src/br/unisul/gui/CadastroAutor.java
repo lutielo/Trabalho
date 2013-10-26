@@ -47,18 +47,18 @@ public class CadastroAutor extends JFrame {
 		public void actionPerformed(ActionEvent event) {
 			if (!txtNomeAutor.getText().isEmpty() || txtNomeAutor != null) {
 				AutorDAO autorDAO = new AutorDAO();
-				int sexoAutor = 0;
-				if (rdbtnFeminino != null) {
-					sexoAutor = 1;
-					Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
-					try {
-						autorDAO.cadastreAutor(autor);
-						JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
-						fecharTela();
-					} catch (DAOException e) {
-						JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
-						e.printStackTrace();
-					}
+				int sexoAutor = 1;
+				if (rdbtnFeminino.isSelected()) {
+					sexoAutor = 2;
+				}
+				Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
+				try {
+					autorDAO.cadastreAutor(autor);
+					JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
+					fecharTela();
+				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
+					e.printStackTrace();
 				}
 			}
 		}
