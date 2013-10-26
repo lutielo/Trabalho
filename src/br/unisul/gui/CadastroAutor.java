@@ -1,6 +1,7 @@
 package br.unisul.gui;
 
-import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import br.unisul.dados.Autor;
 import br.unisul.dao.AutorDAO;
@@ -18,73 +19,86 @@ import br.unisul.dao.DAOException;
 public class CadastroAutor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
-	private JTextField nome_autor;
+	private JTextField txtNomeAutor;
+	private JButton btnSalvar;
+	private JButton btnCancelar;
+	private JLabel lblNomeAutor;
+	private JRadioButton rdbtnMasculino;
+	private JRadioButton rdbtnFeminino;
 
-	public CadastroAutor() {
-		super("Cadastro de Autor");
-		
-		nome_autor = new JTextField();
-		nome_autor.setBounds(69, 44, 243, 20);
-		getContentPane().add(nome_autor);
-		nome_autor.setColumns(10);
+	CadastroAutor() {
+		super("Cadastro Autor");
+		setResizable(false);
+		setType(Type.UTILITY);
 
-		JLabel lblNome = new JLabel("Nome  ");
-		lblNome.setBounds(28, 47, 46, 14);
-		getContentPane().add(lblNome);
+		FlowLayout flowLayout = new FlowLayout();
+		flowLayout.setVgap(20);
+		flowLayout.setHgap(30);
+		getContentPane().setLayout(flowLayout);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(300, 200);
 
-		JLabel lblCadastroDeAutor = new JLabel("Cadastro de Autor");
-		lblCadastroDeAutor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCadastroDeAutor.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCadastroDeAutor.setBounds(129, 11, 168, 22);
-		getContentPane().add(lblCadastroDeAutor);
+		this.abreTela();
 
-		JButton btnCadastrar = new JButton("Salvar");
-		btnCadastrar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				String nomeAutor = nome_autor.getText();
-
-				if (!"".equals(nomeAutor) || nomeAutor == null) {
-
-					AutorDAO autorDAO = new AutorDAO();
-
-					Autor autor = new Autor(null, nomeAutor);
-
-					try {
-						autorDAO.cadastreAutor(autor);
-						JOptionPane.showMessageDialog(null, "Nome : " + autor.getNome() + " Cadastrado com sucesso");
-					} catch (DAOException e) {
-						JOptionPane.showMessageDialog(null, "Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");
-						e.printStackTrace();
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Nome digitado não é valido. Tente novamente");
-				}
-			}
-		});
-		btnCadastrar.setBounds(119, 98, 89, 23);
-		getContentPane().add(btnCadastrar);
-		
-				JButton btnVoltar = new JButton("Voltar");
-				btnVoltar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					}
-				});
-				btnVoltar.setBounds(223, 98, 89, 23);
-				getContentPane().add(btnVoltar);
 	}
 
-	private static void AbreTela() {
-		CadastroAutor cadastrarAutor = new CadastroAutor();
-		cadastrarAutor.getContentPane().setLayout(null);
-		cadastrarAutor.setVisible(true);
-		cadastrarAutor.setSize(400, 400);
-		cadastrarAutor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private class TrataEventoSalvar implements ActionListener {
+
+		public void actionPerformed(ActionEvent event) {
+			if (!txtNomeAutor.getText().isEmpty() || txtNomeAutor != null) {
+				AutorDAO autorDAO = new AutorDAO();
+				int sexoAutor = 0;
+				if (rdbtnFeminino != null) {
+					sexoAutor = 1;
+					Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
+					try {
+						autorDAO.cadastreAutor(autor);
+						JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
+						fecharTela();
+					} catch (DAOException e) {
+						JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	private void abreTela() {
+
+		lblNomeAutor = new JLabel("Nome");
+
+		txtNomeAutor = new JTextField(20);
+		txtNomeAutor.setToolTipText("Nome do Autor");
+
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setToolTipText("Cancelar");
+		btnCancelar.setPreferredSize(new Dimension(90, 23));
+
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.setToolTipText("Salvar Autor");
+		btnSalvar.setPreferredSize(new Dimension(80, 23));
+		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar();
+		btnSalvar.addActionListener(trataEventoSalvar);
+
+		getContentPane().add(lblNomeAutor);
+		getContentPane().add(txtNomeAutor);
+
+		rdbtnMasculino = new JRadioButton("Masculino");
+		getContentPane().add(rdbtnMasculino);
+		rdbtnFeminino = new JRadioButton("Feminino");
+		getContentPane().add(rdbtnFeminino);
+		getContentPane().add(btnSalvar);
+		getContentPane().add(btnCancelar);
+
+	}
+
+	public void fecharTela() {
+		this.dispose();
 	}
 
 	public static void main(String[] args) {
-		AbreTela();
+		CadastroAutor cadastroAutor = new CadastroAutor();
+		cadastroAutor.setVisible(true);
 	}
-
 }
