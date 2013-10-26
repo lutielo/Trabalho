@@ -48,7 +48,7 @@ public class ReceitaDAO extends GenericDAO {
 				Date data = (rs.getDate("dt_criacao"));
 				String modo_preparo = rs.getString("tx_modo_preparo");
 				Integer codigo_autor = rs.getInt("cd_autor");
-				Autor autor = new Autor(codigo_autor, null);
+				Autor autor = new Autor(codigo_autor, null, null);
 				Receita r = new Receita(codigo, nome, data, modo_preparo, autor);
 				lista.add(r);
 			}
@@ -83,7 +83,7 @@ public class ReceitaDAO extends GenericDAO {
 				// Código modelo para instanciar referência dentro de objeto
 				Integer codigo_autor = rs.getInt("cd_autor");
 				String nomeAutor = rs.getString("nm_autor");
-				Autor autor = new Autor(codigo_autor, nomeAutor);
+				Autor autor = new Autor(codigo_autor, nomeAutor, null);
 				Receita r = new Receita(codigo, nome, data, modo_preparo, autor);
 				lista.add(r);
 			}
@@ -114,7 +114,7 @@ public class ReceitaDAO extends GenericDAO {
 				String modo_preparo = rs.getString("tx_modo_preparo");
 				Integer codigo_autor = rs.getInt("cd_autor");
 				String nomeAutor = rs.getString("nm_autor");
-				Autor autor = new Autor(codigo_autor, nomeAutor);
+				Autor autor = new Autor(codigo_autor, nomeAutor, null);
 				return new Receita(codigo, nome, data, modo_preparo, autor);
 			} else {
 				return null;

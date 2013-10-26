@@ -40,7 +40,8 @@ public class AutorDAO extends GenericDAO {
 			while (rs.next()) {
 				Integer codigo = rs.getInt("cd_autor");
 				String nome = rs.getString("nm_autor");
-				Autor a = new Autor(codigo, nome);
+				Integer sexo = rs.getInt("cd_sexo");
+				Autor a = new Autor(codigo, nome, sexo);
 				lista.add(a);
 			}
 			return lista;
@@ -67,7 +68,8 @@ public class AutorDAO extends GenericDAO {
 			while (rs.next()) {
 				Integer codigo = rs.getInt("cd_autor");
 				String nome = rs.getString("nm_autor");
-				Autor a = new Autor(codigo, nome);
+				Integer sexo = rs.getInt("cd_sexo");
+				Autor a = new Autor(codigo, nome, sexo);
 				lista.add(a);
 			}
 			return lista;
@@ -93,7 +95,8 @@ public class AutorDAO extends GenericDAO {
 			if (rs.next()) {
 				int codigo = rs.getInt("cd_autor");
 				String nome = rs.getString("nm_autor");
-				return new Autor(codigo, nome);
+				Integer sexo = rs.getInt("cd_sexo");
+				return new Autor(codigo, nome, sexo);
 			} else {
 				return null;
 			}

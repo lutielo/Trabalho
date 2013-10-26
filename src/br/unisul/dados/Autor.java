@@ -4,14 +4,16 @@ public class Autor {
 
 	private Integer codigo;
 	private String nome;
+	private Integer sexo;
 
 	public Autor() {
 
 	}
 
-	public Autor(Integer codigo, String nome) {
+	public Autor(Integer codigo, String nome, Integer sexo) {
 		this.codigo = codigo;
 		this.nome = nome;
+		this.sexo = sexo;
 	}
 
 	public Integer getCodigo() {
@@ -28,5 +30,13 @@ public class Autor {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Integer getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Integer sexo) {
+		this.sexo = sexo;
 	}
 }

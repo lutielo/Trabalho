@@ -6,7 +6,7 @@ public interface Constantes {
 		String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor)" 
 								  + " VALUES (?)";
 		
-		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor" 
+		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor, cd_sexo" 
 										+ " FROM autor" 
 										+ " ORDER BY nm_autor";
 		
@@ -15,7 +15,7 @@ public interface Constantes {
 									   + " WHERE upper(nm_autor) LIKE  upper(?) "
 									   + " ORDER BY nm_autor ";
 		
-		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_autor" 
+		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_auto, cd_sexor" 
 									+ " FROM autor"
 									+ " WHERE cd_autor = (?) ";
 		
