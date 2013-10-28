@@ -1,10 +1,11 @@
 package br.unisul.gui;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,18 +26,15 @@ public class CadastroAutor extends JFrame {
 	private JLabel lblNomeAutor;
 	private JRadioButton rdbtnMasculino;
 	private JRadioButton rdbtnFeminino;
+	private JLabel lblCadatroDeAutor;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	CadastroAutor() {
 		super("Cadastro Autor");
 		setResizable(false);
 		setType(Type.UTILITY);
-
-		FlowLayout flowLayout = new FlowLayout();
-		flowLayout.setVgap(20);
-		flowLayout.setHgap(30);
-		getContentPane().setLayout(flowLayout);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(300, 200);
+		this.setSize(400, 300);
 
 		this.abreTela();
 
@@ -47,49 +45,83 @@ public class CadastroAutor extends JFrame {
 		public void actionPerformed(ActionEvent event) {
 			if (!txtNomeAutor.getText().isEmpty() || txtNomeAutor != null) {
 				AutorDAO autorDAO = new AutorDAO();
-				int sexoAutor = 1;
+				Integer sexoAutor = null;
 				if (rdbtnFeminino.isSelected()) {
 					sexoAutor = 2;
+					CadastrarAutor(autorDAO, sexoAutor);
+				} else if (rdbtnMasculino.isSelected()){
+					sexoAutor = 1;
+					CadastrarAutor(autorDAO, sexoAutor);
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione um sexo.");
 				}
-				Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
-				try {
-					autorDAO.cadastreAutor(autor);
-					JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
-					fecharTela();
-				} catch (DAOException e) {
-					JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
-					e.printStackTrace();
-				}
+			}
+		}
+
+		private void CadastrarAutor(AutorDAO autorDAO, Integer sexoAutor) {
+			Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
+			try {
+				autorDAO.cadastreAutor(autor);
+				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
+				fecharTela();
+			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
+				e.printStackTrace();
 			}
 		}
 	}
 
+
 	private void abreTela() {
 
-		lblNomeAutor = new JLabel("Nome");
+		lblNomeAutor = new JLabel("Nome*:");
+		lblNomeAutor.setBounds(32, 75, 46, 14);
 
 		txtNomeAutor = new JTextField(20);
+		txtNomeAutor.setBounds(88, 72, 249, 20);
 		txtNomeAutor.setToolTipText("Nome do Autor");
 
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(199, 212, 90, 23);
 		btnCancelar.setToolTipText("Cancelar");
 		btnCancelar.setPreferredSize(new Dimension(90, 23));
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fecharTela();
+			}
+		});
+		
 
 		btnSalvar = new JButton("Salvar");
+		btnSalvar.setBounds(82, 212, 80, 23);
 		btnSalvar.setToolTipText("Salvar Autor");
 		btnSalvar.setPreferredSize(new Dimension(80, 23));
 		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar();
 		btnSalvar.addActionListener(trataEventoSalvar);
 
-		getContentPane().add(lblNomeAutor);
-		getContentPane().add(txtNomeAutor);
+		JLabel lblSexo = new JLabel("Sexo*:");
+		lblSexo.setBounds(32, 108, 46, 14);
+		getContentPane().add(lblSexo);
 
 		rdbtnMasculino = new JRadioButton("Masculino");
-		getContentPane().add(rdbtnMasculino);
+		buttonGroup.add(rdbtnMasculino);
+		rdbtnMasculino.setBounds(91, 104, 90, 23);
 		rdbtnFeminino = new JRadioButton("Feminino");
+		buttonGroup.add(rdbtnFeminino);
+		rdbtnFeminino.setBounds(91, 130, 90, 23);
+		getContentPane().setLayout(null);
+		getContentPane().add(lblNomeAutor);
+		getContentPane().add(txtNomeAutor);
+		getContentPane().add(rdbtnMasculino);
 		getContentPane().add(rdbtnFeminino);
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
+		
+		lblCadatroDeAutor = new JLabel("Cadatro de Autor");
+		lblCadatroDeAutor.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblCadatroDeAutor.setBounds(119, 11, 150, 20);
+		getContentPane().add(lblCadatroDeAutor);
+		
 
 	}
 
