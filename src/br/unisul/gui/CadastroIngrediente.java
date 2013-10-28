@@ -7,11 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.UnidadeDAO;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroIngrediente extends JFrame {
 
@@ -59,6 +62,22 @@ public class CadastroIngrediente extends JFrame {
 		getContentPane().add(lblCamposObrigatrios);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UnidadeDAO unidadeDAO = new UnidadeDAO();
+				List<Unidade> listaUnidades;
+				try {
+					//Conseguindo resgatar o ID da unidade selecionada
+					//Só falta cadastrar no banco de dados juntamente com o nome
+					listaUnidades = unidadeDAO.listeTodasUnidades();
+					Unidade unidade = (Unidade) listaUnidades.get(comboBox.getSelectedIndex() - 1);  
+					int id = unidade.getCodigo();
+					JOptionPane.showMessageDialog(null, id);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnSalvar.setBounds(76, 195, 89, 23);
 		getContentPane().add(btnSalvar);
 		
