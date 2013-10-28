@@ -123,7 +123,7 @@ public class ControleReceitaApp {
 		Date dataAtual = new Date();
 
 		Integer cd_autor = ui.facaPerguntaInt("Digite o código do autor da receita");
-		Autor autor = new Autor(cd_autor, null);
+		Autor autor = new Autor(cd_autor, null, null);
 
 		String modoPreparo = ui.facaPergunta("Digite o modo de preparo");
 

@@ -113,7 +113,7 @@ public class ControleAutorApp {
 	private void abrirCadastroAutor() {
 		String nome = ui.facaPergunta("Digite o nome do Autor");
 
-		Autor autor = new Autor(null, nome);
+		Autor autor = new Autor(null, nome, null);
 		AutorDAO autorDAO = new AutorDAO();
 		try {
 			autorDAO.cadastreAutor(autor);
@@ -129,7 +129,7 @@ public class ControleAutorApp {
 		AutorDAO autorDAO = new AutorDAO();
 		int codigoRecebido = ui.facaPerguntaInt("Digite o codigo do autor para deletar");
 		try {
-			Autor autor = new Autor(codigoRecebido, null);
+			Autor autor = new Autor(codigoRecebido, null, null);
 			listarDadosDoAutorPeloCodigo(codigoRecebido);
 			int opcao = ui.facaPerguntaInt("Deseja Excluir esse registro? 1-Excluir 2-Cancelar");
 			if (opcao == 1) {
