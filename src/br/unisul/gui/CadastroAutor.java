@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import br.unisul.dados.Autor;
 import br.unisul.dao.AutorDAO;
 import br.unisul.dao.DAOException;
+import br.unisul.util.StringUtils;
 
 public class CadastroAutor extends JFrame {
 
@@ -36,6 +37,8 @@ public class CadastroAutor extends JFrame {
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(400, 300);
+		this.setLocationRelativeTo(null);
+		getContentPane().setLayout(null);
 
 		this.abreTela();
 	}
@@ -54,8 +57,8 @@ public class CadastroAutor extends JFrame {
 		btnSalvar.setToolTipText("Salvar Autor");
 		btnSalvar.setPreferredSize(new Dimension(80, 23));
 		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar();
-
 		btnSalvar.addActionListener(trataEventoSalvar);
+		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(199, 212, 90, 23);
 		btnCancelar.setToolTipText("Cancelar");
@@ -65,22 +68,21 @@ public class CadastroAutor extends JFrame {
 
 		lblSexo = new JLabel("Sexo*:");
 		lblSexo.setBounds(32, 108, 46, 14);
-		getContentPane().add(lblSexo);
 
 		btnGroupSexo = new ButtonGroup();
-		
+
 		rdbtnMasculino = new JRadioButton("Masculino");
 		btnGroupSexo.add(rdbtnMasculino);
 		rdbtnMasculino.setBounds(91, 104, 90, 23);
 		rdbtnFeminino = new JRadioButton("Feminino");
 		btnGroupSexo.add(rdbtnFeminino);
 		rdbtnFeminino.setBounds(91, 130, 90, 23);
-		
+
 		lblCadatroDeAutor = new JLabel("Cadatro de Autor");
 		lblCadatroDeAutor.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblCadatroDeAutor.setBounds(119, 11, 150, 20);
 
-		getContentPane().setLayout(null);
+		getContentPane().add(lblSexo);
 		getContentPane().add(lblNomeAutor);
 		getContentPane().add(txtNomeAutor);
 		getContentPane().add(rdbtnMasculino);
@@ -96,10 +98,10 @@ public class CadastroAutor extends JFrame {
 	}
 
 	private class TrataEventoSalvar implements ActionListener {
-	
-		@Override	
+
+		@Override
 		public void actionPerformed(ActionEvent event) {
-			if (!txtNomeAutor.getText().isEmpty() || txtNomeAutor != null) {
+			if (!StringUtils.isNuloOuBranco(txtNomeAutor)) {
 				AutorDAO autorDAO = new AutorDAO();
 				Integer sexoAutor = null;
 				if (rdbtnFeminino.isSelected()) {
@@ -111,9 +113,11 @@ public class CadastroAutor extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um sexo.");
 				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Digite um nome valido");
 			}
 		}
-	
+
 		private void CadastrarAutor(AutorDAO autorDAO, Integer sexoAutor) {
 			Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
 			try {
@@ -128,7 +132,7 @@ public class CadastroAutor extends JFrame {
 	}
 
 	private class TrataEventoCancelar implements ActionListener {
-	
+
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			fecharTela();

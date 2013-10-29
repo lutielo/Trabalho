@@ -23,97 +23,73 @@ import java.awt.event.ActionEvent;
 public class CadastroIngrediente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldNome;
-	private JComboBox comboBox;
-	
+
+	private JTextField txtNome;
+	private JComboBox<String> cbUnidade;
+	private JLabel lblCadastroDeIngredientes;
+	private JLabel lblNome;
+	private JLabel lblUnidade;
+	private JLabel lblCamposObrigatrios;
+	private JButton btnSalvar;
+	private JButton btnCancelar;
+
 	CadastroIngrediente() {
 		super("Cadastro Ingrediente");
-		setResizable(false);
-		setType(Type.UTILITY);
+		this.setResizable(false);
+		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(400, 300);
+		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
 		this.abreTela();
 	}
-	
+
 	private void abreTela() {
-		JLabel lblCadastroDeIngredientes = new JLabel("Cadastro de Ingrediente");
+		lblCadastroDeIngredientes = new JLabel("Cadastro de Ingrediente");
 		lblCadastroDeIngredientes.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblCadastroDeIngredientes.setBounds(83, 11, 221, 31);
-		getContentPane().add(lblCadastroDeIngredientes);
-		
-		JLabel lblNome = new JLabel("Nome*:");
+
+		lblNome = new JLabel("Nome*:");
 		lblNome.setBounds(22, 56, 42, 14);
-		getContentPane().add(lblNome);
-		
-		textFieldNome = new JTextField();
-		textFieldNome.setToolTipText("Ex: Arroz");
-		textFieldNome.setBounds(80, 53, 151, 20);
-		getContentPane().add(textFieldNome);
-		textFieldNome.setColumns(10);
-		
-		JLabel lblUnidade = new JLabel("Unidade*:");
+
+		txtNome = new JTextField();
+		txtNome.setToolTipText("Ex: Arroz");
+		txtNome.setBounds(80, 53, 151, 20);
+		txtNome.setColumns(10);
+
+		lblUnidade = new JLabel("Unidade*:");
 		lblUnidade.setBounds(22, 93, 60, 14);
-		getContentPane().add(lblUnidade);
-		
-		comboBox = new JComboBox();
-		comboBox.setToolTipText("Selecione a unidade de medida do ingrediente");
-		comboBox.setBounds(83, 90, 119, 20);
-		prencherComboBoxUnidade(comboBox);
-		getContentPane().add(comboBox);
-		
-		JLabel lblCamposObrigatrios = new JLabel("* campos obrigat\u00F3rios");
+
+		cbUnidade = new JComboBox<String>();
+		cbUnidade.setToolTipText("Selecione a unidade de medida do ingrediente");
+		cbUnidade.setBounds(83, 90, 119, 20);
+		prencherComboBoxUnidade(cbUnidade);
+
+		lblCamposObrigatrios = new JLabel("* campos obrigat\u00F3rios");
 		lblCamposObrigatrios.setBounds(10, 251, 128, 14);
-		getContentPane().add(lblCamposObrigatrios);
-		
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				UnidadeDAO unidadeDAO = new UnidadeDAO();
-				List<Unidade> listaUnidades;
-				try {
-					//pegando código do ingrediente selecionado no comboBox
-					listaUnidades = unidadeDAO.listeTodasUnidades();
-					Unidade unidade = (Unidade) listaUnidades.get(comboBox.getSelectedIndex() - 1); 
-					
-					//resgatando informações do ingrediente
-					int codigoUnidade = unidade.getCodigo();
-					String nomeIngrediente = textFieldNome.getText();
-					
-					if(!StringUtils.isNuloOuBranco(nomeIngrediente)){
-						//instanciando objeto com as informações resgatadas da pagina
-						Unidade unidadeAserGravada = new Unidade(codigoUnidade, null);
-	
-						Ingrediente ingredienteASerGravado = new Ingrediente();
-						ingredienteASerGravado.setUnidade(unidadeAserGravada);
-						ingredienteASerGravado.setNome(nomeIngrediente);
-						
-						//cadastrando Ingrediente no banco de dados
-						IngredienteDAO ingredienteDAO = new IngredienteDAO();
-						ingredienteDAO.cadastreIngrediente(ingredienteASerGravado);
-						JOptionPane.showMessageDialog(null, "Ingrediente " + nomeIngrediente + " cadastrado com sucesso.");
-						
-					} else {
-						JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
-					}
-				} catch (DAOException e) {
-					e.printStackTrace();
-				} catch (ArrayIndexOutOfBoundsException e) {
-					JOptionPane.showMessageDialog(null, "Selecione uma unidade.");
-				}
-			}
-		});
+
+		btnSalvar = new JButton("Salvar");
+		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar();
+		btnSalvar.addActionListener(trataEventoSalvar);
 		btnSalvar.setBounds(76, 195, 89, 23);
-		getContentPane().add(btnSalvar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		//TODO ACTION FECHAR JANELA
+
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(204, 195, 89, 23);
+		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
+		btnCancelar.addActionListener(trataEventoCancelar);
+
+		getContentPane().add(lblCadastroDeIngredientes);
+		getContentPane().add(lblNome);
+		getContentPane().add(txtNome);
+		getContentPane().add(lblUnidade);
+		getContentPane().add(cbUnidade);
+		getContentPane().add(lblCamposObrigatrios);
+		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
 	}
-	
-	public void prencherComboBoxUnidade(JComboBox comboBox) {
+
+	public void prencherComboBoxUnidade(JComboBox<String> comboBox) {
 		UnidadeDAO unidadeDAO = new UnidadeDAO();
 		try {
 			List<Unidade> listaUnidades = unidadeDAO.listeTodasUnidades();
@@ -125,15 +101,60 @@ public class CadastroIngrediente extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void fecharTela() {
 		this.dispose();
 	}
 
+	private class TrataEventoSalvar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			UnidadeDAO unidadeDAO = new UnidadeDAO();
+			List<Unidade> listaUnidades;
+			try {
+				// pegando código do ingrediente selecionado no comboBox
+				listaUnidades = unidadeDAO.listeTodasUnidades();
+				Unidade unidade = (Unidade) listaUnidades.get(cbUnidade.getSelectedIndex() - 1);
+
+				// resgatando informações do ingrediente
+				int codigoUnidade = unidade.getCodigo();
+				String nomeIngrediente = txtNome.getText();
+
+				if (!StringUtils.isNuloOuBranco(nomeIngrediente)) {
+					// instanciando objeto com as informações resgatadas da pagina
+					Unidade unidadeAserGravada = new Unidade(codigoUnidade, null);
+
+					Ingrediente ingredienteASerGravado = new Ingrediente();
+					ingredienteASerGravado.setUnidade(unidadeAserGravada);
+					ingredienteASerGravado.setNome(nomeIngrediente);
+
+					// cadastrando Ingrediente no banco de dados
+					IngredienteDAO ingredienteDAO = new IngredienteDAO();
+					ingredienteDAO.cadastreIngrediente(ingredienteASerGravado);
+					JOptionPane.showMessageDialog(null, "Ingrediente " + nomeIngrediente + " cadastrado com sucesso.");
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
+				}
+			} catch (DAOException e) {
+				e.printStackTrace();
+			} catch (ArrayIndexOutOfBoundsException e) {
+				JOptionPane.showMessageDialog(null, "Selecione uma unidade.");
+			}
+		}
+	}
+
+	private class TrataEventoCancelar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			fecharTela();
+		}
+	}
+
 	public static void main(String[] args) {
 		CadastroIngrediente cadastroIngrediente = new CadastroIngrediente();
-		//Centraliza a pagina
-		cadastroIngrediente.setLocationRelativeTo(null);  
 		cadastroIngrediente.setVisible(true);
 	}
 }
