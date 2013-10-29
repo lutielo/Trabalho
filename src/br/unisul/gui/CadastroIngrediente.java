@@ -1,6 +1,8 @@
 package br.unisul.gui;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -15,16 +17,14 @@ import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.IngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
+import br.unisul.util.IndexedFocusTraversalPolicy;
 import br.unisul.util.StringUtils;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class CadastroIngrediente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField txtNome;
+	private JTextField txtNomeIngrediente;
 	private JComboBox<String> cbUnidade;
 	private JLabel lblCadastroDeIngredientes;
 	private JLabel lblNome;
@@ -53,10 +53,10 @@ public class CadastroIngrediente extends JFrame {
 		lblNome = new JLabel("Nome*:");
 		lblNome.setBounds(22, 56, 42, 14);
 
-		txtNome = new JTextField();
-		txtNome.setToolTipText("Ex: Arroz");
-		txtNome.setBounds(80, 53, 151, 20);
-		txtNome.setColumns(10);
+		txtNomeIngrediente = new JTextField();
+		txtNomeIngrediente.setToolTipText("Ex: Arroz");
+		txtNomeIngrediente.setBounds(80, 53, 151, 20);
+		txtNomeIngrediente.setColumns(10);
 
 		lblUnidade = new JLabel("Unidade*:");
 		lblUnidade.setBounds(22, 93, 60, 14);
@@ -81,12 +81,23 @@ public class CadastroIngrediente extends JFrame {
 
 		getContentPane().add(lblCadastroDeIngredientes);
 		getContentPane().add(lblNome);
-		getContentPane().add(txtNome);
+		getContentPane().add(txtNomeIngrediente);
 		getContentPane().add(lblUnidade);
 		getContentPane().add(cbUnidade);
 		getContentPane().add(lblCamposObrigatrios);
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
+
+		this.tabOrder();
+	}
+
+	private void tabOrder() {
+		IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+		policy.addIndexedComponent(txtNomeIngrediente);
+		policy.addIndexedComponent(cbUnidade);
+		policy.addIndexedComponent(btnSalvar);
+		policy.addIndexedComponent(btnCancelar);
+		setFocusTraversalPolicy(policy);
 	}
 
 	public void prencherComboBoxUnidade(JComboBox<String> comboBox) {
@@ -119,7 +130,7 @@ public class CadastroIngrediente extends JFrame {
 
 				// resgatando informações do ingrediente
 				int codigoUnidade = unidade.getCodigo();
-				String nomeIngrediente = txtNome.getText();
+				String nomeIngrediente = txtNomeIngrediente.getText();
 
 				if (!StringUtils.isNuloOuBranco(nomeIngrediente)) {
 					// instanciando objeto com as informações resgatadas da pagina

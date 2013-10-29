@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import br.unisul.dados.Autor;
 import br.unisul.dao.AutorDAO;
 import br.unisul.dao.DAOException;
+import br.unisul.util.IndexedFocusTraversalPolicy;
 import br.unisul.util.StringUtils;
 
 public class CadastroAutor extends JFrame {
@@ -50,7 +51,7 @@ public class CadastroAutor extends JFrame {
 
 		txtNomeAutor = new JTextField(20);
 		txtNomeAutor.setBounds(88, 72, 249, 20);
-		txtNomeAutor.setToolTipText("Nome do Autor");
+		txtNomeAutor.setToolTipText("Ex: João da Silva");
 
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(82, 212, 80, 23);
@@ -90,7 +91,19 @@ public class CadastroAutor extends JFrame {
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
 		getContentPane().add(lblCadatroDeAutor);
+		
+		this.tabOrder();
 
+	}
+
+	private void tabOrder() {
+		IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+		policy.addIndexedComponent(txtNomeAutor);
+		policy.addIndexedComponent(rdbtnMasculino);
+		policy.addIndexedComponent(rdbtnFeminino);
+		policy.addIndexedComponent(btnSalvar);
+		policy.addIndexedComponent(btnCancelar);
+		setFocusTraversalPolicy(policy);
 	}
 
 	public void fecharTela() {
