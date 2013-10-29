@@ -10,16 +10,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import br.unisul.dados.Ingrediente;
 import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
+import br.unisul.dao.IngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
+import br.unisul.util.StringUtils;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CadastroIngrediente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField textFieldNome;
 	private JComboBox comboBox;
 	
 	CadastroIngrediente() {
@@ -43,16 +47,18 @@ public class CadastroIngrediente extends JFrame {
 		lblNome.setBounds(22, 56, 42, 14);
 		getContentPane().add(lblNome);
 		
-		textField = new JTextField();
-		textField.setBounds(80, 53, 151, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		textFieldNome = new JTextField();
+		textFieldNome.setToolTipText("Ex: Arroz");
+		textFieldNome.setBounds(80, 53, 151, 20);
+		getContentPane().add(textFieldNome);
+		textFieldNome.setColumns(10);
 		
 		JLabel lblUnidade = new JLabel("Unidade*:");
 		lblUnidade.setBounds(22, 93, 60, 14);
 		getContentPane().add(lblUnidade);
 		
 		comboBox = new JComboBox();
+		comboBox.setToolTipText("Selecione a unidade de medida do ingrediente");
 		comboBox.setBounds(83, 90, 119, 20);
 		prencherComboBoxUnidade(comboBox);
 		getContentPane().add(comboBox);
@@ -67,14 +73,34 @@ public class CadastroIngrediente extends JFrame {
 				UnidadeDAO unidadeDAO = new UnidadeDAO();
 				List<Unidade> listaUnidades;
 				try {
-					//Conseguindo resgatar o ID da unidade selecionada
-					//Só falta cadastrar no banco de dados juntamente com o nome
+					//pegando código do ingrediente selecionado no comboBox
 					listaUnidades = unidadeDAO.listeTodasUnidades();
-					Unidade unidade = (Unidade) listaUnidades.get(comboBox.getSelectedIndex() - 1);  
-					int id = unidade.getCodigo();
-					JOptionPane.showMessageDialog(null, id);
+					Unidade unidade = (Unidade) listaUnidades.get(comboBox.getSelectedIndex() - 1); 
+					
+					//resgatando informações do ingrediente
+					int codigoUnidade = unidade.getCodigo();
+					String nomeIngrediente = textFieldNome.getText();
+					
+					if(!StringUtils.isNuloOuBranco(nomeIngrediente)){
+						//instanciando objeto com as informações resgatadas da pagina
+						Unidade unidadeAserGravada = new Unidade(codigoUnidade, null);
+	
+						Ingrediente ingredienteASerGravado = new Ingrediente();
+						ingredienteASerGravado.setUnidade(unidadeAserGravada);
+						ingredienteASerGravado.setNome(nomeIngrediente);
+						
+						//cadastrando Ingrediente no banco de dados
+						IngredienteDAO ingredienteDAO = new IngredienteDAO();
+						ingredienteDAO.cadastreIngrediente(ingredienteASerGravado);
+						JOptionPane.showMessageDialog(null, "Ingrediente " + nomeIngrediente + " cadastrado com sucesso.");
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
+					}
 				} catch (DAOException e) {
 					e.printStackTrace();
+				} catch (ArrayIndexOutOfBoundsException e) {
+					JOptionPane.showMessageDialog(null, "Selecione uma unidade.");
 				}
 			}
 		});
@@ -82,6 +108,7 @@ public class CadastroIngrediente extends JFrame {
 		getContentPane().add(btnSalvar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		//TODO ACTION FECHAR JANELA
 		btnCancelar.setBounds(204, 195, 89, 23);
 		getContentPane().add(btnCancelar);
 	}
@@ -105,6 +132,8 @@ public class CadastroIngrediente extends JFrame {
 
 	public static void main(String[] args) {
 		CadastroIngrediente cadastroIngrediente = new CadastroIngrediente();
+		//Centraliza a pagina
+		cadastroIngrediente.setLocationRelativeTo(null);  
 		cadastroIngrediente.setVisible(true);
 	}
 }
