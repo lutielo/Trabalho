@@ -16,6 +16,8 @@ import br.unisul.dao.DAOException;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CadastroReceita extends JFrame{
 
@@ -29,7 +31,8 @@ public class CadastroReceita extends JFrame{
 	private JButton btnAdicionarIngrediente;
 	private JTextArea textArea;
 	private JSeparator separator;
-	private JLabel lblIngredientesAdicionados;
+	private JLabel lblReceita;
+	private JTextArea textArea_1;
 	
 	CadastroReceita() {
 		super("Cadastro Receita");
@@ -46,7 +49,6 @@ public class CadastroReceita extends JFrame{
 		getContentPane().add(lblCadastro);
 		
 		lblNomeDaReceita = new JLabel("Nome*:");
-		lblNomeDaReceita.setToolTipText("");
 		lblNomeDaReceita.setBounds(21, 49, 94, 14);
 		getContentPane().add(lblNomeDaReceita);
 		
@@ -55,6 +57,12 @@ public class CadastroReceita extends JFrame{
 		getContentPane().add(lblNomeDoAutor);
 		
 		textField = new JTextField();
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textArea_1.setText("Nome da Receita : " + textField.getText());
+			}
+		});
 		textField.setToolTipText("Ex: Bolo de Chocolate");
 		textField.setBounds(65, 46, 167, 20);
 		getContentPane().add(textField);
@@ -92,12 +100,12 @@ public class CadastroReceita extends JFrame{
 		separator.setBounds(394, 11, 10, 354);
 		getContentPane().add(separator);
 		
-		lblIngredientesAdicionados = new JLabel("Ingredientes Adicionados :");
-		lblIngredientesAdicionados.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblIngredientesAdicionados.setBounds(414, 17, 197, 20);
-		getContentPane().add(lblIngredientesAdicionados);
+		lblReceita = new JLabel("Resumo da receita :");
+		lblReceita.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblReceita.setBounds(414, 17, 197, 20);
+		getContentPane().add(lblReceita);
 		
-		JTextArea textArea_1 = new JTextArea();
+		textArea_1 = new JTextArea();
 		textArea_1.setBounds(414, 46, 370, 319);
 		getContentPane().add(textArea_1);
 
