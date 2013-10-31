@@ -50,6 +50,32 @@ public class ReceitaDAO extends GenericDAO {
 			close(connection);
 		}
 	}
+	
+	@SuppressWarnings("null")
+	public Integer resgatarUltimoRegistro() throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer ultimoRegistro = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_LIST_ULTIMO_REGISTRO);
+			pstmt.setInt(1, ultimoRegistro);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				ultimoRegistro = rs.getInt("cd_receita");
+				return ultimoRegistro;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Ocorreu um erro ao localizar o último registro da tabela receita.", e);
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(connection);
+		}
+	}
 
 	public List<Receita> listeTodasReceitas() throws DAOException {
 		Connection connection = null;

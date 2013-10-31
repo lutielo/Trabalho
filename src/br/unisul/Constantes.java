@@ -81,6 +81,8 @@ public interface Constantes {
 			 						   + " JOIN autor ON receita.cd_autor = autor.cd_autor " 
 			 						   + " WHERE cd_receita = (?) ";
 		 
+		 String QUERY_LIST_ULTIMO_REGISTRO = "SELECT MAX (cd_receita) FROM receita";
+		 
 		 String QUERY_DELETE_RECEITA = "DELETE FROM receita WHERE cd_receita = (?)";
 		 
 		 String QUERY_ALTER_RECEITA = "UPDATE receita SET nm_receita = (?), tx_modo_preparo = (?)" +
