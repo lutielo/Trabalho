@@ -34,10 +34,8 @@ public class IngredienteDAO extends GenericDAO {
 		try {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_ALTER_INGREDIENTE);
-
 			pstmt.setString(1, ingrediente.getNome());
 			pstmt.setInt(2, ingrediente.getCodigo());
-
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Ocorreu um erro ao precessar sua alteração", e);

@@ -29,6 +29,23 @@ public class UnidadeDAO extends GenericDAO {
 		}
 	}
 
+	public void alterarUnidade(Unidade unidade) throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Unidade.QUERY_ALTER_UNIDADE);
+			pstmt.setString(1, unidade.getTipo());
+			pstmt.setInt(2, unidade.getCodigo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Ocorreu um erro ao processar a alteração", e);
+		} finally {
+			close(pstmt);
+			close(connection);
+		}
+	}
+
 	public List<Unidade> listeTodasUnidades() throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;

@@ -105,5 +105,8 @@ public interface Constantes {
 			 						   + " WHERE cd_unidade = (?) ";
 		 
 		 String QUERY_DELETE_UNIDADE = "DELETE FROM unidade WHERE cd_unidade = (?)";
+		 
+		 String QUERY_ALTER_UNIDADE = "UPDATE unidade SET tp_unidade = (?)" +
+			 						  " WHERE cd_unidade = (?)";
 	}
 }
