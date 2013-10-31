@@ -42,6 +42,9 @@ public interface Constantes {
 										  +	" WHERE cd_ingrediente = (?) ";
 		
 		String QUERY_DELETE_INGREDIENTE = "DELETE FROM ingrediente WHERE cd_ingrediente = (?)";
+		
+		String QUERY_ALTER_INGREDIENTE = "UPDATE ingrediente SET nm_ingrediente = (?)" +
+			 							 " WHERE cd_ingrediente = (?)";
 	}
 	
 	public interface Receita_Ingrediente {

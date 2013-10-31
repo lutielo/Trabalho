@@ -28,6 +28,25 @@ public class IngredienteDAO extends GenericDAO {
 		}
 	}
 
+	public void alterarIngrediente(Ingrediente ingrediente) throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_ALTER_INGREDIENTE);
+
+			pstmt.setString(1, ingrediente.getNome());
+			pstmt.setInt(2, ingrediente.getCodigo());
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Ocorreu um erro ao precessar sua alteração", e);
+		} finally {
+			close(pstmt);
+			close(connection);
+		}
+	}
+
 	public List<Ingrediente> listeTodosIngredientes() throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -94,7 +113,7 @@ public class IngredienteDAO extends GenericDAO {
 			if (rs.next()) {
 				Integer codigo = rs.getInt("cd_ingrediente");
 				String nome = rs.getString("nm_ingrediente");
-				
+
 				return new Ingrediente(codigo, nome);
 			} else {
 				return null;
