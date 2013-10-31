@@ -31,7 +31,7 @@ public interface Constantes {
 		
 		String QUERY_LIST_TODOS_INGREDIENTES = "SELECT cd_ingrediente, nm_ingrediente "
 											 + " FROM ingrediente " 
-											 + " ORDER BY tp_unidade";
+											 + " ORDER BY nm_ingrediente";
 		
 		String QUERY_LIST_INGREDIENTES_NOME = "SELECT cd_ingrediente, nm_ingrediente "
 											+ " FROM ingrediente " 
