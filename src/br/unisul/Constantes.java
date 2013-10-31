@@ -82,6 +82,9 @@ public interface Constantes {
 			 						   + " WHERE cd_receita = (?) ";
 		 
 		 String QUERY_DELETE_RECEITA = "DELETE FROM receita WHERE cd_receita = (?)";
+		 
+		 String QUERY_ALTER_RECEITA = "UPDATE receita SET nm_receita = (?), tx_modo_preparo = (?)" +
+			 						  " WHERE cd_receita = (?)";
 	}
 	
 	public interface Unidade {

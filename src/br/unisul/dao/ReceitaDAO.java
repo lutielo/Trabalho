@@ -33,6 +33,24 @@ public class ReceitaDAO extends GenericDAO {
 		}
 	}
 
+	public void alterarReceita(Receita receita) throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_ALTER_RECEITA);
+			pstmt.setString(1, receita.getNome());
+			pstmt.setString(2, receita.getModo_preparo());
+			pstmt.setInt(3, receita.getCodigo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Ocorreu um erro ao processar sua alteração", e);
+		} finally {
+			close(pstmt);
+			close(connection);
+		}
+	}
+
 	public List<Receita> listeTodasReceitas() throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -80,7 +98,6 @@ public class ReceitaDAO extends GenericDAO {
 				String nome = rs.getString("nm_receita");
 				Date data = (rs.getDate("dt_criacao"));
 				String modo_preparo = rs.getString("tx_modo_preparo");
-				// Código modelo para instanciar referência dentro de objeto
 				Integer codigo_autor = rs.getInt("cd_autor");
 				String nomeAutor = rs.getString("nm_autor");
 				Autor autor = new Autor(codigo_autor, nomeAutor, null);
