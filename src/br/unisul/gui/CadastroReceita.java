@@ -102,7 +102,7 @@ public class CadastroReceita extends JFrame{
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String modoPreparo = null;
-				if (!StringUtils.isNuloOuBranco(tfNomeReceita)) {
+				if (!StringUtils.isNuloOuBranco(tfNomeReceita.getText())) {
 					String nomeReceita = tfNomeReceita.getText();
 					Date dataAtual = new Date();
 					
@@ -113,7 +113,7 @@ public class CadastroReceita extends JFrame{
 						try {
 							// pegando código do ingrediente selecionado no comboBox
 							listaAutores = autorDAO.listeTodosAutores();
-							Autor autor = (Autor) listaAutores.get(comboBoxUnidade.getSelectedIndex() - 1);
+							Autor autor = (Autor) listaAutores.get(cbAutor.getSelectedIndex() - 1);
 									
 							Integer cd_autor = autor.getCodigo();
 							autorASerGravado = new Autor(cd_autor, null, null);
@@ -123,7 +123,7 @@ public class CadastroReceita extends JFrame{
 							JOptionPane.showMessageDialog(null, "Selecione um autor.");
 						}
 						
-						if (!StringUtils.isNuloOuBranco(taModoPreparo)) {
+						if (!StringUtils.isNuloOuBranco(taModoPreparo.getText())) {
 							modoPreparo = taModoPreparo.getText();
 							
 							Receita receita = new Receita(null, nomeReceita, dataAtual, modoPreparo, autorASerGravado);
@@ -131,9 +131,9 @@ public class CadastroReceita extends JFrame{
 							
 							try {
 								receitaeDAO.cadastreReceita(receita);
-								System.out.println("Receita cadastrada com sucesso");
+								JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso");
 							} catch (DAOException e1) {
-								System.err.println("Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");
+								JOptionPane.showMessageDialog(null, "Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");
 							}
 						} else {
 							JOptionPane.showMessageDialog(null, "Digite o modo de preparo.");
