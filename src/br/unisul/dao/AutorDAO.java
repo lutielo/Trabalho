@@ -29,6 +29,24 @@ public class AutorDAO extends GenericDAO {
 		}
 	}
 
+	public void alterarAutor(Autor autor) throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_ALTER_AUTOR);
+			pstmt.setString(1, autor.getNome());
+			pstmt.setInt(2, autor.getSexo());
+			pstmt.setInt(3, autor.getCodigo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Ocorreu um erro ao precesar sua alteração", e);
+		} finally {
+			close(pstmt);
+			close(connection);
+		}
+	}
+
 	public List<Autor> listeTodosAutores() throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;

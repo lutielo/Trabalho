@@ -20,6 +20,9 @@ public interface Constantes {
 									+ " WHERE cd_autor = (?) ";
 		
 		String QUERY_DELETE_AUTOR = "DELETE FROM autor WHERE cd_autor = (?)";
+		
+		String QUERY_ALTER_AUTOR = "UPDATE autor SET nm_autor = (?), cd_sexo = (?)" + 
+			 						" WHERE cd_autor = (?)";
 	}
 
 	public interface Ingrediente {
