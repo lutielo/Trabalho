@@ -144,6 +144,28 @@ public class CadastroReceita extends JFrame{
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite o nome da receita");
 				}
+				ReceitaDAO receitaDAO = new ReceitaDAO();
+				try {
+					int codigoReceitaCriada = receitaDAO.resgatarUltimoRegistro();
+					System.out.println(codigoReceitaCriada);
+					
+					Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
+					try {
+						for (Receita_Ingrediente receita_Ingrediente : listaIngredientesAdicionados) {
+							Receita receita = new Receita();
+							receita.setCodigo(codigoReceitaCriada);
+							
+							receita_Ingrediente.setReceita(receita);
+							receita_IngredienteDAO.cadastreIngredienteNaReceita(receita_Ingrediente);	
+						}
+						JOptionPane.showMessageDialog(null, "Ingredientes cadastrados na receita com sucesso");
+					} catch (DAOException e1) {
+						JOptionPane.showMessageDialog(null, "Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");
+					}
+					
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnSalvar.setBounds(65, 442, 89, 23);
