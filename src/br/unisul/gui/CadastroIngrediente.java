@@ -3,20 +3,16 @@ package br.unisul.gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.unisul.dados.Ingrediente;
-import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.IngredienteDAO;
-import br.unisul.dao.UnidadeDAO;
 import br.unisul.util.IndexedFocusTraversalPolicy;
 import br.unisul.util.StringUtils;
 
@@ -25,10 +21,8 @@ public class CadastroIngrediente extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JTextField tfNomeIngrediente;
-	private JComboBox<String> cbUnidade;
 	private JLabel lblCadastroDeIngredientes;
 	private JLabel lblNome;
-	private JLabel lblUnidade;
 	private JLabel lblCamposObrigatrios;
 	private JButton btnSalvar;
 	private JButton btnCancelar;
@@ -58,14 +52,6 @@ public class CadastroIngrediente extends JFrame {
 		tfNomeIngrediente.setBounds(80, 53, 151, 20);
 		tfNomeIngrediente.setColumns(10);
 
-		lblUnidade = new JLabel("Unidade*:");
-		lblUnidade.setBounds(22, 93, 60, 14);
-
-		cbUnidade = new JComboBox<String>();
-		cbUnidade.setToolTipText("Selecione a unidade de medida do ingrediente");
-		cbUnidade.setBounds(83, 90, 119, 20);
-		prencherComboBoxUnidade(cbUnidade);
-
 		lblCamposObrigatrios = new JLabel("* campos obrigat\u00F3rios");
 		lblCamposObrigatrios.setBounds(10, 251, 128, 14);
 
@@ -82,8 +68,6 @@ public class CadastroIngrediente extends JFrame {
 		getContentPane().add(lblCadastroDeIngredientes);
 		getContentPane().add(lblNome);
 		getContentPane().add(tfNomeIngrediente);
-		getContentPane().add(lblUnidade);
-		getContentPane().add(cbUnidade);
 		getContentPane().add(lblCamposObrigatrios);
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
@@ -94,23 +78,9 @@ public class CadastroIngrediente extends JFrame {
 	private void tabOrder() {
 		IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
 		policy.addIndexedComponent(tfNomeIngrediente);
-		policy.addIndexedComponent(cbUnidade);
 		policy.addIndexedComponent(btnSalvar);
 		policy.addIndexedComponent(btnCancelar);
 		setFocusTraversalPolicy(policy);
-	}
-
-	public void prencherComboBoxUnidade(JComboBox<String> comboBox) {
-		UnidadeDAO unidadeDAO = new UnidadeDAO();
-		try {
-			List<Unidade> listaUnidades = unidadeDAO.listeTodasUnidades();
-			comboBox.addItem(" -- Selecione -- ");
-			for (Unidade unidade : listaUnidades) {
-				comboBox.addItem(unidade.getTipo());
-			}
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void fecharTela() {
@@ -121,24 +91,14 @@ public class CadastroIngrediente extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			UnidadeDAO unidadeDAO = new UnidadeDAO();
-			List<Unidade> listaUnidades;
 			try {
-				// pegando código do ingrediente selecionado no comboBox
-				listaUnidades = unidadeDAO.listeTodasUnidades();
-				Unidade unidade = (Unidade) listaUnidades.get(cbUnidade.getSelectedIndex() - 1);
-
 				// resgatando informações do ingrediente
-				int codigoUnidade = unidade.getCodigo();
 				String nomeIngrediente = tfNomeIngrediente.getText();
 
 				if (!StringUtils.isNuloOuBranco(nomeIngrediente)) {
 					// instanciando objeto com as informações resgatadas da pagina
-					Unidade unidadeAserGravada = new Unidade(codigoUnidade, null);
 
-					Ingrediente ingredienteASerGravado = new Ingrediente();
-					ingredienteASerGravado.setUnidade(unidadeAserGravada);
-					ingredienteASerGravado.setNome(nomeIngrediente);
+					Ingrediente ingredienteASerGravado = new Ingrediente(null, nomeIngrediente);
 
 					// cadastrando Ingrediente no banco de dados
 					IngredienteDAO ingredienteDAO = new IngredienteDAO();
@@ -150,9 +110,7 @@ public class CadastroIngrediente extends JFrame {
 				}
 			} catch (DAOException e) {
 				e.printStackTrace();
-			} catch (ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Selecione uma unidade.");
-			}
+			} 
 		}
 	}
 

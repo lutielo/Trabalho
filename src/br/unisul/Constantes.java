@@ -23,20 +23,18 @@ public interface Constantes {
 	}
 
 	public interface Ingrediente {
-		String QUERY_INSERT_INGREDIENTE = "INSERT INTO ingrediente (nm_ingrediente, cd_unidade)" 
-										+ " VALUES (?, ?)";
+		String QUERY_INSERT_INGREDIENTE = "INSERT INTO ingrediente (nm_ingrediente)" 
+										+ " VALUES (?)";
 		
-		String QUERY_LIST_TODOS_INGREDIENTES = "SELECT cd_ingrediente, nm_ingrediente, unidade.cd_unidade, unidade.tp_unidade "
+		String QUERY_LIST_TODOS_INGREDIENTES = "SELECT cd_ingrediente, nm_ingrediente "
 											 + " FROM ingrediente " 
-										     + " JOIN unidade ON ingrediente.cd_unidade = unidade.cd_unidade " 
 											 + " ORDER BY tp_unidade";
 		
-		String QUERY_LIST_INGREDIENTES_NOME = "SELECT cd_ingrediente, nm_ingrediente, unidade.cd_unidade, unidade.tp_unidade "
+		String QUERY_LIST_INGREDIENTES_NOME = "SELECT cd_ingrediente, nm_ingrediente "
 											+ " FROM ingrediente " 
-											+ " JOIN unidade ON ingrediente.cd_unidade = unidade.cd_unidade "
 											+ " WHERE upper(nm_ingrediente) LIKE  upper(?) ORDER BY nm_ingrediente ";
 		
-		String QUERY_LIST_INGREDIENTE_COD = "SELECT cd_ingrediente, nm_ingrediente, cd_unidade" 
+		String QUERY_LIST_INGREDIENTE_COD = "SELECT cd_ingrediente, nm_ingrediente " 
 										  + " FROM ingrediente "
 										  +	" WHERE cd_ingrediente = (?) ";
 		
@@ -44,10 +42,10 @@ public interface Constantes {
 	}
 	
 	public interface Receita_Ingrediente {
-		 String QUERY_INSERT_RECEITA_INGREDIENTE = "INSERT INTO receita_ingrediente (cd_ingrediente, cd_receita, quantidade) " 
-			 									 + " VALUES (?, ?, ?)";
+		 String QUERY_INSERT_RECEITA_INGREDIENTE = "INSERT INTO receita_ingrediente (cd_ingrediente, cd_receita, cd_unidade, quantidade) " 
+			 									 + " VALUES (?, ?, ?, ?)";
 		 
-		 String QUERY_LIST_TODAS_RECEITAS_INGREDIENTES = "SELECT cd_receita_ingrediente, receita.cd_receita, ingrediente.cd_ingrediente, quantidade "
+		 String QUERY_LIST_TODAS_RECEITAS_INGREDIENTES = "SELECT receita.cd_receita, ingrediente.cd_ingrediente, unidade.cd_unidade, quantidade "
 		 											   + " FROM receita_ingrediente " 
 		 											   + " ORDER BY cd_receita";
 		 

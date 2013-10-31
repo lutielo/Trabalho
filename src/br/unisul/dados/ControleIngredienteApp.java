@@ -71,7 +71,7 @@ public class ControleIngredienteApp {
 			} else {
 				System.out.println("Listando dados dos ingredientes cadastrados:");
 				for (Ingrediente ingrediente : listaIngredientes) {
-					System.out.println("Codigo:" + ingrediente.getCodigo() + "\tNome:" + ingrediente.getNome() + "\tUnidade: " + ingrediente.getUnidade().getTipo());
+					System.out.println("Codigo:" + ingrediente.getCodigo() + "\tNome:" + ingrediente.getNome());
 				}
 			}
 		} catch (DAOException e) {
@@ -88,7 +88,7 @@ public class ControleIngredienteApp {
 			Ingrediente ingrediente = ingredienteDAO.listeDadosDoIngredientePeloCodigo(codigoRecebido);
 			if (ingrediente != null) {
 				System.out.println("Listando dados do ingrediente com código = " + ingrediente.getCodigo() + ":");
-				System.out.println("Codigo:" + ingrediente.getCodigo() + "\tNome:" + ingrediente.getNome() + "\tCodigo da Unidade: " + ingrediente.getUnidade().getCodigo());
+				System.out.println("Codigo:" + ingrediente.getCodigo() + "\tNome:" + ingrediente.getNome());
 			} else {
 				System.out.println("Código não existe");
 			}
@@ -108,7 +108,7 @@ public class ControleIngredienteApp {
 			} else {
 				System.out.println("Listando dados dos ingredientes cadastrados:");
 				for (Ingrediente ingrediente : listaIngredientes) {
-					System.out.println("Codigo:" + ingrediente.getCodigo() + "\tNome:" + ingrediente.getNome() + "\tCodigo unidade:" + ingrediente.getUnidade().getCodigo());
+					System.out.println("Codigo:" + ingrediente.getCodigo() + "\tNome:" + ingrediente.getNome());
 				}
 			}
 		} catch (DAOException e) {
@@ -120,10 +120,8 @@ public class ControleIngredienteApp {
 
 	private void abrirCadastroIngrediente() {
 		String nome = ui.facaPergunta("Digite o nome do ingrediente");
-		Integer cd_tp_unidade = ui.facaPerguntaInt("Digite o codigo do tipo da unidade do ingrediente");
 
-		Unidade unidade = new Unidade(cd_tp_unidade, null);
-		Ingrediente ingrediente = new Ingrediente(null, nome, unidade);
+		Ingrediente ingrediente = new Ingrediente(null, nome);
 
 		IngredienteDAO ingredienteDAO = new IngredienteDAO();
 		try {
@@ -140,7 +138,7 @@ public class ControleIngredienteApp {
 		IngredienteDAO ingredienteDAO = new IngredienteDAO();
 		int codigoRecebido = ui.facaPerguntaInt("Digite o codigo do ingrediente para deletar");
 		try {
-			Ingrediente ingrediente = new Ingrediente(codigoRecebido, null, null);
+			Ingrediente ingrediente = new Ingrediente(codigoRecebido, null);
 			ingredienteDAO.deletaIngrediente(ingrediente);
 			System.out.println("Ingrediente deletado com sucesso");
 		} catch (DAOException e) {

@@ -112,9 +112,9 @@ public class ControleReceitaIngredienteApp {
 			} else {
 				System.out.println("Listando dados dos ingredientes cadastrados nas receitas:");
 				for (Receita_Ingrediente receita_Ingrediente : listaReceita_Ingredientes) {
-					System.out.println("Codigo:" + receita_Ingrediente.getCodigo()
-								+ "\tNome Ingrediente:" + receita_Ingrediente.getIngredientes().getNome()
+					System.out.println("\tNome Ingrediente:" + receita_Ingrediente.getIngredientes().getNome()
 								+ "\tNome Receita:" + receita_Ingrediente.getReceita().getNome()
+								+ "\tNome Receita:" + receita_Ingrediente.getUnidade().getTipo()
 								+ "\tQuantidade:" + receita_Ingrediente.getQuantidade());
 				}
 			}
@@ -150,11 +150,14 @@ public class ControleReceitaIngredienteApp {
 		Receita receita = new Receita(codigoReceita, null, null, null, null);
 		
 		Integer codigoIngrediente = ui.facaPerguntaInt("Digite o codigo do ingrediente");
-		Ingrediente ingrediente = new Ingrediente(codigoIngrediente, null, null);
+		Ingrediente ingrediente = new Ingrediente(codigoIngrediente, null);
+		
+		Integer codigoUnidade = ui.facaPerguntaInt("Digite o codigo da unidade");
+		Unidade unidade = new Unidade(codigoUnidade, null);
 		
 		Double quantidade = ui.facaPerguntaDouble("Digite a quantidade do ingrediente");
 
-		Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, receita, ingrediente, quantidade);
+		Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(receita, ingrediente, unidade, quantidade);
 		Receita_IngredienteDAO Receita_IngredienteDAO = new Receita_IngredienteDAO();
 		try {
 			Receita_IngredienteDAO.cadastreIngredienteNaReceita(receita_Ingrediente);

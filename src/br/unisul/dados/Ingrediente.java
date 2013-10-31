@@ -4,17 +4,14 @@ public class Ingrediente {
 
 	private Integer codigo;
 	private String nome;
-	private Unidade unidade;
-	
 	
 	public Ingrediente (){
 		
 	}
 	
-	public Ingrediente(Integer codigo, String nome, Unidade unidade) {
+	public Ingrediente(Integer codigo, String nome) {
 		this.codigo = codigo;
 		this.nome = nome;
-		this.unidade = unidade;
 	}
 
 	public Integer getCodigo() {
@@ -31,13 +28,5 @@ public class Ingrediente {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	public Unidade getUnidade() {
-		return unidade;
-	}
-
-	public void setUnidade(Unidade unidade) {
-		this.unidade = unidade;
 	}
 }

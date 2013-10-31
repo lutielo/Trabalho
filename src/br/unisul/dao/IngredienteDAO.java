@@ -9,7 +9,6 @@ import java.util.List;
 
 import br.unisul.Constantes;
 import br.unisul.dados.Ingrediente;
-import br.unisul.dados.Unidade;
 
 public class IngredienteDAO extends GenericDAO {
 
@@ -20,7 +19,6 @@ public class IngredienteDAO extends GenericDAO {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_INSERT_INGREDIENTE);
 			pstmt.setString(1, ingrediente.getNome());
-			pstmt.setInt(2, ingrediente.getUnidade().getCodigo());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Ocorreu um erro no banco de dados " + "ao cadastrar o ingrediente", e);
@@ -42,10 +40,7 @@ public class IngredienteDAO extends GenericDAO {
 			while (rs.next()) {
 				Integer codigo = rs.getInt("cd_ingrediente");
 				String nome = rs.getString("nm_ingrediente");
-				String nomeUnidade = rs.getString("tp_unidade");
-				Integer codigo_unidade = rs.getInt("cd_unidade");
-				Unidade unidade = new Unidade(codigo_unidade, nomeUnidade);
-				Ingrediente i = new Ingrediente(codigo, nome, unidade);
+				Ingrediente i = new Ingrediente(codigo, nome);
 				lista.add(i);
 			}
 			return lista;
@@ -73,10 +68,7 @@ public class IngredienteDAO extends GenericDAO {
 				Integer codigo = rs.getInt("cd_ingrediente");
 				String nome = rs.getString("nm_ingrediente");
 
-				String nomeUnidade = rs.getString("tp_unidade");
-				Integer codigo_unidade = rs.getInt("cd_unidade");
-				Unidade unidade = new Unidade(codigo_unidade, nomeUnidade);
-				Ingrediente i = new Ingrediente(codigo, nome, unidade);
+				Ingrediente i = new Ingrediente(codigo, nome);
 				lista.add(i);
 			}
 			return lista;
@@ -102,9 +94,8 @@ public class IngredienteDAO extends GenericDAO {
 			if (rs.next()) {
 				Integer codigo = rs.getInt("cd_ingrediente");
 				String nome = rs.getString("nm_ingrediente");
-				Integer codigo_unidade = rs.getInt("cd_unidade");
-				Unidade unidade = new Unidade(codigo_unidade, null);
-				return new Ingrediente(codigo, nome, unidade);
+				
+				return new Ingrediente(codigo, nome);
 			} else {
 				return null;
 			}

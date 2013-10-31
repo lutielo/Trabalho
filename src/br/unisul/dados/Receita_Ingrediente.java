@@ -2,9 +2,9 @@ package br.unisul.dados;
 
 public class Receita_Ingrediente {
 	
-	private Integer codigo;
 	private Receita receita;
 	private Ingrediente ingredientes;
+	private Unidade unidade;
 	private Double quantidade;
 	
 	
@@ -12,19 +12,11 @@ public class Receita_Ingrediente {
 		
 	}
 	
-	public Receita_Ingrediente(Integer codigo, Receita receita,	Ingrediente ingredientes, Double quantidade) {
-		this.codigo = codigo;
+	public Receita_Ingrediente(Receita receita,	Ingrediente ingredientes, Unidade unidade, Double quantidade) {
 		this.receita = receita;
 		this.ingredientes = ingredientes;
+		this.unidade = unidade;
 		this.quantidade = quantidade;
-	}
-
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
 	}
 
 	public Receita getReceita() {
@@ -43,6 +35,15 @@ public class Receita_Ingrediente {
 		this.ingredientes = ingredientes;
 	}
 	
+	
+	public Unidade getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
+	}
+
 	public Double getQuantidade() {
 		return quantidade;
 	}
