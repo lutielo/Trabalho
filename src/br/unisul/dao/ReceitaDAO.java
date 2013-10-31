@@ -60,10 +60,9 @@ public class ReceitaDAO extends GenericDAO {
 		try {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Receita.QUERY_LIST_ULTIMO_REGISTRO);
-			pstmt.setInt(1, ultimoRegistro);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				ultimoRegistro = rs.getInt("cd_receita");
+				ultimoRegistro = rs.getInt("ultimo");
 				return ultimoRegistro;
 			} else {
 				return null;
