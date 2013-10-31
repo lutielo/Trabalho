@@ -24,7 +24,7 @@ public class CadastroIngrediente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField txtNomeIngrediente;
+	private JTextField tfNomeIngrediente;
 	private JComboBox<String> cbUnidade;
 	private JLabel lblCadastroDeIngredientes;
 	private JLabel lblNome;
@@ -53,10 +53,10 @@ public class CadastroIngrediente extends JFrame {
 		lblNome = new JLabel("Nome*:");
 		lblNome.setBounds(22, 56, 42, 14);
 
-		txtNomeIngrediente = new JTextField();
-		txtNomeIngrediente.setToolTipText("Ex: Arroz");
-		txtNomeIngrediente.setBounds(80, 53, 151, 20);
-		txtNomeIngrediente.setColumns(10);
+		tfNomeIngrediente = new JTextField();
+		tfNomeIngrediente.setToolTipText("Ex: Arroz");
+		tfNomeIngrediente.setBounds(80, 53, 151, 20);
+		tfNomeIngrediente.setColumns(10);
 
 		lblUnidade = new JLabel("Unidade*:");
 		lblUnidade.setBounds(22, 93, 60, 14);
@@ -81,7 +81,7 @@ public class CadastroIngrediente extends JFrame {
 
 		getContentPane().add(lblCadastroDeIngredientes);
 		getContentPane().add(lblNome);
-		getContentPane().add(txtNomeIngrediente);
+		getContentPane().add(tfNomeIngrediente);
 		getContentPane().add(lblUnidade);
 		getContentPane().add(cbUnidade);
 		getContentPane().add(lblCamposObrigatrios);
@@ -93,7 +93,7 @@ public class CadastroIngrediente extends JFrame {
 
 	private void tabOrder() {
 		IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
-		policy.addIndexedComponent(txtNomeIngrediente);
+		policy.addIndexedComponent(tfNomeIngrediente);
 		policy.addIndexedComponent(cbUnidade);
 		policy.addIndexedComponent(btnSalvar);
 		policy.addIndexedComponent(btnCancelar);
@@ -130,7 +130,7 @@ public class CadastroIngrediente extends JFrame {
 
 				// resgatando informações do ingrediente
 				int codigoUnidade = unidade.getCodigo();
-				String nomeIngrediente = txtNomeIngrediente.getText();
+				String nomeIngrediente = tfNomeIngrediente.getText();
 
 				if (!StringUtils.isNuloOuBranco(nomeIngrediente)) {
 					// instanciando objeto com as informações resgatadas da pagina

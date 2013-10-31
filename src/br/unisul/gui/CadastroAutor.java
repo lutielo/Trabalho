@@ -23,7 +23,7 @@ public class CadastroAutor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField txtNomeAutor;
+	private JTextField tfNomeAutor;
 	private JLabel lblNomeAutor;
 	private JLabel lblSexo;
 	private JLabel lblCadatroDeAutor;
@@ -49,9 +49,9 @@ public class CadastroAutor extends JFrame {
 		lblNomeAutor = new JLabel("Nome*:");
 		lblNomeAutor.setBounds(32, 75, 46, 14);
 
-		txtNomeAutor = new JTextField(20);
-		txtNomeAutor.setBounds(88, 72, 249, 20);
-		txtNomeAutor.setToolTipText("Ex: João da Silva");
+		tfNomeAutor = new JTextField(20);
+		tfNomeAutor.setBounds(88, 72, 249, 20);
+		tfNomeAutor.setToolTipText("Ex: João da Silva");
 
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(82, 212, 80, 23);
@@ -85,7 +85,7 @@ public class CadastroAutor extends JFrame {
 
 		getContentPane().add(lblSexo);
 		getContentPane().add(lblNomeAutor);
-		getContentPane().add(txtNomeAutor);
+		getContentPane().add(tfNomeAutor);
 		getContentPane().add(rdbtnMasculino);
 		getContentPane().add(rdbtnFeminino);
 		getContentPane().add(btnSalvar);
@@ -98,7 +98,7 @@ public class CadastroAutor extends JFrame {
 
 	private void tabOrder() {
 		IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
-		policy.addIndexedComponent(txtNomeAutor);
+		policy.addIndexedComponent(tfNomeAutor);
 		policy.addIndexedComponent(rdbtnMasculino);
 		policy.addIndexedComponent(rdbtnFeminino);
 		policy.addIndexedComponent(btnSalvar);
@@ -114,7 +114,7 @@ public class CadastroAutor extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			if (!StringUtils.isNuloOuBranco(txtNomeAutor)) {
+			if (!StringUtils.isNuloOuBranco(tfNomeAutor)) {
 				AutorDAO autorDAO = new AutorDAO();
 				Integer sexoAutor = null;
 				if (rdbtnFeminino.isSelected()) {
@@ -132,7 +132,7 @@ public class CadastroAutor extends JFrame {
 		}
 
 		private void CadastrarAutor(AutorDAO autorDAO, Integer sexoAutor) {
-			Autor autor = new Autor(null, txtNomeAutor.getText(), sexoAutor);
+			Autor autor = new Autor(null, tfNomeAutor.getText(), sexoAutor);
 			try {
 				autorDAO.cadastreAutor(autor);
 				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
