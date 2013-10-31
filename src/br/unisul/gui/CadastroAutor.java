@@ -114,7 +114,7 @@ public class CadastroAutor extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			if (!StringUtils.isNuloOuBranco(tfNomeAutor)) {
+			if (!StringUtils.isNuloOuBranco(tfNomeAutor.getText())) {
 				AutorDAO autorDAO = new AutorDAO();
 				Integer sexoAutor = null;
 				if (rdbtnFeminino.isSelected()) {
