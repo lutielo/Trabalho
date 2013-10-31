@@ -147,7 +147,6 @@ public class CadastroReceita extends JFrame{
 				ReceitaDAO receitaDAO = new ReceitaDAO();
 				try {
 					int codigoReceitaCriada = receitaDAO.resgatarUltimoRegistro();
-					System.out.println(codigoReceitaCriada);
 					
 					Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
 					try {
