@@ -85,7 +85,7 @@ public class CadastroReceita extends JFrame{
 			}
 		});
 		tfNomeReceita.setToolTipText("Ex: Bolo de Chocolate");
-		tfNomeReceita.setBounds(65, 46, 167, 20);
+		tfNomeReceita.setBounds(65, 46, 257, 20);
 		getContentPane().add(tfNomeReceita);
 		tfNomeReceita.setColumns(10);
 		
@@ -94,7 +94,7 @@ public class CadastroReceita extends JFrame{
 		getContentPane().add(lblModoDePreparo);
 		
 		cbAutor = new JComboBox<String>();
-		cbAutor.setBounds(65, 74, 167, 20);
+		cbAutor.setBounds(65, 74, 257, 20);
 		prencherComboBoxAutor(cbAutor);
 		getContentPane().add(cbAutor);
 		
