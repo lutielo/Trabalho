@@ -95,6 +95,8 @@ public class CadastroReceita extends JFrame {
 		cbAutor = new JComboBox<String>();
 		cbAutor.setBounds(65, 74, 257, 20);
 		prencherComboBoxAutor(cbAutor);
+		VerificaFocoNomeAutor verificaFocoNomeAutor = new VerificaFocoNomeAutor();
+		cbAutor.addFocusListener(verificaFocoNomeAutor);
 
 		listaIngredientesAdicionados = new ArrayList<Receita_Ingrediente>();
 
@@ -255,27 +257,30 @@ public class CadastroReceita extends JFrame {
 		}
 	}
 
-	private class VerificaFocoNomeAutor implements FocusListener {
-
-		@Override
-		public void focusLost(FocusEvent e) {
-			taResumoReceita.setText("Nome da Receita : " + tfNomeReceita.getText());
-		}
-
-		@Override
-		public void focusGained(FocusEvent e) {
-		}
-	}
-
 	private class VerificaFocoNomeReceita implements FocusListener {
 
 		@Override
-		public void focusLost(FocusEvent e) {
-			taResumoReceita.setText("Nome da Receita : " + tfNomeReceita.getText());
+		public void focusGained(FocusEvent arg0) {
+			// TODO Auto-generated method stub
 		}
 
 		@Override
+		public void focusLost(FocusEvent e) {
+			taResumoReceita.setText("Nome da Receita : " + tfNomeReceita.getText());
+		}
+	}
+
+	private class VerificaFocoNomeAutor implements FocusListener {
+
+		@Override
 		public void focusGained(FocusEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+			String resumoReceita = taResumoReceita.getText() + "\nNome do Autor: " + cbAutor.getSelectedItem().toString();
+			taResumoReceita.setText(resumoReceita);
 		}
 	}
 
