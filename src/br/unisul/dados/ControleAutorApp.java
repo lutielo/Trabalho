@@ -58,7 +58,7 @@ public class ControleAutorApp {
 	private void listarDadosDoAutorPeloNome(String nomeRecebido) {
 		AutorDAO autorDAO = new AutorDAO();
 		try {
-			List<Autor> listaAutores = autorDAO.listeTodosAutoresPeloNome(nomeRecebido);
+			List<Autor> listaAutores = autorDAO.listarAutoresPeloNome(nomeRecebido);
 			if (listaAutores.isEmpty()) {
 				System.err.println("Não há registros");
 			} else {
@@ -77,7 +77,7 @@ public class ControleAutorApp {
 	private void listarDadosDoAutorPeloCodigo(Integer codigoRecebido) {
 		AutorDAO autorDAO = new AutorDAO();
 		try {
-			Autor autor = autorDAO.listeDadosDoAutorPeloCodigo(codigoRecebido);
+			Autor autor = autorDAO.listarAutorPeloCodigo(codigoRecebido);
 			if (autor != null) {
 				System.out.println("Listando dados do autor com código = " + autor.getCodigo() + ":");
 				System.out.println("Codigo:" + autor.getCodigo() + "\tNome:" + autor.getNome());
@@ -94,7 +94,7 @@ public class ControleAutorApp {
 	private void abrirListagemAutores() {
 		AutorDAO autorDAO = new AutorDAO();
 		try {
-			List<Autor> listaAutores = autorDAO.listeTodosAutores();
+			List<Autor> listaAutores = autorDAO.listarTodosAutores();
 			if (listaAutores.isEmpty()) {
 				System.err.println("Não há registros");
 			} else {
@@ -116,7 +116,7 @@ public class ControleAutorApp {
 		Autor autor = new Autor(null, nome, null);
 		AutorDAO autorDAO = new AutorDAO();
 		try {
-			autorDAO.cadastreAutor(autor);
+			autorDAO.cadastrarAutor(autor);
 			System.out.println("Autor cadastrado com sucesso");
 		} catch (DAOException e) {
 			System.err.println("Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");
@@ -133,7 +133,7 @@ public class ControleAutorApp {
 			listarDadosDoAutorPeloCodigo(codigoRecebido);
 			int opcao = ui.facaPerguntaInt("Deseja Excluir esse registro? 1-Excluir 2-Cancelar");
 			if (opcao == 1) {
-				autorDAO.deletaAutor(autor);
+				autorDAO.deletarAutor(autor);
 				System.out.println("Autor deletado com sucesso");
 			} else if (opcao == 2) {
 				System.out.println("Cancelado com sucesso");

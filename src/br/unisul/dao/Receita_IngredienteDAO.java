@@ -33,6 +33,10 @@ public class Receita_IngredienteDAO extends GenericDAO {
 			close(connection);
 		}
 	}
+	
+	public void alterarIngredienteNaReceita() {
+		
+	}
 
 	public List<Receita_Ingrediente> listeTodosIngredientesDasReceitas() throws DAOException {
 		Connection connection = null;

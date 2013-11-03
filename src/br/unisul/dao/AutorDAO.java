@@ -12,7 +12,7 @@ import br.unisul.dados.Autor;
 
 public class AutorDAO extends GenericDAO {
 
-	public void cadastreAutor(Autor autor) throws DAOException {
+	public void cadastrarAutor(Autor autor) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -47,7 +47,7 @@ public class AutorDAO extends GenericDAO {
 		}
 	}
 
-	public List<Autor> listeTodosAutores() throws DAOException {
+	public List<Autor> listarTodosAutores() throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -74,7 +74,7 @@ public class AutorDAO extends GenericDAO {
 		}
 	}
 
-	public List<Autor> listeTodosAutoresPeloNome(String nomeRecebido) throws DAOException {
+	public List<Autor> listarAutoresPeloNome(String nomeRecebido) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -102,7 +102,7 @@ public class AutorDAO extends GenericDAO {
 		}
 	}
 
-	public Autor listeDadosDoAutorPeloCodigo(int codigoRecebido) throws DAOException {
+	public Autor listarAutorPeloCodigo(int codigoRecebido) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -128,7 +128,7 @@ public class AutorDAO extends GenericDAO {
 		}
 	}
 
-	public void deletaAutor(Autor autor) throws DAOException {
+	public void deletarAutor(Autor autor) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {

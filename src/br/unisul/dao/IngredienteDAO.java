@@ -12,7 +12,7 @@ import br.unisul.dados.Ingrediente;
 
 public class IngredienteDAO extends GenericDAO {
 
-	public void cadastreIngrediente(Ingrediente ingrediente) throws DAOException {
+	public void cadastrarIngrediente(Ingrediente ingrediente) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {

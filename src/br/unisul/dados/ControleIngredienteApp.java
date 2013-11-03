@@ -125,7 +125,7 @@ public class ControleIngredienteApp {
 
 		IngredienteDAO ingredienteDAO = new IngredienteDAO();
 		try {
-			ingredienteDAO.cadastreIngrediente(ingrediente);
+			ingredienteDAO.cadastrarIngrediente(ingrediente);
 			System.out.println("Ingrediente cadastrado com sucesso");
 		} catch (DAOException e) {
 			System.err.println("Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");

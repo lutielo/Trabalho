@@ -91,26 +91,24 @@ public class CadastroIngrediente extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
+			if (!StringUtils.isNuloOuBranco(tfNomeIngrediente.getText())) {
+				this.cadastrarIngrediente();
+			} else {
+				JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
+			}
+		}
+
+		private void cadastrarIngrediente() {
+			Ingrediente ingrediente = new Ingrediente(null, tfNomeIngrediente.getText());
+			IngredienteDAO ingredienteDAO = new IngredienteDAO();
 			try {
-				// resgatando informações do ingrediente
-				String nomeIngrediente = tfNomeIngrediente.getText();
-
-				if (!StringUtils.isNuloOuBranco(nomeIngrediente)) {
-					// instanciando objeto com as informações resgatadas da pagina
-
-					Ingrediente ingredienteASerGravado = new Ingrediente(null, nomeIngrediente);
-
-					// cadastrando Ingrediente no banco de dados
-					IngredienteDAO ingredienteDAO = new IngredienteDAO();
-					ingredienteDAO.cadastreIngrediente(ingredienteASerGravado);
-					JOptionPane.showMessageDialog(null, "Ingrediente " + nomeIngrediente + " cadastrado com sucesso.");
-
-				} else {
-					JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
-				}
+				ingredienteDAO.cadastrarIngrediente(ingrediente);
+				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " cadastrado com sucesso.");
 			} catch (DAOException e) {
 				e.printStackTrace();
-			} 
+			} finally {
+				fecharTela();
+			}
 		}
 	}
 

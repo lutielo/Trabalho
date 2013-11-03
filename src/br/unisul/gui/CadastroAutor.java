@@ -35,6 +35,7 @@ public class CadastroAutor extends JFrame {
 
 	CadastroAutor() {
 		super("Cadastro Autor");
+		this.setResizable(false);
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(400, 300);
@@ -59,7 +60,7 @@ public class CadastroAutor extends JFrame {
 		btnSalvar.setPreferredSize(new Dimension(80, 23));
 		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar();
 		btnSalvar.addActionListener(trataEventoSalvar);
-		
+
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(199, 212, 90, 23);
 		btnCancelar.setToolTipText("Cancelar");
@@ -91,7 +92,7 @@ public class CadastroAutor extends JFrame {
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
 		getContentPane().add(lblCadatroDeAutor);
-		
+
 		this.tabOrder();
 
 	}
@@ -115,31 +116,32 @@ public class CadastroAutor extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			if (!StringUtils.isNuloOuBranco(tfNomeAutor.getText())) {
-				AutorDAO autorDAO = new AutorDAO();
 				Integer sexoAutor = null;
 				if (rdbtnFeminino.isSelected()) {
 					sexoAutor = 2;
-					CadastrarAutor(autorDAO, sexoAutor);
+					cadastrarAutor(sexoAutor);
 				} else if (rdbtnMasculino.isSelected()) {
 					sexoAutor = 1;
-					CadastrarAutor(autorDAO, sexoAutor);
+					cadastrarAutor(sexoAutor);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um sexo.");
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite um nome valido");
+				JOptionPane.showMessageDialog(null, "Digite um nome válido");
 			}
 		}
 
-		private void CadastrarAutor(AutorDAO autorDAO, Integer sexoAutor) {
+		private void cadastrarAutor(Integer sexoAutor) {
 			Autor autor = new Autor(null, tfNomeAutor.getText(), sexoAutor);
+			AutorDAO autorDAO = new AutorDAO();
 			try {
-				autorDAO.cadastreAutor(autor);
+				autorDAO.cadastrarAutor(autor);
 				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
-				fecharTela();
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
 				e.printStackTrace();
+			} finally {
+				fecharTela();
 			}
 		}
 	}

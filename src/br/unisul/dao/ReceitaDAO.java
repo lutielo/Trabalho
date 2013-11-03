@@ -51,7 +51,6 @@ public class ReceitaDAO extends GenericDAO {
 		}
 	}
 	
-	@SuppressWarnings("null")
 	public Integer resgatarUltimoRegistro() throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
