@@ -67,7 +67,6 @@ public class CadastroReceita extends JFrame {
 		getContentPane().setLayout(null);
 
 		this.abreTela();
-
 	}
 
 	private void abreTela() {
@@ -155,8 +154,8 @@ public class CadastroReceita extends JFrame {
 		getContentPane().add(lblCadastro);
 		getContentPane().add(lblNomeDaReceita);
 		getContentPane().add(lblNomeDoAutor);
-		getContentPane().add(tfNomeReceita);
 		getContentPane().add(lblModoDePreparo);
+		getContentPane().add(tfNomeReceita);
 		getContentPane().add(cbAutor);
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
