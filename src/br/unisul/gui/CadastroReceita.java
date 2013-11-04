@@ -31,6 +31,8 @@ import br.unisul.dao.ReceitaDAO;
 import br.unisul.dao.Receita_IngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
 import br.unisul.util.StringUtils;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class CadastroReceita extends JFrame {
 
@@ -56,6 +58,8 @@ public class CadastroReceita extends JFrame {
 	private JComboBox<String> cbUnidade;
 	private JComboBox<String> cbIngrediente;
 	private List<Receita_Ingrediente> listaIngredientesAdicionados;
+	private JScrollPane scrollPaneResumoDaReceita;
+	private JScrollPane scrollPaneModoDePreparo;
 
 	CadastroReceita() {
 		super("Cadastro Receita");
@@ -104,11 +108,6 @@ public class CadastroReceita extends JFrame {
 		TrataEventoSalvarIngrediente trataEventoSalvarIngrediente = new TrataEventoSalvarIngrediente();
 		btnAdicionarIngrediente.addActionListener(trataEventoSalvarIngrediente);
 
-		taModoPreparo = new JTextArea();
-		taModoPreparo.setWrapStyleWord(true);
-		taModoPreparo.setLineWrap(true);
-		taModoPreparo.setBounds(21, 308, 350, 123);
-
 		jsSeparator = new JSeparator();
 		jsSeparator.setOrientation(SwingConstants.VERTICAL);
 		jsSeparator.setBounds(394, 11, 10, 454);
@@ -116,9 +115,6 @@ public class CadastroReceita extends JFrame {
 		lblReceita = new JLabel("Resumo da receita :");
 		lblReceita.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblReceita.setBounds(414, 17, 197, 20);
-
-		taResumoReceita = new JTextArea();
-		taResumoReceita.setBounds(414, 46, 370, 319);
 
 		cbIngrediente = new JComboBox<String>();
 		cbIngrediente.setBounds(21, 141, 167, 20);
@@ -151,6 +147,23 @@ public class CadastroReceita extends JFrame {
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
 
+		scrollPaneResumoDaReceita = new JScrollPane();
+		scrollPaneResumoDaReceita.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneResumoDaReceita.setBounds(414, 46, 370, 404);
+		
+		taResumoReceita = new JTextArea();
+		taResumoReceita.setEditable(false);
+		scrollPaneResumoDaReceita.setViewportView(taResumoReceita);
+
+		scrollPaneModoDePreparo = new JScrollPane();
+		scrollPaneModoDePreparo.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneModoDePreparo.setBounds(21, 308, 350, 123);
+
+		taModoPreparo = new JTextArea();
+		scrollPaneModoDePreparo.setViewportView(taModoPreparo);
+		taModoPreparo.setWrapStyleWord(true);
+		taModoPreparo.setLineWrap(true);
+
 		getContentPane().add(lblCadastro);
 		getContentPane().add(lblNomeDaReceita);
 		getContentPane().add(lblNomeDoAutor);
@@ -160,10 +173,10 @@ public class CadastroReceita extends JFrame {
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
 		getContentPane().add(btnAdicionarIngrediente);
-		getContentPane().add(taModoPreparo);
+		getContentPane().add(scrollPaneModoDePreparo);
 		getContentPane().add(jsSeparator);
 		getContentPane().add(lblReceita);
-		getContentPane().add(taResumoReceita);
+		getContentPane().add(scrollPaneResumoDaReceita);
 		getContentPane().add(cbIngrediente);
 		getContentPane().add(lblIngrediente);
 		getContentPane().add(cbUnidade);
