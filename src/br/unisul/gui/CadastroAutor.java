@@ -37,7 +37,7 @@ public class CadastroAutor extends JFrame {
 		super("Cadastro Autor");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(400, 300);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);

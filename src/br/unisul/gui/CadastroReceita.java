@@ -61,7 +61,7 @@ public class CadastroReceita extends JFrame {
 		super("Cadastro Receita");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(800, 500);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
