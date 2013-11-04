@@ -3,8 +3,6 @@ package br.unisul.gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,9 +12,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import br.unisul.dados.Autor;
@@ -31,8 +31,6 @@ import br.unisul.dao.ReceitaDAO;
 import br.unisul.dao.Receita_IngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
 import br.unisul.util.StringUtils;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 public class CadastroReceita extends JFrame {
 
@@ -89,8 +87,6 @@ public class CadastroReceita extends JFrame {
 		tfNomeReceita.setToolTipText("Ex: Bolo de Chocolate");
 		tfNomeReceita.setBounds(65, 46, 257, 20);
 		tfNomeReceita.setColumns(10);
-		VerificaFocoNomeReceita verificaFocoNomeReceita = new VerificaFocoNomeReceita();
-		tfNomeReceita.addFocusListener(verificaFocoNomeReceita);
 
 		lblModoDePreparo = new JLabel("Modo de preparo*:");
 		lblModoDePreparo.setBounds(21, 272, 115, 14);
@@ -98,8 +94,6 @@ public class CadastroReceita extends JFrame {
 		cbAutor = new JComboBox<String>();
 		cbAutor.setBounds(65, 74, 257, 20);
 		prencherComboBoxAutor(cbAutor);
-		VerificaFocoNomeAutor verificaFocoNomeAutor = new VerificaFocoNomeAutor();
-		cbAutor.addFocusListener(verificaFocoNomeAutor);
 
 		listaIngredientesAdicionados = new ArrayList<Receita_Ingrediente>();
 
@@ -138,12 +132,12 @@ public class CadastroReceita extends JFrame {
 		lblQuantidade.setBounds(21, 172, 73, 14);
 
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(65, 442, 89, 23);
+		btnSalvar.setBounds(31, 442, 89, 23);
 		TrataEventoSalvarReceita trataEventoSalvarReceita = new TrataEventoSalvarReceita();
 		btnSalvar.addActionListener(trataEventoSalvarReceita);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(183, 442, 89, 23);
+		btnCancelar.setBounds(147, 442, 89, 23);
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
 
@@ -152,6 +146,8 @@ public class CadastroReceita extends JFrame {
 		scrollPaneResumoDaReceita.setBounds(414, 46, 370, 404);
 		
 		taResumoReceita = new JTextArea();
+		taResumoReceita.setWrapStyleWord(true);
+		taResumoReceita.setLineWrap(true);
 		taResumoReceita.setEditable(false);
 		scrollPaneResumoDaReceita.setViewportView(taResumoReceita);
 
@@ -183,6 +179,23 @@ public class CadastroReceita extends JFrame {
 		getContentPane().add(lblUnidadeDeMedida);
 		getContentPane().add(tfQuantidade);
 		getContentPane().add(lblQuantidade);
+		
+		JButton btnVisualizaReceita = new JButton("Visualizar");
+		btnVisualizaReceita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				taResumoReceita.setText("");
+				taResumoReceita.append("Nome da receita : " + tfNomeReceita.getText());
+				taResumoReceita.append("\nNome do autor    : " + cbAutor.getSelectedItem().toString());
+				taResumoReceita.append("\n\nIngredientes         : ");
+				for (Receita_Ingrediente i : listaIngredientesAdicionados) {
+					taResumoReceita.append("\n"+i.getQuantidade() + " " +  i.getUnidade().getTipo() + " de " + i.getIngredientes().getNome());
+				}
+				taResumoReceita.append("\n\nModo de preparo : " + taModoPreparo.getText());
+			}
+		});
+		btnVisualizaReceita.setToolTipText("Clique para visualizar a receita");
+		btnVisualizaReceita.setBounds(259, 442, 98, 23);
+		getContentPane().add(btnVisualizaReceita);
 	}
 
 	public void fecharTela() {
@@ -296,33 +309,6 @@ public class CadastroReceita extends JFrame {
 				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.");
 				return false;
 			}
-		}
-	}
-
-	private class VerificaFocoNomeReceita implements FocusListener {
-
-		@Override
-		public void focusGained(FocusEvent arg0) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void focusLost(FocusEvent e) {
-			taResumoReceita.setText("Nome da Receita : " + tfNomeReceita.getText());
-		}
-	}
-
-	private class VerificaFocoNomeAutor implements FocusListener {
-
-		@Override
-		public void focusGained(FocusEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void focusLost(FocusEvent e) {
-			String resumoReceita = taResumoReceita.getText() + "\nNome do Autor: " + cbAutor.getSelectedItem().toString();
-			taResumoReceita.setText(resumoReceita);
 		}
 	}
 
