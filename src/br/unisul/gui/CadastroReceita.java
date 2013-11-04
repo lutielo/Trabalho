@@ -240,11 +240,25 @@ public class CadastroReceita extends JFrame {
 				Unidade unidade = (Unidade) listaUnidades.get(cbUnidade.getSelectedIndex() - 1);
 				listaIngredientes = ingredienteDAO.listeTodosIngredientes();
 				Ingrediente ingrediente = (Ingrediente) listaIngredientes.get(cbIngrediente.getSelectedIndex() - 1);
-				if (!StringUtils.isNuloOuBranco(tfQuantidade)) {
-					Double quantidade = Double.parseDouble(tfQuantidade.getText());
-					new Receita_IngredienteDAO();
-					Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, ingrediente, unidade, quantidade);
-					listaIngredientesAdicionados.add(receita_Ingrediente);
+				if (!StringUtils.isNuloOuBranco(tfQuantidade.getText())) {
+					Double quantidade = null;
+					if(validarValorQuantidade(quantidade)){
+						quantidade = Double.parseDouble(tfQuantidade.getText());
+						new Receita_IngredienteDAO();
+						Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, ingrediente, unidade, quantidade);
+						int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja salvar este ingrediente? " +
+		                									 "\nIngrediente \t: " + receita_Ingrediente.getIngredientes().getNome() +
+		                									 "\nQuantidade \t: " + receita_Ingrediente.getQuantidade() +
+		                									 "\nUnidade \t: " + receita_Ingrediente.getUnidade().getTipo()
+		                									 ,"Atenção",JOptionPane.YES_NO_OPTION);
+		                if(dialogButton == JOptionPane.YES_OPTION){          
+		                	listaIngredientesAdicionados.add(receita_Ingrediente);
+		                	JOptionPane.showMessageDialog(null, "Ingrediente adicionado com sucesso.");
+		                	limparCamposIngrediente();
+		                } else if (dialogButton == JOptionPane.NO_OPTION){
+		                	JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.");
+		                }
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite a quantidade");
 				}
@@ -252,6 +266,22 @@ public class CadastroReceita extends JFrame {
 				e.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e1) {
 				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
+			}
+		}
+
+		private void limparCamposIngrediente() {
+			tfQuantidade.setText("");
+			cbIngrediente.setSelectedIndex(0);
+			cbUnidade.setSelectedIndex(0);
+		}
+
+		private boolean validarValorQuantidade(Double quantidade) {
+			try {
+				quantidade = Double.parseDouble(tfQuantidade.getText());
+				return true;
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.");
+				return false;
 			}
 		}
 	}
@@ -290,9 +320,10 @@ public class CadastroReceita extends JFrame {
 			if (!StringUtils.isNuloOuBranco(tfNomeReceita.getText())) {
 				Autor autor = null;
 				if (!cbAutor.getSelectedItem().toString().contains(" -- Selecione -- ")) {
-					autor = validarAutor();
+					autor = resgatarAutorSelecionado();
 					if (!StringUtils.isNuloOuBranco(taModoPreparo.getText())) {
 						this.cadastrarReceita(autor);
+						this.cadatrarIngredientesNaReceita();
 					} else {
 						JOptionPane.showMessageDialog(null, "Digite o modo de preparo.");
 					}
@@ -302,10 +333,9 @@ public class CadastroReceita extends JFrame {
 			} else {
 				JOptionPane.showMessageDialog(null, "Digite o nome da receita");
 			}
-			this.cadatrarIngredienteNaReceita();
 		}
 
-		private Autor validarAutor() {
+		private Autor resgatarAutorSelecionado() {
 			Autor autor = null;
 			AutorDAO autorDAO = new AutorDAO();
 			List<Autor> listaAutores;
@@ -332,7 +362,7 @@ public class CadastroReceita extends JFrame {
 			}
 		}
 
-		private void cadatrarIngredienteNaReceita() {
+		private void cadatrarIngredientesNaReceita() {
 			try {
 				ReceitaDAO receitaDAO = new ReceitaDAO();
 				int codigoReceitaCriada = receitaDAO.resgatarUltimoRegistro();
