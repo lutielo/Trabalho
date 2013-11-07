@@ -1,4 +1,4 @@
-package br.unisul.gui;
+package br.unisul.gui.cadastros;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -52,19 +52,21 @@ public class CadastroReceita extends JFrame {
 	private JButton btnAdicionarIngrediente;
 	private JButton btnSalvar;
 	private JButton btnCancelar;
+	private JButton btnVisualizaReceita;
 	private JComboBox<String> cbAutor;
 	private JComboBox<String> cbUnidade;
 	private JComboBox<String> cbIngrediente;
 	private List<Receita_Ingrediente> listaIngredientesAdicionados;
-	private JScrollPane scrollPaneResumoDaReceita;
-	private JScrollPane scrollPaneModoDePreparo;
+	private JScrollPane spResumoDaReceita;
+	private JScrollPane spModoDePreparo;
+	private JLabel lblcamposObrigatrios;
 
-	CadastroReceita() {
+	public CadastroReceita() {
 		super("Cadastro Receita");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(800, 500);
+		this.setSize(800, 508);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
@@ -141,22 +143,28 @@ public class CadastroReceita extends JFrame {
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
 
-		scrollPaneResumoDaReceita = new JScrollPane();
-		scrollPaneResumoDaReceita.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneResumoDaReceita.setBounds(414, 46, 370, 404);
-		
+		btnVisualizaReceita = new JButton("Visualizar");
+		btnVisualizaReceita.setToolTipText("Clique para visualizar a receita");
+		btnVisualizaReceita.setBounds(259, 442, 98, 23);
+		TrataEventoVisualizar trataEventoVisualizar = new TrataEventoVisualizar();
+		btnVisualizaReceita.addActionListener(trataEventoVisualizar);
+
+		spResumoDaReceita = new JScrollPane();
+		spResumoDaReceita.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spResumoDaReceita.setBounds(414, 46, 370, 404);
+
 		taResumoReceita = new JTextArea();
 		taResumoReceita.setWrapStyleWord(true);
 		taResumoReceita.setLineWrap(true);
 		taResumoReceita.setEditable(false);
-		scrollPaneResumoDaReceita.setViewportView(taResumoReceita);
+		spResumoDaReceita.setViewportView(taResumoReceita);
 
-		scrollPaneModoDePreparo = new JScrollPane();
-		scrollPaneModoDePreparo.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneModoDePreparo.setBounds(21, 308, 350, 123);
+		spModoDePreparo = new JScrollPane();
+		spModoDePreparo.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spModoDePreparo.setBounds(21, 308, 350, 123);
 
 		taModoPreparo = new JTextArea();
-		scrollPaneModoDePreparo.setViewportView(taModoPreparo);
+		spModoDePreparo.setViewportView(taModoPreparo);
 		taModoPreparo.setWrapStyleWord(true);
 		taModoPreparo.setLineWrap(true);
 
@@ -169,33 +177,28 @@ public class CadastroReceita extends JFrame {
 		getContentPane().add(btnSalvar);
 		getContentPane().add(btnCancelar);
 		getContentPane().add(btnAdicionarIngrediente);
-		getContentPane().add(scrollPaneModoDePreparo);
+		getContentPane().add(spModoDePreparo);
 		getContentPane().add(jsSeparator);
 		getContentPane().add(lblReceita);
-		getContentPane().add(scrollPaneResumoDaReceita);
+		getContentPane().add(spResumoDaReceita);
 		getContentPane().add(cbIngrediente);
 		getContentPane().add(lblIngrediente);
 		getContentPane().add(cbUnidade);
 		getContentPane().add(lblUnidadeDeMedida);
 		getContentPane().add(tfQuantidade);
 		getContentPane().add(lblQuantidade);
-		
-		JButton btnVisualizaReceita = new JButton("Visualizar");
-		btnVisualizaReceita.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				taResumoReceita.setText("");
-				taResumoReceita.append("Nome da receita : " + tfNomeReceita.getText());
-				taResumoReceita.append("\nNome do autor    : " + cbAutor.getSelectedItem().toString());
-				taResumoReceita.append("\n\nIngredientes         : ");
-				for (Receita_Ingrediente i : listaIngredientesAdicionados) {
-					taResumoReceita.append("\n"+i.getQuantidade() + " " +  i.getUnidade().getTipo() + " de " + i.getIngredientes().getNome());
-				}
-				taResumoReceita.append("\n\nModo de preparo : " + taModoPreparo.getText());
-			}
-		});
-		btnVisualizaReceita.setToolTipText("Clique para visualizar a receita");
-		btnVisualizaReceita.setBounds(259, 442, 98, 23);
 		getContentPane().add(btnVisualizaReceita);
+		
+		lblcamposObrigatrios = new JLabel("*campos obrigat\u00F3rios");
+		lblcamposObrigatrios.setBounds(414, 459, 135, 14);
+		getContentPane().add(lblcamposObrigatrios);
+		
+		this.tabOrder();
+
+	}
+	
+	private void tabOrder() {
+		
 	}
 
 	public void fecharTela() {
@@ -268,22 +271,8 @@ public class CadastroReceita extends JFrame {
 				Ingrediente ingrediente = (Ingrediente) listaIngredientes.get(cbIngrediente.getSelectedIndex() - 1);
 				if (!StringUtils.isNuloOuBranco(tfQuantidade.getText())) {
 					Double quantidade = null;
-					if(validarValorQuantidade(quantidade)){
-						quantidade = Double.parseDouble(tfQuantidade.getText());
-						new Receita_IngredienteDAO();
-						Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, ingrediente, unidade, quantidade);
-						int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja salvar este ingrediente? " +
-		                									 "\nIngrediente \t: " + receita_Ingrediente.getIngredientes().getNome() +
-		                									 "\nQuantidade \t: " + receita_Ingrediente.getQuantidade() +
-		                									 "\nUnidade \t: " + receita_Ingrediente.getUnidade().getTipo()
-		                									 ,"Atenção",JOptionPane.YES_NO_OPTION);
-		                if(dialogButton == JOptionPane.YES_OPTION){          
-		                	listaIngredientesAdicionados.add(receita_Ingrediente);
-		                	JOptionPane.showMessageDialog(null, "Ingrediente adicionado com sucesso.");
-		                	limparCamposIngrediente();
-		                } else if (dialogButton == JOptionPane.NO_OPTION){
-		                	JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.");
-		                }
+					if (validarValorQuantidade(quantidade)) {
+						cadastraIngrediente(unidade, ingrediente);
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite a quantidade");
@@ -292,6 +281,22 @@ public class CadastroReceita extends JFrame {
 				e.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e1) {
 				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
+			}
+		}
+
+		private void cadastraIngrediente(Unidade unidade, Ingrediente ingrediente) {
+			Double quantidade;
+			quantidade = Double.parseDouble(tfQuantidade.getText());
+			new Receita_IngredienteDAO();
+			Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, ingrediente, unidade, quantidade);
+			int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja salvar este ingrediente? " + "\nIngrediente \t: "
+				+ receita_Ingrediente.getIngredientes().getNome() + "\nQuantidade \t: " + receita_Ingrediente.getQuantidade() + "\nUnidade \t: "
+				+ receita_Ingrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
+			if (dialogButton == JOptionPane.YES_OPTION) {
+				listaIngredientesAdicionados.add(receita_Ingrediente);
+				limparCamposIngrediente();
+			} else if (dialogButton == JOptionPane.NO_OPTION) {
+				JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.");
 			}
 		}
 
@@ -383,6 +388,21 @@ public class CadastroReceita extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			fecharTela();
+		}
+	}
+
+	private class TrataEventoVisualizar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			taResumoReceita.setText("");
+			taResumoReceita.append("Nome da receita : " + tfNomeReceita.getText());
+			taResumoReceita.append("\nNome do autor : " + cbAutor.getSelectedItem().toString());
+			taResumoReceita.append("\n\nIngredientes : ");
+			for (Receita_Ingrediente i : listaIngredientesAdicionados) {
+				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngredientes().getNome());
+			}
+			taResumoReceita.append("\n\nModo de preparo : " + taModoPreparo.getText());
 		}
 	}
 

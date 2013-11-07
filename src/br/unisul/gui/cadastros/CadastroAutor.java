@@ -1,4 +1,4 @@
-package br.unisul.gui;
+package br.unisul.gui.cadastros;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,6 +14,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import br.unisul.dados.Autor;
+import br.unisul.dados.Sexo;
 import br.unisul.dao.AutorDAO;
 import br.unisul.dao.DAOException;
 import br.unisul.util.IndexedFocusTraversalPolicy;
@@ -33,7 +34,7 @@ public class CadastroAutor extends JFrame {
 	private JButton btnSalvar;
 	private JButton btnCancelar;
 
-	CadastroAutor() {
+	public CadastroAutor() {
 		super("Cadastro Autor");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
@@ -119,10 +120,12 @@ public class CadastroAutor extends JFrame {
 				Integer sexoAutor = null;
 				if (rdbtnFeminino.isSelected()) {
 					sexoAutor = 2;
-					cadastrarAutor(sexoAutor);
+					Sexo sexo = new Sexo(sexoAutor, null);
+					cadastrarAutor(sexo);
 				} else if (rdbtnMasculino.isSelected()) {
 					sexoAutor = 1;
-					cadastrarAutor(sexoAutor);
+					Sexo sexo = new Sexo(sexoAutor, null);
+					cadastrarAutor(sexo);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione um sexo.");
 				}
@@ -131,8 +134,8 @@ public class CadastroAutor extends JFrame {
 			}
 		}
 
-		private void cadastrarAutor(Integer sexoAutor) {
-			Autor autor = new Autor(null, tfNomeAutor.getText(), sexoAutor);
+		private void cadastrarAutor(Sexo sexo) {
+			Autor autor = new Autor(null, tfNomeAutor.getText(), sexo);
 			AutorDAO autorDAO = new AutorDAO();
 			try {
 				autorDAO.cadastrarAutor(autor);

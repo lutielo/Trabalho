@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.unisul.Constantes;
 import br.unisul.dados.Autor;
+import br.unisul.dados.Sexo;
 
 public class AutorDAO extends GenericDAO {
 
@@ -19,7 +20,7 @@ public class AutorDAO extends GenericDAO {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_INSERT_AUTOR);
 			pstmt.setString(1, autor.getNome());
-			pstmt.setInt(2, autor.getSexo());
+			pstmt.setInt(2, autor.getSexo().getCodigo());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Ocorreu um erro no banco de dados " + "ao cadastrar o autor da receita", e);
@@ -36,7 +37,7 @@ public class AutorDAO extends GenericDAO {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Autor.QUERY_ALTER_AUTOR);
 			pstmt.setString(1, autor.getNome());
-			pstmt.setInt(2, autor.getSexo());
+			pstmt.setInt(2, autor.getSexo().getCodigo());
 			pstmt.setInt(3, autor.getCodigo());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -59,7 +60,10 @@ public class AutorDAO extends GenericDAO {
 			while (rs.next()) {
 				Integer codigo = rs.getInt("cd_autor");
 				String nome = rs.getString("nm_autor");
-				Integer sexo = rs.getInt("cd_sexo");
+				
+				String deSexo = rs.getString("de_sexo");
+				Sexo sexo = new Sexo(null, deSexo);
+				
 				Autor a = new Autor(codigo, nome, sexo);
 				lista.add(a);
 			}
@@ -87,7 +91,10 @@ public class AutorDAO extends GenericDAO {
 			while (rs.next()) {
 				Integer codigo = rs.getInt("cd_autor");
 				String nome = rs.getString("nm_autor");
-				Integer sexo = rs.getInt("cd_sexo");
+
+				String deSexo = rs.getString("de_sexo");
+				Sexo sexo = new Sexo(null, deSexo);
+				
 				Autor a = new Autor(codigo, nome, sexo);
 				lista.add(a);
 			}
@@ -114,7 +121,10 @@ public class AutorDAO extends GenericDAO {
 			if (rs.next()) {
 				int codigo = rs.getInt("cd_autor");
 				String nome = rs.getString("nm_autor");
-				Integer sexo = rs.getInt("cd_sexo");
+				
+				String deSexo = rs.getString("de_sexo");
+				Sexo sexo = new Sexo(null, deSexo);
+				
 				return new Autor(codigo, nome, sexo);
 			} else {
 				return null;

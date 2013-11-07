@@ -4,13 +4,13 @@ public class Autor {
 
 	private Integer codigo;
 	private String nome;
-	private Integer sexo;
+	private Sexo sexo;
 
 	public Autor() {
 
 	}
 
-	public Autor(Integer codigo, String nome, Integer sexo) {
+	public Autor(Integer codigo, String nome, Sexo sexo) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.sexo = sexo;
@@ -32,11 +32,12 @@ public class Autor {
 		this.nome = nome;
 	}
 
-	public Integer getSexo() {
+	public Sexo getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(Integer sexo) {
+	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
+	
 }

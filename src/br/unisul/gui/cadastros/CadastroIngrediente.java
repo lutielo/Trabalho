@@ -1,4 +1,4 @@
-package br.unisul.gui;
+package br.unisul.gui.cadastros;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -27,7 +27,7 @@ public class CadastroIngrediente extends JFrame {
 	private JButton btnSalvar;
 	private JButton btnCancelar;
 
-	CadastroIngrediente() {
+	public CadastroIngrediente() {
 		super("Cadastro Ingrediente");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);

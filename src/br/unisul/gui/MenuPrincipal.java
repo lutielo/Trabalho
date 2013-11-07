@@ -7,16 +7,23 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import br.unisul.gui.cadastros.CadastroAutor;
+import br.unisul.gui.cadastros.CadastroIngrediente;
+import br.unisul.gui.cadastros.CadastroReceita;
 
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JMenuBar mbMenuBarra;
-	private JMenu jmArquivo;
-	private JMenu jmCadastro;
-	private JMenuItem miCadastrarReceita;
-	private JMenuItem miCadastrarAutor;
-	private JMenuItem miCadastrarIngrediente;
+	private JMenu mnArquivo;
+	private JMenu mnCadastro;
+	private JMenuItem miCadastroReceita;
+	private JMenuItem miCadastroAutor;
+	private JMenuItem miCadastroIngrediente;
+	private JMenu mnSair;
 
 	public MenuPrincipal() {
 		super("Menu Principal");
@@ -34,26 +41,44 @@ public class MenuPrincipal extends JFrame {
 		mbMenuBarra = new JMenuBar();
 		this.setJMenuBar(mbMenuBarra);
 
-		jmArquivo = new JMenu("Arquivo");
-		mbMenuBarra.add(jmArquivo);
+		mnArquivo = new JMenu("Arquivo");
+		mbMenuBarra.add(mnArquivo);
 
-		jmCadastro = new JMenu("Cadastro");
-		jmArquivo.add(jmCadastro);
+		mnCadastro = new JMenu("Cadastro");
+		mnArquivo.add(mnCadastro);
 
-		miCadastrarAutor = new JMenuItem("Cadastrar Autor");
+		miCadastroAutor = new JMenuItem("Cadastro Autor");
 		TrataEventoCadastroAutor trataEventoCadastroAutor = new TrataEventoCadastroAutor();
-		miCadastrarAutor.addActionListener(trataEventoCadastroAutor);
-		jmCadastro.add(miCadastrarAutor);
+		miCadastroAutor.addActionListener(trataEventoCadastroAutor);
+		mnCadastro.add(miCadastroAutor);
 
-		miCadastrarIngrediente = new JMenuItem("Cadastrar Ingrediente");
+		miCadastroIngrediente = new JMenuItem("Cadastro Ingrediente");
 		TrataEventoCadastroIngrediente trataEventoCadastroIngrediente = new TrataEventoCadastroIngrediente();
-		miCadastrarIngrediente.addActionListener(trataEventoCadastroIngrediente);
-		jmCadastro.add(miCadastrarIngrediente);
+		miCadastroIngrediente.addActionListener(trataEventoCadastroIngrediente);
+		mnCadastro.add(miCadastroIngrediente);
 
-		miCadastrarReceita = new JMenuItem("Cadastrar Receita");
+		miCadastroReceita = new JMenuItem("Cadastro Receita");
 		TrataEventoCadastroReceita trataEventoCadastroReceita = new TrataEventoCadastroReceita();
-		miCadastrarReceita.addActionListener(trataEventoCadastroReceita);
-		jmCadastro.add(miCadastrarReceita);
+		miCadastroReceita.addActionListener(trataEventoCadastroReceita);
+		mnCadastro.add(miCadastroReceita);
+
+		mnSair = new JMenu("Sair");
+		mbMenuBarra.add(mnSair);
+		mnSair.addMouseListener(new java.awt.event.MouseAdapter() {
+
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja sair?", "Atenção", JOptionPane.YES_NO_OPTION);
+				if (dialogButton == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+	}
+
+	public void fecharTela() {
+		getContentPane();
+		System.exit(0);
 	}
 
 	private class TrataEventoCadastroAutor implements ActionListener {

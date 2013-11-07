@@ -6,17 +6,20 @@ public interface Constantes {
 		String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor, cd_sexo)" 
 								  + " VALUES (?, ?)";
 		
-		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor, cd_sexo" 
-										+ " FROM autor" 
+		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor, sexo.de_sexo" 
+										+ " FROM autor "
+										+ " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
 										+ " ORDER BY nm_autor";
 		
-		String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor " 
+		String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor, sexo.de_sexo" 
 									   + " FROM autor " 
+									   + " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
 									   + " WHERE upper(nm_autor) LIKE  upper(?) "
 									   + " ORDER BY nm_autor ";
 		
-		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_auto, cd_sexor" 
+		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_auto, sexo.de_sexo" 
 									+ " FROM autor"
+									+ " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
 									+ " WHERE cd_autor = (?) ";
 		
 		String QUERY_DELETE_AUTOR = "DELETE FROM autor WHERE cd_autor = (?)";
