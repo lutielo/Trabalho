@@ -17,7 +17,7 @@ public interface Constantes {
 									   + " WHERE upper(nm_autor) LIKE  upper(?) "
 									   + " ORDER BY nm_autor ";
 		
-		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_auto, sexo.de_sexo" 
+		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_autor, sexo.de_sexo" 
 									+ " FROM autor"
 									+ " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
 									+ " WHERE cd_autor = (?) ";

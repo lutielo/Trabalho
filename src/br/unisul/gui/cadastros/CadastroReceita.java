@@ -44,6 +44,7 @@ public class CadastroReceita extends JFrame {
 	private JLabel lblIngrediente;
 	private JLabel lblUnidadeDeMedida;
 	private JLabel lblQuantidade;
+	private JLabel lblcamposObrigatrios;
 	private JTextField tfNomeReceita;
 	private JTextField tfQuantidade;
 	private JTextArea taModoPreparo;
@@ -59,7 +60,6 @@ public class CadastroReceita extends JFrame {
 	private List<Receita_Ingrediente> listaIngredientesAdicionados;
 	private JScrollPane spResumoDaReceita;
 	private JScrollPane spModoDePreparo;
-	private JLabel lblcamposObrigatrios;
 
 	public CadastroReceita() {
 		super("Cadastro Receita");
@@ -168,6 +168,9 @@ public class CadastroReceita extends JFrame {
 		taModoPreparo.setWrapStyleWord(true);
 		taModoPreparo.setLineWrap(true);
 
+		lblcamposObrigatrios = new JLabel("*campos obrigat\u00F3rios");
+		lblcamposObrigatrios.setBounds(414, 459, 135, 14);
+
 		getContentPane().add(lblCadastro);
 		getContentPane().add(lblNomeDaReceita);
 		getContentPane().add(lblNomeDoAutor);
@@ -188,9 +191,6 @@ public class CadastroReceita extends JFrame {
 		getContentPane().add(tfQuantidade);
 		getContentPane().add(lblQuantidade);
 		getContentPane().add(btnVisualizaReceita);
-		
-		lblcamposObrigatrios = new JLabel("*campos obrigat\u00F3rios");
-		lblcamposObrigatrios.setBounds(414, 459, 135, 14);
 		getContentPane().add(lblcamposObrigatrios);
 		
 		this.tabOrder();
