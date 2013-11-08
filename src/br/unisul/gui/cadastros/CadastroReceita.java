@@ -279,7 +279,7 @@ public class CadastroReceita extends JFrame {
 				}
 			} catch (DAOException e) {
 				e.printStackTrace();
-			} catch (ArrayIndexOutOfBoundsException e1) {
+			} catch (ArrayIndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
 			}
 		}

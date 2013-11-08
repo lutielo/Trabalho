@@ -42,7 +42,7 @@ public class ListagemIngredientes extends JFrame {
 
 	public ListagemIngredientes() {
 		super("Listagem Ingredientes");
-		this.setSize(440, 580);
+		this.setSize(500, 560);
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -54,7 +54,7 @@ public class ListagemIngredientes extends JFrame {
 
 	private void abreTela() {
 		spListagemIngredientes = new JScrollPane(getTblIngredientes());
-		spListagemIngredientes.setBounds(30, 183, 370, 328);
+		spListagemIngredientes.setBounds(40, 139, 415, 328);
 		getContentPane().add(spListagemIngredientes);
 		this.addIngredientes();
 
@@ -62,7 +62,7 @@ public class ListagemIngredientes extends JFrame {
 		getTblIngredientes().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(176, 522, 89, 23);
+		btnExcluir.setBounds(167, 478, 89, 23);
 		getContentPane().add(btnExcluir);
 
 		btnEditar = new JButton("Editar");
@@ -81,11 +81,11 @@ public class ListagemIngredientes extends JFrame {
 			}
 		});
 
-		btnEditar.setBounds(77, 522, 89, 23);
+		btnEditar.setBounds(68, 478, 89, 23);
 		getContentPane().add(btnEditar);
 
 		btnFechar = new JButton("Fechar");
-		btnFechar.setBounds(275, 522, 89, 23);
+		btnFechar.setBounds(268, 478, 89, 23);
 		getContentPane().add(btnFechar);
 
 		lblCodigo = new JLabel("C\u00F3digo:");
@@ -107,12 +107,12 @@ public class ListagemIngredientes extends JFrame {
 		getContentPane().add(tfNome);
 
 		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(163, 127, 102, 23);
+		btnPesquisar.setBounds(353, 98, 102, 23);
 		getContentPane().add(btnPesquisar);
 
 		lblListagemIngredientes = new JLabel("Listagem de  Ingredientes");
 		lblListagemIngredientes.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblListagemIngredientes.setBounds(96, 22, 239, 29);
+		lblListagemIngredientes.setBounds(138, 23, 239, 29);
 		getContentPane().add(lblListagemIngredientes);
 
 		JLabel lblParaPesquisasMais = new JLabel("Para uma pesquisa mais avan\u00E7adas digite algum filtro:");
