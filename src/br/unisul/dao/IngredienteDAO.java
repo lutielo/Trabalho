@@ -98,6 +98,33 @@ public class IngredienteDAO extends GenericDAO {
 			close(connection);
 		}
 	}
+	
+	public List<Ingrediente> listeIngredientesMaisUtilizados() throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS);
+			rs = pstmt.executeQuery();
+			List<Ingrediente> lista = new ArrayList<Ingrediente>();
+			while (rs.next()) {
+				Integer vezes = rs.getInt("vezes");
+				String nome = rs.getString("nm_ingrediente");
+
+				Ingrediente i = new Ingrediente(vezes, nome);
+				lista.add(i);
+			}
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(connection);
+		}
+	}
 
 	public Ingrediente listeDadosDoIngredientePeloCodigo(int codigoRecebido) throws DAOException {
 		Connection connection = null;
