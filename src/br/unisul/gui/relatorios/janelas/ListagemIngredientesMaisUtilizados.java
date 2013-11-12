@@ -16,6 +16,9 @@ import br.unisul.dao.DAOException;
 import br.unisul.dao.IngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.IngredientesMaisUtilizadosTableModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListagemIngredientesMaisUtilizados extends JFrame {
 
@@ -52,6 +55,15 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		lblListagemIngredientesMaisUtilizados.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblListagemIngredientesMaisUtilizados.setBounds(36, 23, 389, 29);
 		getContentPane().add(lblListagemIngredientesMaisUtilizados);
+		
+		JButton btnVisualizar = new JButton("Visualizar");
+		btnVisualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		btnVisualizar.setBounds(147, 395, 104, 23);
+		getContentPane().add(btnVisualizar);
 
 		TableColumn col0 = getTblIngredientes().getColumnModel().getColumn(0);
 		col0.setPreferredWidth(90);

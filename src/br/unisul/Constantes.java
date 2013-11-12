@@ -70,6 +70,16 @@ public interface Constantes {
 			 											+ " JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente " 
 			 											+ " GROUP BY i.nm_ingrediente " 
 			 											+ " ORDER BY COUNT(i.nm_ingrediente) DESC";
+		 
+		 String QUERY_LIST_RECEITAS_USAM_INGREDIENTE_COD = " SELECT r.nm_receita, a.nm_autor, r.dt_criacao "
+				 										  +" FROM receita_ingrediente ri "
+				 										  +" JOIN receita r ON r.cd_receita = ri.cd_receita "
+				 										  +" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente "
+				 										  +" JOIN unidade u ON u.cd_unidade = ri.cd_unidade "
+				 										  +" JOIN autor a ON a.cd_autor = r.cd_autor "
+				 										  +" WHERE ri.cd_ingrediente = ? "
+				 										  +" AND ri.cd_unidade = ? "
+				 										  +" ORDER BY nm_receita";
 	}
 	
 	public interface Receita {
