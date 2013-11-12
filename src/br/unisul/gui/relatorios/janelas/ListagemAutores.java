@@ -172,9 +172,31 @@ public class ListagemAutores extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!StringUtils.isNuloOuBranco(tfCodigo.getText())) {
-				listarAutorCodigo();
+				if (validarValorCodigo()) {
+					boolean numeroInvalido = true;
+					for (Autor autor : listaAutores) {
+						Integer codigo = Integer.parseInt(tfCodigo.getText());
+						if (autor.getCodigo() == codigo) {
+							listarAutorCodigo();
+							numeroInvalido = false;
+						}
+					}
+					if (numeroInvalido) {
+						JOptionPane.showMessageDialog(null, "Digite um código existente");
+					}
+				}
 			} else if (!StringUtils.isNuloOuBranco(tfNome.getText())) {
 				listarAutoresNome();
+			}
+		}
+
+		private boolean validarValorCodigo() {
+			try {
+				Integer.parseInt(tfCodigo.getText());
+				return true;
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Insira um valor válido");
+				return false;
 			}
 		}
 
@@ -183,8 +205,12 @@ public class ListagemAutores extends JFrame {
 			try {
 				AutorDAO autorDAO = new AutorDAO();
 				List<Autor> autores = autorDAO.listarAutoresPeloNome(nomeAutor);
-				getModel().limpar();
-				getModel().addListaDeAutores(autores);
+				if (!autores.isEmpty()) {
+					getModel().limpar();
+					getModel().addListaDeAutores(autores);
+				} else {
+					JOptionPane.showMessageDialog(null, "Nenhum resultado encontrado");
+				}
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada");
 			}
@@ -206,7 +232,6 @@ public class ListagemAutores extends JFrame {
 	private class TrataEventoEditar implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			// RESGATA CODIGO DA ROW SELECIONADA
 			int selectedRow = getTblAutores().getSelectedRow();
 			editaAutor(selectedRow);
 		}
@@ -228,7 +253,7 @@ public class ListagemAutores extends JFrame {
 		}
 	}
 
-	public class TrataEventoExcluir implements ActionListener {
+	private class TrataEventoExcluir implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -247,6 +272,7 @@ public class ListagemAutores extends JFrame {
 					if (dialogButton == JOptionPane.YES_OPTION) {
 						autorDAO.deletarAutor(new Autor(codigoAutor, null, null));
 						JOptionPane.showMessageDialog(null, "Autor deletado com sucesso.");
+						getModel().limpar();
 						configuraTable();
 					} else if (dialogButton == JOptionPane.NO_OPTION) {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
