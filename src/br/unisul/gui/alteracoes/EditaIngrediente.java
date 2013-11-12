@@ -117,11 +117,10 @@ public class EditaIngrediente extends JFrame {
 			IngredienteDAO ingredienteDAO = new IngredienteDAO();
 			try {
 				ingredienteDAO.cadastrarIngrediente(ingrediente);
-				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " cadastrado com sucesso.");
+				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " editado com sucesso.");
+				fecharTela();
 			} catch (DAOException e) {
 				e.printStackTrace();
-			} finally {
-				fecharTela();
 			}
 		}
 	}

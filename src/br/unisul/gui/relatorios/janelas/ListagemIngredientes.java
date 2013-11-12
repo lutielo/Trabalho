@@ -36,7 +36,7 @@ public class ListagemIngredientes extends JFrame {
 	private JScrollPane spListagemIngredientes;
 	private JButton btnExcluir;
 	private JButton btnEditar;
-	private JButton btnFechar;
+	private JButton btnCancelar;
 	private JButton btnPesquisar;
 	private JLabel lblCodigo;
 	private JLabel lblNome;
@@ -72,8 +72,10 @@ public class ListagemIngredientes extends JFrame {
 		btnEditar.addActionListener(trataEventoEditar);
 		btnEditar.setBounds(68, 478, 89, 23);
 
-		btnFechar = new JButton("Fechar");
-		btnFechar.setBounds(268, 478, 89, 23);
+		btnCancelar = new JButton("Cancelar");
+		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
+		btnCancelar.addActionListener(trataEventoCancelar);
+		btnCancelar.setBounds(268, 478, 89, 23);
 
 		lblCodigo = new JLabel("C\u00F3digo:");
 		lblCodigo.setBounds(30, 98, 46, 23);
@@ -108,7 +110,7 @@ public class ListagemIngredientes extends JFrame {
 		getContentPane().add(tfNome);
 		getContentPane().add(tfCodigo);
 		getContentPane().add(btnPesquisar);
-		getContentPane().add(btnFechar);
+		getContentPane().add(btnCancelar);
 		getContentPane().add(btnEditar);
 		getContentPane().add(btnExcluir);
 		getContentPane().add(spListagemIngredientes);
@@ -277,6 +279,14 @@ public class ListagemIngredientes extends JFrame {
 			} catch (IndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Para remover selecione um autor");
 			}
+		}
+	}
+
+	private class TrataEventoCancelar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			fecharTela();
 		}
 	}
 
