@@ -49,10 +49,11 @@ public interface Constantes {
 		String QUERY_ALTER_INGREDIENTE = "UPDATE ingrediente SET nm_ingrediente = (?)" +
 			 							 " WHERE cd_ingrediente = (?)";
 		
-		String QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS = " SELECT COUNT(i.nm_ingrediente) as vezes, i.nm_ingrediente "
+		String QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS = " SELECT COUNT(i.nm_ingrediente) as vezes, i.nm_ingrediente, u.tp_unidade "
 														+" FROM receita_ingrediente ri "
 														+" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente "
-														+" GROUP BY i.nm_ingrediente "
+														+" JOIN unidade u ON u.cd_unidade = ri.cd_unidade "
+														+" GROUP BY i.nm_ingrediente, u.tp_unidade "
 														+" ORDER BY COUNT(i.nm_ingrediente) DESC";
 	}
 	
