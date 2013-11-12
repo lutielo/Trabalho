@@ -9,7 +9,6 @@ import java.util.List;
 
 import br.unisul.Constantes;
 import br.unisul.dados.Ingrediente;
-import br.unisul.dados.IngredientesMaisUtilizados;
 
 public class IngredienteDAO extends GenericDAO {
 
@@ -100,34 +99,6 @@ public class IngredienteDAO extends GenericDAO {
 		}
 	}
 	
-	public List<IngredientesMaisUtilizados> listeIngredientesMaisUtilizados() throws DAOException {
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			connection = getConnection();
-			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS);
-			rs = pstmt.executeQuery();
-			List<IngredientesMaisUtilizados> lista = new ArrayList<IngredientesMaisUtilizados>();
-			while (rs.next()) {
-				Integer vezes = rs.getInt("vezes");
-				String nome = rs.getString("nm_ingrediente");
-				String unidade = rs.getString("tp_unidade");
-
-				IngredientesMaisUtilizados i = new IngredientesMaisUtilizados(vezes, nome, unidade);
-				lista.add(i);
-			}
-			return lista;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			close(rs);
-			close(pstmt);
-			close(connection);
-		}
-	}
-
 	public Ingrediente listeDadosDoIngredientePeloCodigo(int codigoRecebido) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;

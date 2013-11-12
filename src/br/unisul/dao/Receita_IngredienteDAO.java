@@ -78,20 +78,19 @@ public class Receita_IngredienteDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(Constantes.Receita_Ingrediente.QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS);
+			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS);
 			rs = pstmt.executeQuery();
 			List<Receita_Ingrediente> lista = new ArrayList<Receita_Ingrediente>();
 			while (rs.next()) {
-				// O RESULT SET PODE SER TANTO:
-				// O NUMERO DA POSICAO DO SELECT rs.getString(2)
-				// COMO O NOME DO ATRIBUTO DO SELECT
-				// rs.getString("nm_ingrediente")
-				String nomeIngrediente = rs.getString(2);
-				Ingrediente ingrediente = new Ingrediente(null, nomeIngrediente);
+				Double vezes = rs.getDouble("vezes");
 				
-				double quantidade = rs.getDouble(1);
+				String nome = rs.getString("nm_ingrediente");
+				Receita receita = new Receita(null, nome, null, nome, null);
 				
-				Receita_Ingrediente ri = new Receita_Ingrediente(null, ingrediente, null, quantidade);
+				String tpUunidade = rs.getString("tp_unidade");
+				Unidade unidade = new Unidade(null, tpUunidade);
+				
+				Receita_Ingrediente ri = new Receita_Ingrediente(receita, null, unidade, vezes);
 				lista.add(ri);
 			}
 			return lista;
@@ -105,3 +104,4 @@ public class Receita_IngredienteDAO extends GenericDAO {
 		}
 	}
 }
+

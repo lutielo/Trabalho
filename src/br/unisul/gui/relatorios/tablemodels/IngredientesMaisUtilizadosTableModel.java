@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.unisul.dados.IngredientesMaisUtilizados;
+import br.unisul.dados.Receita_Ingrediente;
 
 
 /**
@@ -19,7 +19,7 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	/* Lista de Ingredientes que representam as linhas. */
-	private List<IngredientesMaisUtilizados> linhas;
+	private List<Receita_Ingrediente> linhas;
 
 	/* Array de Strings com o nome das colunas. */
 	private String[] colunas = new String[] {
@@ -28,13 +28,13 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 
 	/* Cria um IngredienteTableModel vazio. */
 	public IngredientesMaisUtilizadosTableModel() {
-		linhas = new ArrayList<IngredientesMaisUtilizados>();
+		linhas = new ArrayList<Receita_Ingrediente>();
 	}
 
 	/* Cria um IngredienteTableModel carregado com
 	 * a lista de ingredientes especificada. */
-	public IngredientesMaisUtilizadosTableModel(List<IngredientesMaisUtilizados> listaDeIngredientes) {
-		linhas = new ArrayList<IngredientesMaisUtilizados>(listaDeIngredientes);
+	public IngredientesMaisUtilizadosTableModel(List<Receita_Ingrediente> listaDeIngredientes) {
+		linhas = new ArrayList<Receita_Ingrediente>(listaDeIngredientes);
 	}
 
 
@@ -91,7 +91,7 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// Pega o sócio da linha especificada.
-		IngredientesMaisUtilizados ingredientesMaisUtilizados = linhas.get(rowIndex);
+		Receita_Ingrediente receita_Ingrediente = linhas.get(rowIndex);
 
 		// Retorna o campo referente a coluna especificada.
 		// Aqui é feito um switch para verificar qual é a coluna
@@ -99,11 +99,11 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 		// que foram especificadas no array "colunas".
 		switch (columnIndex) {
 		case 0: // Primeira coluna é o numero de vezes.
-			return ingredientesMaisUtilizados.getVezes();
+			return receita_Ingrediente.getQuantidade();
 		case 1: // Segunda coluna é o nome.
-			return ingredientesMaisUtilizados.getNome();
+			return receita_Ingrediente.getReceita().getNome();
 		case 2: // Terceira coluna é o unidade.
-			return ingredientesMaisUtilizados.getUnidade();
+			return receita_Ingrediente.getUnidade().getTipo();
 		default:
 			// Se o índice da coluna não for válido, lança um
 			// IndexOutOfBoundsException (Exceção de índice fora dos limites).
@@ -143,12 +143,12 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 
 
 	/* Retorna o ingrediente da linha especificada. */
-	public IngredientesMaisUtilizados getIngrediente(int indiceLinha) {
+	public Receita_Ingrediente getIngrediente(int indiceLinha) {
 		return linhas.get(indiceLinha);
 	}
 	
 	/* Adiciona um registro. */
-	public void addIngrediente(IngredientesMaisUtilizados ingrediente) {
+	public void addIngrediente(Receita_Ingrediente ingrediente) {
 		// Adiciona o registro.
 		linhas.add(ingrediente);
 
@@ -173,7 +173,7 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 	}
 
 	/* Adiciona uma lista de sócios ao final dos registros. */
-	public void addListaDeIngredientes(List<IngredientesMaisUtilizados> ingredientes) {
+	public void addListaDeIngredientes(List<Receita_Ingrediente> ingredientes) {
 		// Pega o tamanho antigo da tabela.
 		int tamanhoAntigo = getRowCount();
 

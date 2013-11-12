@@ -1,9 +1,12 @@
 package br.unisul.gui.relatorios.janelas;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -11,20 +14,17 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
-import br.unisul.dados.IngredientesMaisUtilizados;
+import br.unisul.dados.Receita_Ingrediente;
 import br.unisul.dao.DAOException;
-import br.unisul.dao.IngredienteDAO;
+import br.unisul.dao.Receita_IngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.IngredientesMaisUtilizadosTableModel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ListagemIngredientesMaisUtilizados extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<IngredientesMaisUtilizados> listaIngredientesMaisUtilizados;
+	private List<Receita_Ingrediente> listaIngredientesMaisUtilizados;
 	private IngredientesMaisUtilizadosTableModel atm;
 	private JTable tblIngredientes;
 	private JScrollPane spListagemIngredientes;
@@ -92,11 +92,11 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		return atm;
 	}
 
-	private List<IngredientesMaisUtilizados> getIngredientes() {
-		IngredienteDAO ingredienteDAO = new IngredienteDAO();
+	private List<Receita_Ingrediente> getIngredientes() {
+		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
 		listaIngredientesMaisUtilizados = new ArrayList<>();
 		try {
-			listaIngredientesMaisUtilizados = ingredienteDAO.listeIngredientesMaisUtilizados();
+			listaIngredientesMaisUtilizados = receita_IngredienteDAO.listeIngredientesMaisUtilizados();
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
