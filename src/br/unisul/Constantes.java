@@ -49,12 +49,6 @@ public interface Constantes {
 		String QUERY_ALTER_INGREDIENTE = "UPDATE ingrediente SET nm_ingrediente = (?)" +
 			 							 " WHERE cd_ingrediente = (?)";
 		
-		String QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS = " SELECT COUNT(i.nm_ingrediente) as vezes, i.nm_ingrediente, u.tp_unidade "
-														+" FROM receita_ingrediente ri "
-														+" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente "
-														+" JOIN unidade u ON u.cd_unidade = ri.cd_unidade "
-														+" GROUP BY i.nm_ingrediente, u.tp_unidade "
-														+" ORDER BY COUNT(i.nm_ingrediente) DESC";
 	}
 	
 	public interface Receita_Ingrediente {
@@ -65,13 +59,14 @@ public interface Constantes {
 		 											   + " FROM receita_ingrediente " 
 		 											   + " ORDER BY cd_receita";
 		 
-		 String QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS = "SELECT COUNT(i.nm_ingrediente), i.nm_ingrediente " 
-			 											+ " FROM receita_ingrediente ri " 
-			 											+ " JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente " 
-			 											+ " GROUP BY i.nm_ingrediente " 
-			 											+ " ORDER BY COUNT(i.nm_ingrediente) DESC";
+		 String QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS = " SELECT COUNT(i.nm_ingrediente) as vezes, i.cd_ingrediente, i.nm_ingrediente, u.cd_unidade, u.tp_unidade "
+														 +" FROM receita_ingrediente ri "
+														 +" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente "
+														 +" JOIN unidade u ON u.cd_unidade = ri.cd_unidade "
+														 +" GROUP BY i.cd_ingrediente, i.nm_ingrediente, u.cd_unidade, u.tp_unidade "
+														 +" ORDER BY COUNT(i.nm_ingrediente) DESC";
 		 
-		 String QUERY_LIST_RECEITAS_USAM_INGREDIENTE_COD = " SELECT r.nm_receita, a.nm_autor, r.dt_criacao "
+		 String QUERY_LIST_RECEITAS_USAM_TAL_INGREDIENTE = " SELECT r.nm_receita, a.nm_autor, r.dt_criacao "
 				 										  +" FROM receita_ingrediente ri "
 				 										  +" JOIN receita r ON r.cd_receita = ri.cd_receita "
 				 										  +" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente "

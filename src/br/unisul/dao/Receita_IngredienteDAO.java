@@ -1,6 +1,7 @@
 package br.unisul.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unisul.Constantes;
+import br.unisul.dados.Autor;
 import br.unisul.dados.Ingrediente;
 import br.unisul.dados.Receita;
 import br.unisul.dados.Receita_Ingrediente;
@@ -78,19 +80,54 @@ public class Receita_IngredienteDAO extends GenericDAO {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			pstmt = connection.prepareStatement(Constantes.Ingrediente.QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS);
+			pstmt = connection.prepareStatement(Constantes.Receita_Ingrediente.QUERY_LIST_INGREDIENTES_MAIS_UTILIZADOS);
 			rs = pstmt.executeQuery();
 			List<Receita_Ingrediente> lista = new ArrayList<Receita_Ingrediente>();
 			while (rs.next()) {
 				Double vezes = rs.getDouble("vezes");
 				
-				String nome = rs.getString("nm_ingrediente");
-				Receita receita = new Receita(null, nome, null, nome, null);
+				Integer codIngrediente = rs.getInt("cd_ingrediente");
+				String nomeIngrediente = rs.getString("nm_ingrediente");
+				Ingrediente ingrediente = new Ingrediente(codIngrediente, nomeIngrediente);
 				
+				Integer codUnidade = rs.getInt("cd_unidade");
 				String tpUunidade = rs.getString("tp_unidade");
-				Unidade unidade = new Unidade(null, tpUunidade);
+				Unidade unidade = new Unidade(codUnidade, tpUunidade);
 				
-				Receita_Ingrediente ri = new Receita_Ingrediente(receita, null, unidade, vezes);
+				Receita_Ingrediente ri = new Receita_Ingrediente(null, ingrediente, unidade, vezes);
+				lista.add(ri);
+			}
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(connection);
+		}
+	}
+	
+	public List<Receita_Ingrediente> listeReceitaQueUsamIngrediente(Unidade unidade, Ingrediente ingrediente) throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Receita_Ingrediente.QUERY_LIST_RECEITAS_USAM_TAL_INGREDIENTE);
+			pstmt.setInt(1, ingrediente.getCodigo());
+			pstmt.setInt(2, unidade.getCodigo());
+			rs = pstmt.executeQuery();
+			List<Receita_Ingrediente> lista = new ArrayList<Receita_Ingrediente>();
+			while (rs.next()) {
+				String nomeAutor = rs.getString("nm_autor");
+				Autor autor = new Autor(null, nomeAutor, null);
+				
+				String nomeReceita = rs.getString("nm_receita");
+				Date data = rs.getDate("dt_criacao");
+				Receita receita = new Receita(null, nomeReceita, data, null, autor);
+				
+				Receita_Ingrediente ri = new Receita_Ingrediente(receita, null, null, null);
 				lista.add(ri);
 			}
 			return lista;

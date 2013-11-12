@@ -101,7 +101,7 @@ public class IngredientesMaisUtilizadosTableModel extends AbstractTableModel {
 		case 0: // Primeira coluna é o numero de vezes.
 			return receita_Ingrediente.getQuantidade();
 		case 1: // Segunda coluna é o nome.
-			return receita_Ingrediente.getReceita().getNome();
+			return receita_Ingrediente.getIngredientes().getNome();
 		case 2: // Terceira coluna é o unidade.
 			return receita_Ingrediente.getUnidade().getTipo();
 		default:

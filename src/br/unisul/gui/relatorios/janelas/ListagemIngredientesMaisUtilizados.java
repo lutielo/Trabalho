@@ -14,7 +14,9 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
+import br.unisul.dados.Ingrediente;
 import br.unisul.dados.Receita_Ingrediente;
+import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.Receita_IngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
@@ -59,7 +61,16 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		JButton btnVisualizar = new JButton("Visualizar");
 		btnVisualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int selectedRow = getTblIngredientes().getSelectedRow();
+				Receita_Ingrediente ri = listaIngredientesMaisUtilizados.get(selectedRow);
+				Integer codUnidade = ri.getUnidade().getCodigo();
+				Unidade unidade = new Unidade(codUnidade, null);
 				
+				Integer codIngrediente = ri.getIngredientes().getCodigo();
+				Ingrediente ingrediente = new Ingrediente(codIngrediente, null);
+				
+				ListagemReceitasQueUsamIngrediente listagemReceitasQueUsamIngrediente = new ListagemReceitasQueUsamIngrediente(unidade, ingrediente);
+				listagemReceitasQueUsamIngrediente.setVisible(true);
 			}
 		});
 		btnVisualizar.setBounds(147, 395, 104, 23);
