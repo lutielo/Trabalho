@@ -64,10 +64,12 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 				int selectedRow = getTblIngredientes().getSelectedRow();
 				Receita_Ingrediente ri = listaIngredientesMaisUtilizados.get(selectedRow);
 				Integer codUnidade = ri.getUnidade().getCodigo();
-				Unidade unidade = new Unidade(codUnidade, null);
+				String nomeUnidade = ri.getUnidade().getTipo();
+				Unidade unidade = new Unidade(codUnidade, nomeUnidade);
 				
 				Integer codIngrediente = ri.getIngredientes().getCodigo();
-				Ingrediente ingrediente = new Ingrediente(codIngrediente, null);
+				String nomeIngrediente = ri.getIngredientes().getNome();
+				Ingrediente ingrediente = new Ingrediente(codIngrediente, nomeIngrediente);
 				
 				ListagemReceitasQueUsamIngrediente listagemReceitasQueUsamIngrediente = new ListagemReceitasQueUsamIngrediente(unidade, ingrediente);
 				listagemReceitasQueUsamIngrediente.setVisible(true);
