@@ -30,7 +30,7 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	private JLabel lblReceitasQueUsamIngrediente;
 
 	public ListagemReceitasQueUsamIngrediente(Unidade unidade, Ingrediente ingrediente) {
-		super("Receitas Que Usam o Ingrediente " + ingrediente.getNome() +" em "+ unidade.getTipo());
+		super("Receitas que usam o ingrediente " + ingrediente.getNome().toLowerCase() +" em "+ unidade.getTipo().toLowerCase());
 		this.setSize(443, 453);
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
@@ -55,7 +55,7 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		lblReceitasQueUsamIngrediente.setBounds(69, 11, 331, 27);
 		getContentPane().add(lblReceitasQueUsamIngrediente);
 		
-		JLabel lblIngrediente = new JLabel(ingrediente.getNome() +" em "+ unidade.getTipo());
+		JLabel lblIngrediente = new JLabel(ingrediente.getNome() +" em "+ unidade.getTipo().toLowerCase());
 		lblIngrediente.setBounds(92, 49, 253, 14);
 		getContentPane().add(lblIngrediente);
 
