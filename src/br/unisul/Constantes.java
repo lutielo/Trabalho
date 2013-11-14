@@ -75,13 +75,20 @@ public interface Constantes {
 				 										  +" WHERE ri.cd_ingrediente = ? "
 				 										  +" AND ri.cd_unidade = ? "
 				 										  +" ORDER BY nm_receita";
+		 
+		 String QUERY_LIST_INGREDIENTES_DA_RECEITA = "SELECT i.cd_ingrediente, i.nm_ingrediente, r.cd_receita, r.nm_receita, u.cd_unidade, u.tp_unidade, quantidade"
+			 									 +" FROM receita_ingrediente ri"
+			 									 +" JOIN receita r ON r.cd_receita = ri.cd_receita"
+			 									 +" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente"
+			 									 +" JOIN unidade u ON u.cd_unidade = ri.cd_unidade"
+			 									 +" WHERE r.cd_receita = (?)";
 	}
 	
 	public interface Receita {
 		 String QUERY_INSERT_RECEITA = "INSERT INTO receita (nm_receita, cd_autor, dt_criacao, tx_modo_preparo) " 
 			 						 + " VALUES (?, ?, ?, ?)";
 		 
-		 String QUERY_LIST_TODAS_RECEITAS = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor" 
+		 String QUERY_LIST_TODAS_RECEITAS = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" 
 			 							  + " FROM receita "
 			 							  + " JOIN autor ON receita.cd_autor = autor.cd_autor "
 			 							  + " ORDER BY nm_receita ";

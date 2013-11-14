@@ -90,7 +90,8 @@ public class ReceitaDAO extends GenericDAO {
 				Date data = (rs.getDate("dt_criacao"));
 				String modo_preparo = rs.getString("tx_modo_preparo");
 				Integer codigo_autor = rs.getInt("cd_autor");
-				Autor autor = new Autor(codigo_autor, null, null);
+				String nomeAutor = rs.getString("nm_autor");
+				Autor autor = new Autor(codigo_autor, nomeAutor, null);
 				Receita r = new Receita(codigo, nome, data, modo_preparo, autor);
 				lista.add(r);
 			}
@@ -169,7 +170,7 @@ public class ReceitaDAO extends GenericDAO {
 		}
 	}
 
-	public void deletaReceita(Receita receita) throws DAOException {
+	public void deletarReceita(Receita receita) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {

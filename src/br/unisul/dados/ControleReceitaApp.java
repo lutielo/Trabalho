@@ -144,7 +144,7 @@ public class ControleReceitaApp {
 		int codigoRecebido = ui.facaPerguntaInt("Digite o codigo da receita para deletar");
 		try {
 			Receita receita = new Receita(codigoRecebido, null, null, null, null);
-			receitaDAO.deletaReceita(receita);
+			receitaDAO.deletarReceita(receita);
 			System.out.println("Receita deletada com sucesso");
 		} catch (DAOException e) {
 			System.out.println("Prezado usuário, infelizmente ocorreu um erro ao processar sua requisição.");

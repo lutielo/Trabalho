@@ -29,7 +29,7 @@ public class ListagemIngredientes extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private List<Ingrediente> listaIngredientes;
-	private IngredienteTableModel atm;
+	private IngredienteTableModel itm;
 	private JTable tblIngredientes;
 	private JTextField tfCodigo;
 	private JTextField tfNome;
@@ -134,10 +134,10 @@ public class ListagemIngredientes extends JFrame {
 	}
 
 	private IngredienteTableModel getModel() {
-		if (atm == null) {
-			atm = (IngredienteTableModel) getTblIngredientes().getModel();
+		if (itm == null) {
+			itm = (IngredienteTableModel) getTblIngredientes().getModel();
 		}
-		return atm;
+		return itm;
 	}
 
 	private JTable getTblIngredientes() {
