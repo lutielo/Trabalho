@@ -18,6 +18,7 @@ import br.unisul.dao.DAOException;
 import br.unisul.dao.Receita_IngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.ReceitasQueUsamIngredienteTableModel;
+import javax.swing.JTextField;
 
 public class ListagemReceitasQueUsamIngrediente extends JFrame {
 
@@ -28,9 +29,10 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	private JTable tblIngredientes;
 	private JScrollPane spListagemIngredientes;
 	private JLabel lblReceitasQueUsamIngrediente;
+	private JTextField tfNomeIngredienteUsado;
 
 	public ListagemReceitasQueUsamIngrediente(Unidade unidade, Ingrediente ingrediente) {
-		super("Receitas que usam o ingrediente " + ingrediente.getNome().toLowerCase() +" em "+ unidade.getTipo().toLowerCase());
+		super("Receitas que usam " + ingrediente.getNome().toLowerCase() +" em "+ unidade.getTipo().toLowerCase());
 		this.setSize(443, 453);
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
@@ -55,18 +57,21 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		lblReceitasQueUsamIngrediente.setBounds(69, 11, 331, 27);
 		getContentPane().add(lblReceitasQueUsamIngrediente);
 		
-		JLabel lblIngrediente = new JLabel(ingrediente.getNome() +" em "+ unidade.getTipo().toLowerCase());
-		lblIngrediente.setBounds(92, 49, 253, 14);
-		getContentPane().add(lblIngrediente);
+		tfNomeIngredienteUsado = new JTextField("");
+		tfNomeIngredienteUsado.setEditable(false);
+		tfNomeIngredienteUsado.setBounds(79, 44, 260, 20);
+		tfNomeIngredienteUsado.setText(ingrediente.getNome() +" em "+ unidade.getTipo().toLowerCase());
+		getContentPane().add(tfNomeIngredienteUsado);
+		tfNomeIngredienteUsado.setColumns(10);
 
 		TableColumn col0 = getTblIngredientes().getColumnModel().getColumn(0);
-		col0.setPreferredWidth(90);
+		col0.setPreferredWidth(150);
 
 		TableColumn col1 = getTblIngredientes().getColumnModel().getColumn(1);
 		col1.setPreferredWidth(200);
 		
 		TableColumn col2 = getTblIngredientes().getColumnModel().getColumn(2);
-		col2.setPreferredWidth(100);
+		col2.setPreferredWidth(80);
 
 		getTblIngredientes().setDefaultRenderer(Object.class, new CellRenderer());
 	}

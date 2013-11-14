@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -33,7 +34,7 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 	private JLabel lblListagemIngredientesMaisUtilizados;
 
 	public ListagemIngredientesMaisUtilizados() {
-		super("Listagem Ingredientes Mais Utilizados");
+		super("Listagem ingredientes mais utilizados");
 		this.setSize(443, 453);
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
@@ -46,7 +47,7 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 
 	private void abreTela() {
 		spListagemIngredientes = new JScrollPane(getTblIngredientes());
-		spListagemIngredientes.setBounds(10, 63, 415, 328);
+		spListagemIngredientes.setBounds(10, 63, 415, 305);
 		getContentPane().add(spListagemIngredientes);
 		this.addIngredientes();
 
@@ -61,22 +62,30 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		JButton btnVisualizar = new JButton("Visualizar");
 		btnVisualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int selectedRow = getTblIngredientes().getSelectedRow();
-				Receita_Ingrediente ri = listaIngredientesMaisUtilizados.get(selectedRow);
-				Integer codUnidade = ri.getUnidade().getCodigo();
-				String nomeUnidade = ri.getUnidade().getTipo();
-				Unidade unidade = new Unidade(codUnidade, nomeUnidade);
-				
-				Integer codIngrediente = ri.getIngredientes().getCodigo();
-				String nomeIngrediente = ri.getIngredientes().getNome();
-				Ingrediente ingrediente = new Ingrediente(codIngrediente, nomeIngrediente);
-				
-				ListagemReceitasQueUsamIngrediente listagemReceitasQueUsamIngrediente = new ListagemReceitasQueUsamIngrediente(unidade, ingrediente);
-				listagemReceitasQueUsamIngrediente.setVisible(true);
+				if(getTblIngredientes().getSelectedRow() == -1){
+					JOptionPane.showMessageDialog(null, "Selecione um ingrediente");
+				} else {
+					int selectedRow = getTblIngredientes().getSelectedRow();
+					Receita_Ingrediente ri = listaIngredientesMaisUtilizados.get(selectedRow);
+					Integer codUnidade = ri.getUnidade().getCodigo();
+					String nomeUnidade = ri.getUnidade().getTipo();
+					Unidade unidade = new Unidade(codUnidade, nomeUnidade);
+					
+					Integer codIngrediente = ri.getIngredientes().getCodigo();
+					String nomeIngrediente = ri.getIngredientes().getNome();
+					Ingrediente ingrediente = new Ingrediente(codIngrediente, nomeIngrediente);
+					
+					ListagemReceitasQueUsamIngrediente listagemReceitasQueUsamIngrediente = new ListagemReceitasQueUsamIngrediente(unidade, ingrediente);
+					listagemReceitasQueUsamIngrediente.setVisible(true);
+				}
 			}
 		});
 		btnVisualizar.setBounds(147, 395, 104, 23);
 		getContentPane().add(btnVisualizar);
+		
+		JLabel lblCliqueParaVisualizar = new JLabel("clique para visualizar as receitas que usam o ingrediente selecionado");
+		lblCliqueParaVisualizar.setBounds(20, 370, 405, 14);
+		getContentPane().add(lblCliqueParaVisualizar);
 
 		TableColumn col0 = getTblIngredientes().getColumnModel().getColumn(0);
 		col0.setPreferredWidth(90);
