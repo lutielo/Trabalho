@@ -30,6 +30,7 @@ import br.unisul.dao.IngredienteDAO;
 import br.unisul.dao.ReceitaDAO;
 import br.unisul.dao.Receita_IngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
+import br.unisul.gui.relatorios.janelas.ListagemIngredientesDaReceita;
 import br.unisul.util.StringUtils;
 
 public class EditaReceita extends JFrame {
@@ -66,7 +67,7 @@ public class EditaReceita extends JFrame {
 		this.abreTela(receita_Ingrediente);
 	}
 
-	private void abreTela(Receita_Ingrediente receita_Ingrediente) {
+	private void abreTela(Receita_Ingrediente receitaIngrediente) {
 
 		lblAlteracaoDeReceita = new JLabel("Altera\u00E7\u00E3o de Receita");
 		lblAlteracaoDeReceita.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -82,21 +83,21 @@ public class EditaReceita extends JFrame {
 		tfNomeReceita.setToolTipText("Ex: Bolo de Chocolate");
 		tfNomeReceita.setBounds(65, 46, 257, 20);
 		tfNomeReceita.setColumns(10);
-		tfNomeReceita.setText(receita_Ingrediente.getReceita().getNome());
+		tfNomeReceita.setText(receitaIngrediente.getReceita().getNome());
 
 		lblModoDePreparo = new JLabel("Modo de preparo*:");
 		lblModoDePreparo.setBounds(21, 272, 115, 14);
 
 		cbAutor = new JComboBox<String>();
 		cbAutor.setBounds(65, 74, 257, 20);
-		prencherComboBoxAutor(cbAutor, receita_Ingrediente.getReceita().getAutor());
+		prencherComboBoxAutor(cbAutor, receitaIngrediente.getReceita().getAutor());
 
 		listaIngredientesAdicionados = new ArrayList<Receita_Ingrediente>();
 
 		btnEditarIngrediente = new JButton("<html><center>Editar<br>Ingredientes</center></html>");
 		btnEditarIngrediente.setBounds(103, 159, 162, 49);
-		// TrataEventoSalvarIngrediente trataEventoSalvarIngrediente = new TrataEventoSalvarIngrediente();
-		// btnEditarIngrediente.addActionListener(trataEventoSalvarIngrediente);
+		TrataEventoEditarIngredientes trataEventoEditarIngrediente = new TrataEventoEditarIngredientes(receitaIngrediente);
+		btnEditarIngrediente.addActionListener(trataEventoEditarIngrediente);
 
 		jsSeparator = new JSeparator();
 		jsSeparator.setOrientation(SwingConstants.VERTICAL);
@@ -124,7 +125,7 @@ public class EditaReceita extends JFrame {
 		taResumoReceita.setWrapStyleWord(true);
 		taResumoReceita.setLineWrap(true);
 		taResumoReceita.setEditable(false);
-		populaResumoReceita(receita_Ingrediente);
+		populaResumoReceita(receitaIngrediente);
 		spResumoDaReceita.setViewportView(taResumoReceita);
 
 		spModoDePreparo = new JScrollPane();
@@ -135,7 +136,7 @@ public class EditaReceita extends JFrame {
 		spModoDePreparo.setViewportView(taModoPreparo);
 		taModoPreparo.setWrapStyleWord(true);
 		taModoPreparo.setLineWrap(true);
-		taModoPreparo.setText(receita_Ingrediente.getReceita().getModo_preparo());
+		taModoPreparo.setText(receitaIngrediente.getReceita().getModo_preparo());
 
 		lblcamposObrigatrios = new JLabel("*campos obrigat\u00F3rios");
 		lblcamposObrigatrios.setBounds(414, 459, 135, 14);
@@ -217,12 +218,20 @@ public class EditaReceita extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
-	private class TrataEventoEditaIngredientes implements ActionListener {
+
+	private class TrataEventoEditarIngredientes implements ActionListener {
+
+		private Receita_Ingrediente receitaIngrediente;
+
+		public TrataEventoEditarIngredientes(Receita_Ingrediente receitaIngrediente) {
+			super();
+			this.receitaIngrediente = receitaIngrediente;
+		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			ListagemIngredientesDaReceita listagemIngredientesDaReceita = new ListagemIngredientesDaReceita(receitaIngrediente);
+			listagemIngredientesDaReceita.setVisible(true);
 		}
 	}
 
