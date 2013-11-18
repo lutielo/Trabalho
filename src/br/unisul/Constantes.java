@@ -3,48 +3,55 @@ package br.unisul;
 public interface Constantes {
 
 	public interface Autor {
-		String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor, cd_sexo)" 
-								  + " VALUES (?, ?)";
+		String QUERY_INSERT_AUTOR = "INSERT INTO autor (nm_autor, cd_sexo, status)" 
+								  + " VALUES (?, ?, 'D')";
 		
 		String QUERY_LIST_TODOS_AUTORES = "SELECT cd_autor, nm_autor, sexo.de_sexo" 
 										+ " FROM autor "
 										+ " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
+										+ " WHERE status = 'D' "
 										+ " ORDER BY nm_autor";
 		
 		String QUERY_LIST_AUTORES_NOME = "SELECT cd_autor, nm_autor, sexo.de_sexo" 
 									   + " FROM autor " 
 									   + " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
 									   + " WHERE upper(nm_autor) LIKE  upper(?) "
+									   + " AND status = 'D' "
 									   + " ORDER BY nm_autor ";
 		
 		String QUERY_LIST_AUTOR_COD = "SELECT cd_autor, nm_autor, sexo.de_sexo" 
 									+ " FROM autor"
 									+ " JOIN sexo ON autor.cd_sexo = sexo.cd_sexo "
-									+ " WHERE cd_autor = (?) ";
+									+ " WHERE cd_autor = (?) "
+									+ " AND status = 'D' ";
 		
-		String QUERY_DELETE_AUTOR = "DELETE FROM autor WHERE cd_autor = (?)";
+		String QUERY_DELETE_AUTOR = "UPDATE autor SET status = 'I' WHERE cd_autor = (?)";
 		
 		String QUERY_ALTER_AUTOR = "UPDATE autor SET nm_autor = (?), cd_sexo = (?)" + 
 			 						" WHERE cd_autor = (?)";
 	}
 
 	public interface Ingrediente {
-		String QUERY_INSERT_INGREDIENTE = "INSERT INTO ingrediente (nm_ingrediente)" 
-										+ " VALUES (?)";
+		String QUERY_INSERT_INGREDIENTE = "INSERT INTO ingrediente (nm_ingrediente, status)" 
+										+ " VALUES (?, 'D')";
 		
 		String QUERY_LIST_TODOS_INGREDIENTES = "SELECT cd_ingrediente, nm_ingrediente "
 											 + " FROM ingrediente " 
+											 + " WHERE status = 'D' "
 											 + " ORDER BY nm_ingrediente";
 		
 		String QUERY_LIST_INGREDIENTES_NOME = "SELECT cd_ingrediente, nm_ingrediente "
 											+ " FROM ingrediente " 
-											+ " WHERE upper(nm_ingrediente) LIKE  upper(?) ORDER BY nm_ingrediente ";
+											+ " WHERE upper(nm_ingrediente) LIKE  upper(?) "
+											+ " AND status = 'D' "
+											+ " ORDER BY nm_ingrediente ";
 		
 		String QUERY_LIST_INGREDIENTE_COD = "SELECT cd_ingrediente, nm_ingrediente " 
 										  + " FROM ingrediente "
-										  +	" WHERE cd_ingrediente = (?) ";
+										  +	" WHERE cd_ingrediente = (?) "
+										  + " AND status = 'D' ";
 		
-		String QUERY_DELETE_INGREDIENTE = "DELETE FROM ingrediente WHERE cd_ingrediente = (?)";
+		String QUERY_DELETE_INGREDIENTE = "UPDATE ingrediente SET status = 'I' WHERE cd_ingrediente = (?)";
 		
 		String QUERY_ALTER_INGREDIENTE = "UPDATE ingrediente SET nm_ingrediente = (?)" +
 			 							 " WHERE cd_ingrediente = (?)";
@@ -85,27 +92,30 @@ public interface Constantes {
 	}
 	
 	public interface Receita {
-		 String QUERY_INSERT_RECEITA = "INSERT INTO receita (nm_receita, cd_autor, dt_criacao, tx_modo_preparo) " 
-			 						 + " VALUES (?, ?, ?, ?)";
+		 String QUERY_INSERT_RECEITA = "INSERT INTO receita (nm_receita, cd_autor, dt_criacao, tx_modo_preparo, status) " 
+			 						 + " VALUES (?, ?, ?, ?, 'D')";
 		 
 		 String QUERY_LIST_TODAS_RECEITAS = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" 
 			 							  + " FROM receita "
 			 							  + " JOIN autor ON receita.cd_autor = autor.cd_autor "
+			 							  + " WHERE receita.status = 'D' "
 			 							  + " ORDER BY nm_receita ";
 		 
 		 String QUERY_LIST_RECEITAS_NOME = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" 
 			 							 + " FROM receita " 
 			 							 + " JOIN autor ON receita.cd_autor = autor.cd_autor " 
-			 							 + " WHERE upper(nm_receita) LIKE  upper(?) ORDER BY nm_receita ";
+			 							 + " WHERE upper(nm_receita) LIKE  upper(?) ORDER BY nm_receita "
+			 							 + " AND receita.status = 'D' ";
 		 
 		 String QUERY_LIST_RECEITA_COD = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" 
 			 						   + " FROM receita " 
 			 						   + " JOIN autor ON receita.cd_autor = autor.cd_autor " 
-			 						   + " WHERE cd_receita = (?) ";
+			 						   + " WHERE cd_receita = (?) "
+			 						   + " AND receita.status = 'D' ";
 		 
 		 String QUERY_LIST_ULTIMO_REGISTRO = "SELECT MAX (cd_receita) as ultimo FROM receita ";
 		 
-		 String QUERY_DELETE_RECEITA = "DELETE FROM receita WHERE cd_receita = (?)";
+		 String QUERY_DELETE_RECEITA = "UPDATE receita SET status = 'I' WHERE cd_receita = (?)";
 		 
 		 String QUERY_ALTER_RECEITA = "UPDATE receita SET nm_receita = (?), tx_modo_preparo = (?)" +
 			 						  " WHERE cd_receita = (?)";
