@@ -28,10 +28,11 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private List<Receita_Ingrediente> listaIngredientesMaisUtilizados;
-	private IngredientesMaisUtilizadosTableModel atm;
+	private IngredientesMaisUtilizadosTableModel imutm;
 	private JTable tblIngredientes;
 	private JScrollPane spListagemIngredientes;
 	private JLabel lblListagemIngredientesMaisUtilizados;
+	private JLabel lblCliqueParaVisualizar;
 
 	public ListagemIngredientesMaisUtilizados() {
 		super("Listagem ingredientes mais utilizados");
@@ -83,7 +84,7 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		btnVisualizar.setBounds(147, 395, 104, 23);
 		getContentPane().add(btnVisualizar);
 		
-		JLabel lblCliqueParaVisualizar = new JLabel("clique para visualizar as receitas que usam o ingrediente selecionado");
+		lblCliqueParaVisualizar = new JLabel("Clique para visualizar as receitas que usam o ingrediente selecionado");
 		lblCliqueParaVisualizar.setBounds(20, 370, 405, 14);
 		getContentPane().add(lblCliqueParaVisualizar);
 
@@ -108,10 +109,10 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 	}
 
 	private IngredientesMaisUtilizadosTableModel getModel() {
-		if (atm == null) {
-			atm = (IngredientesMaisUtilizadosTableModel) getTblIngredientes().getModel();
+		if (imutm == null) {
+			imutm = (IngredientesMaisUtilizadosTableModel) getTblIngredientes().getModel();
 		}
-		return atm;
+		return imutm;
 	}
 
 	private List<Receita_Ingrediente> getIngredientes() {

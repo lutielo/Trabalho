@@ -25,7 +25,7 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private List<Receita_Ingrediente> listaIngredientesMaisUtilizados;
-	private ReceitasQueUsamIngredienteTableModel atm;
+	private ReceitasQueUsamIngredienteTableModel rquitm;
 	private JTable tblIngredientes;
 	private JScrollPane spListagemIngredientes;
 	private JLabel lblReceitasQueUsamIngrediente;
@@ -85,10 +85,10 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	}
 
 	private ReceitasQueUsamIngredienteTableModel getModel() {
-		if (atm == null) {
-			atm = (ReceitasQueUsamIngredienteTableModel) getTblIngredientes().getModel();
+		if (rquitm == null) {
+			rquitm = (ReceitasQueUsamIngredienteTableModel) getTblIngredientes().getModel();
 		}
-		return atm;
+		return rquitm;
 	}
 
 	private List<Receita_Ingrediente> getIngredientes(Unidade unidade, Ingrediente ingrediente) {
