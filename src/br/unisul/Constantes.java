@@ -70,6 +70,7 @@ public interface Constantes {
 														 +" FROM receita_ingrediente ri "
 														 +" JOIN ingrediente i ON i.cd_ingrediente = ri.cd_ingrediente "
 														 +" JOIN unidade u ON u.cd_unidade = ri.cd_unidade "
+														 +" WHERE i.status = 'D' "
 														 +" GROUP BY i.cd_ingrediente, i.nm_ingrediente, u.cd_unidade, u.tp_unidade "
 														 +" ORDER BY COUNT(i.nm_ingrediente) DESC";
 		 
@@ -81,6 +82,7 @@ public interface Constantes {
 				 										  +" JOIN autor a ON a.cd_autor = r.cd_autor "
 				 										  +" WHERE ri.cd_ingrediente = ? "
 				 										  +" AND ri.cd_unidade = ? "
+				 										  +" AND r.status = 'D' "
 				 										  +" ORDER BY nm_receita";
 		 
 		 String QUERY_LIST_INGREDIENTES_DA_RECEITA = "SELECT i.cd_ingrediente, i.nm_ingrediente, r.cd_receita, r.nm_receita, u.cd_unidade, u.tp_unidade, quantidade"
