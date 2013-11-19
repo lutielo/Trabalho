@@ -72,8 +72,8 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 					String nomeUnidade = ri.getUnidade().getTipo();
 					Unidade unidade = new Unidade(codUnidade, nomeUnidade);
 					
-					Integer codIngrediente = ri.getIngredientes().getCodigo();
-					String nomeIngrediente = ri.getIngredientes().getNome();
+					Integer codIngrediente = ri.getIngrediente().getCodigo();
+					String nomeIngrediente = ri.getIngrediente().getNome();
 					Ingrediente ingrediente = new Ingrediente(codIngrediente, nomeIngrediente);
 					
 					ListagemReceitasQueUsamIngrediente listagemReceitasQueUsamIngrediente = new ListagemReceitasQueUsamIngrediente(unidade, ingrediente);

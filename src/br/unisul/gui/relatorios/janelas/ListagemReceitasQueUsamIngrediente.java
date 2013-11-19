@@ -32,7 +32,7 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	private JTextField tfNomeIngredienteUsado;
 
 	public ListagemReceitasQueUsamIngrediente(Unidade unidade, Ingrediente ingrediente) {
-		super("Receitas que usam " + ingrediente.getNome().toLowerCase() +" em "+ unidade.getTipo().toLowerCase());
+		super("Receitas que usam " + ingrediente.getNome().toLowerCase() + " em " + unidade.getTipo().toLowerCase());
 		this.setSize(443, 453);
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
@@ -56,20 +56,24 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		lblReceitasQueUsamIngrediente.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblReceitasQueUsamIngrediente.setBounds(69, 11, 331, 27);
 		getContentPane().add(lblReceitasQueUsamIngrediente);
-		
+
 		tfNomeIngredienteUsado = new JTextField("");
 		tfNomeIngredienteUsado.setEditable(false);
 		tfNomeIngredienteUsado.setBounds(79, 44, 260, 20);
-		tfNomeIngredienteUsado.setText(ingrediente.getNome() +" em "+ unidade.getTipo().toLowerCase());
+		tfNomeIngredienteUsado.setText(ingrediente.getNome() + " em " + unidade.getTipo().toLowerCase());
 		getContentPane().add(tfNomeIngredienteUsado);
 		tfNomeIngredienteUsado.setColumns(10);
 
+		configuraTable();
+	}
+
+	private void configuraTable() {
 		TableColumn col0 = getTblIngredientes().getColumnModel().getColumn(0);
 		col0.setPreferredWidth(150);
 
 		TableColumn col1 = getTblIngredientes().getColumnModel().getColumn(1);
 		col1.setPreferredWidth(200);
-		
+
 		TableColumn col2 = getTblIngredientes().getColumnModel().getColumn(2);
 		col2.setPreferredWidth(80);
 

@@ -166,7 +166,7 @@ public class EditaReceita extends JFrame {
 		try {
 			List<Receita_Ingrediente> listaIngredientes = receita_IngredienteDAO.listarIngredientesDaReceita(receita_Ingrediente);
 			for (Receita_Ingrediente i : listaIngredientes) {
-				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngredientes().getNome());
+				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngrediente().getNome());
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();

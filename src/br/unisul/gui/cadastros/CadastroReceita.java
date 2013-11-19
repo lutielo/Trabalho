@@ -290,7 +290,7 @@ public class CadastroReceita extends JFrame {
 			new Receita_IngredienteDAO();
 			Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, ingrediente, unidade, quantidade);
 			int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja salvar este ingrediente? " + "\nIngrediente \t: "
-				+ receita_Ingrediente.getIngredientes().getNome() + "\nQuantidade \t: " + receita_Ingrediente.getQuantidade() + "\nUnidade \t: "
+				+ receita_Ingrediente.getIngrediente().getNome() + "\nQuantidade \t: " + receita_Ingrediente.getQuantidade() + "\nUnidade \t: "
 				+ receita_Ingrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
 			if (dialogButton == JOptionPane.YES_OPTION) {
 				listaIngredientesAdicionados.add(receita_Ingrediente);
@@ -400,7 +400,7 @@ public class CadastroReceita extends JFrame {
 			taResumoReceita.append("\nNome do autor : " + cbAutor.getSelectedItem().toString());
 			taResumoReceita.append("\n\nIngredientes : ");
 			for (Receita_Ingrediente i : listaIngredientesAdicionados) {
-				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngredientes().getNome());
+				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngrediente().getNome());
 			}
 			taResumoReceita.append("\n\nModo de preparo : " + taModoPreparo.getText());
 		}

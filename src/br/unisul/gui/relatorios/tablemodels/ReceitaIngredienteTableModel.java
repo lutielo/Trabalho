@@ -98,7 +98,7 @@ public class ReceitaIngredienteTableModel extends AbstractTableModel {
 		// que foram especificadas no array "colunas".
 		switch (columnIndex) {
 		case 0: // Primeira coluna é o nome da receita.
-			return receita_Ingrediente.getIngredientes().getNome();
+			return receita_Ingrediente.getIngrediente().getNome();
 		case 1: // Segunda coluna é o nome do autor.
 			return receita_Ingrediente.getUnidade().getTipo();
 		case 2: // Terceita coluna é o data.

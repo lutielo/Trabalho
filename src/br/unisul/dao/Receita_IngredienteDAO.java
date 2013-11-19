@@ -23,7 +23,7 @@ public class Receita_IngredienteDAO extends GenericDAO {
 		try {
 			connection = getConnection();
 			pstmt = connection.prepareStatement(Constantes.Receita_Ingrediente.QUERY_INSERT_RECEITA_INGREDIENTE);
-			pstmt.setInt(1, receita_Ingrediente.getIngredientes().getCodigo());
+			pstmt.setInt(1, receita_Ingrediente.getIngrediente().getCodigo());
 			pstmt.setInt(2, receita_Ingrediente.getReceita().getCodigo());
 			pstmt.setInt(3, receita_Ingrediente.getUnidade().getCodigo());
 			pstmt.setDouble(4, receita_Ingrediente.getQuantidade());
@@ -36,8 +36,25 @@ public class Receita_IngredienteDAO extends GenericDAO {
 		}
 	}
 
-	public void alterarIngredienteLiNaReceita() {
-
+	public void alterarIngredienteLiNaReceita(Receita_Ingrediente receitaIngredienteNEW, Receita_Ingrediente receitaIngredienteOLD) throws DAOException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = connection.prepareStatement(Constantes.Receita_Ingrediente.QUERY_ALTER_INGREDIENTE_DA_RECEITA);
+			pstmt.setInt(1, receitaIngredienteNEW.getIngrediente().getCodigo());
+			pstmt.setInt(2, receitaIngredienteNEW.getUnidade().getCodigo());
+			pstmt.setDouble(3, receitaIngredienteNEW.getQuantidade());
+			pstmt.setInt(4, receitaIngredienteOLD.getReceita().getCodigo());
+			pstmt.setInt(5, receitaIngredienteOLD.getIngrediente().getCodigo());
+			pstmt.setInt(6, receitaIngredienteOLD.getUnidade().getCodigo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Ocorreu um erro ao precessar sua alteração", e);
+		} finally {
+			close(pstmt);
+			close(connection);
+		}
 	}
 
 	public List<Receita_Ingrediente> listarIngredientesDaReceita(Receita_Ingrediente receitaIngrediente) throws DAOException {

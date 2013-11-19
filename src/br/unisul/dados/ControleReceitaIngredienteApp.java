@@ -112,7 +112,7 @@ public class ControleReceitaIngredienteApp {
 			} else {
 				System.out.println("Listando dados dos ingredientes cadastrados nas receitas:");
 				for (Receita_Ingrediente receita_Ingrediente : listaReceita_Ingredientes) {
-					System.out.println("\tNome Ingrediente:" + receita_Ingrediente.getIngredientes().getNome()
+					System.out.println("\tNome Ingrediente:" + receita_Ingrediente.getIngrediente().getNome()
 								+ "\tNome Receita:" + receita_Ingrediente.getReceita().getNome()
 								+ "\tNome Receita:" + receita_Ingrediente.getUnidade().getTipo()
 								+ "\tQuantidade:" + receita_Ingrediente.getQuantidade());
@@ -134,7 +134,7 @@ public class ControleReceitaIngredienteApp {
 			} else {
 				System.out.println("Listando ingredientes mais utilizados nas receitas:");
 				for (Receita_Ingrediente receita_Ingrediente : listaReceita_Ingredientes) {
-					System.out.println("Nome Ingrediente:" + receita_Ingrediente.getIngredientes().getNome()
+					System.out.println("Nome Ingrediente:" + receita_Ingrediente.getIngrediente().getNome()
 									 + "\tQuantidade:" + receita_Ingrediente.getQuantidade());
 				}
 			}
