@@ -20,6 +20,7 @@ import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.gui.alteracoes.EditaReceitaIngrediente;
+import br.unisul.gui.cadastros.CadastraNovoIngredienteReceita;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.ReceitaIngredienteTableModel;
 
@@ -36,6 +37,7 @@ public class ListagemIngredientesDaReceita extends JFrame {
 	private JButton btnEditar;
 	private JButton btnExcluir;
 	private JButton btnCancelar;
+	private JButton btnNovo;
 
 	public ListagemIngredientesDaReceita(ReceitaIngrediente receitaIngrediente) {
 		super("Ingredientes da receita " + receitaIngrediente.getReceita().getNome());
@@ -64,19 +66,30 @@ public class ListagemIngredientesDaReceita extends JFrame {
 		tfNomeIngredienteUsado.setColumns(10);
 
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(52, 422, 89, 23);
+		btnEditar.setBounds(119, 414, 89, 23);
 		TrataEventoEditar trataEventoEditar = new TrataEventoEditar();
 		btnEditar.addActionListener(trataEventoEditar);
 
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(151, 422, 89, 23);
+		btnExcluir.setBounds(218, 414, 89, 23);
 		TrataEventoExcluir trataEventoExcluir = new TrataEventoExcluir();
 		btnExcluir.addActionListener(trataEventoExcluir);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(250, 422, 89, 23);
+		btnCancelar.setBounds(317, 414, 89, 23);
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
+		
+		
+		btnNovo = new JButton("Novo");
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente();
+				CadastraNovoIngredienteReceita cadastraNovoIngredienteReceita = new CadastraNovoIngredienteReceita(receitaIngrediente);
+				cadastraNovoIngredienteReceita.setVisible(true);
+			}
+		});
+		btnNovo.setBounds(20, 414, 89, 23);
 
 		getContentPane().add(btnCancelar);
 		getContentPane().add(spListagemIngredientes);
@@ -84,6 +97,8 @@ public class ListagemIngredientesDaReceita extends JFrame {
 		getContentPane().add(tfNomeIngredienteUsado);
 		getContentPane().add(btnEditar);
 		getContentPane().add(btnExcluir);
+		getContentPane().add(btnNovo);
+
 
 		configuraTable(receitaIngrediente);
 	}
