@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
+import br.unisul.dados.Receita;
 import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.ReceitaIngredienteDAO;
@@ -34,10 +35,10 @@ public class ListagemIngredientesDaReceita extends JFrame {
 	private JScrollPane spListagemIngredientes;
 	private JLabel lblIngredientesDaReceita;
 	private JTextField tfNomeIngredienteUsado;
+	private JButton btnNovo;
 	private JButton btnEditar;
 	private JButton btnExcluir;
 	private JButton btnCancelar;
-	private JButton btnNovo;
 
 	public ListagemIngredientesDaReceita(ReceitaIngrediente receitaIngrediente) {
 		super("Ingredientes da receita " + receitaIngrediente.getReceita().getNome());
@@ -79,16 +80,10 @@ public class ListagemIngredientesDaReceita extends JFrame {
 		btnCancelar.setBounds(317, 414, 89, 23);
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
-		
-		
+
 		btnNovo = new JButton("Novo");
-		btnNovo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente();
-				CadastraNovoIngredienteReceita cadastraNovoIngredienteReceita = new CadastraNovoIngredienteReceita(receitaIngrediente);
-				cadastraNovoIngredienteReceita.setVisible(true);
-			}
-		});
+		TrataEventoNovo trataEventoNovo = new TrataEventoNovo();
+		btnNovo.addActionListener(trataEventoNovo);
 		btnNovo.setBounds(20, 414, 89, 23);
 
 		getContentPane().add(btnCancelar);
@@ -98,7 +93,6 @@ public class ListagemIngredientesDaReceita extends JFrame {
 		getContentPane().add(btnEditar);
 		getContentPane().add(btnExcluir);
 		getContentPane().add(btnNovo);
-
 
 		configuraTable(receitaIngrediente);
 	}
@@ -155,6 +149,18 @@ public class ListagemIngredientesDaReceita extends JFrame {
 		this.dispose();
 	}
 
+	private class TrataEventoNovo implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			Receita receita = listaIngredientesDaReceita.get(0).getReceita();
+			CadastraNovoIngredienteReceita cadastraNovoIngredienteReceita = new CadastraNovoIngredienteReceita(receita);
+			cadastraNovoIngredienteReceita.setVisible(true);
+		}
+
+	}
+
 	private class TrataEventoEditar implements ActionListener {
 
 		@Override
@@ -198,6 +204,7 @@ public class ListagemIngredientesDaReceita extends JFrame {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {

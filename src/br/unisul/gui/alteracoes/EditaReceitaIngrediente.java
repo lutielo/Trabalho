@@ -158,6 +158,7 @@ public class EditaReceitaIngrediente extends JFrame {
 				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " editado com sucesso.");
 				fecharTela();
 			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 				e.printStackTrace();
 			}
 		}

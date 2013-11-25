@@ -192,13 +192,13 @@ public class CadastroReceita extends JFrame {
 		getContentPane().add(lblQuantidade);
 		getContentPane().add(btnVisualizaReceita);
 		getContentPane().add(lblcamposObrigatrios);
-		
+
 		this.tabOrder();
 
 	}
-	
+
 	private void tabOrder() {
-		
+
 	}
 
 	public void fecharTela() {
@@ -277,10 +277,11 @@ public class CadastroReceita extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite a quantidade");
 				}
-			} catch (DAOException e) {
-				e.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
+			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 		}
 
@@ -346,10 +347,10 @@ public class CadastroReceita extends JFrame {
 			try {
 				listaAutores = autorDAO.listarTodosAutores();
 				autor = (Autor) listaAutores.get(cbAutor.getSelectedIndex() - 1);
-			} catch (DAOException e) {
-				e.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Selecione um autor.");
+			} catch (DAOException e) {
+				e.printStackTrace();
 			}
 			return autor;
 		}
@@ -361,8 +362,9 @@ public class CadastroReceita extends JFrame {
 				receitaDAO.cadastreReceita(receita);
 				JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso");
 				fecharTela();
-			} catch (DAOException e1) {
-				JOptionPane.showMessageDialog(null, "Occoreu um erro ao processar a sua requisição.");
+			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 		}
 
@@ -378,6 +380,7 @@ public class CadastroReceita extends JFrame {
 					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				}
 			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 				e.printStackTrace();
 			}
 		}

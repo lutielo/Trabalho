@@ -212,7 +212,8 @@ public class ListagemAutores extends JFrame {
 					JOptionPane.showMessageDialog(null, "Nenhum resultado encontrado");
 				}
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 		}
 
@@ -224,7 +225,8 @@ public class ListagemAutores extends JFrame {
 				getModel().limpar();
 				getModel().addAutor(autor);
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -245,6 +247,7 @@ public class ListagemAutores extends JFrame {
 					EditaAutor editaAutor = new EditaAutor(autor);
 					editaAutor.setVisible(true);
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e1) {
@@ -278,6 +281,7 @@ public class ListagemAutores extends JFrame {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {

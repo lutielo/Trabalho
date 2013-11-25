@@ -241,6 +241,7 @@ public class ListagemIngredientes extends JFrame {
 					EditaIngrediente editaIngrediente = new EditaIngrediente(ingrediente);
 					editaIngrediente.setVisible(true);
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e1) {
@@ -274,6 +275,7 @@ public class ListagemIngredientes extends JFrame {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {

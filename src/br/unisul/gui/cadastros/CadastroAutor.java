@@ -141,7 +141,7 @@ public class CadastroAutor extends JFrame {
 				autorDAO.cadastrarAutor(autor);
 				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 				e.printStackTrace();
 			} finally {
 				fecharTela();

@@ -161,7 +161,7 @@ public class EditaAutor extends JFrame {
 				autorDAO.alterarAutor(autor);
 				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " editado com sucesso.");
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao precessar sua requisição.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 				e.printStackTrace();
 			} finally {
 				fecharTela();

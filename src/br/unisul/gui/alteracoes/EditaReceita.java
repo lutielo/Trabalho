@@ -169,6 +169,7 @@ public class EditaReceita extends JFrame {
 				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngrediente().getNome());
 			}
 		} catch (DAOException e) {
+			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 			e.printStackTrace();
 		}
 		taResumoReceita.append("\n\nModo de preparo : " + receitaIngrediente.getReceita().getModo_preparo());
@@ -260,10 +261,11 @@ public class EditaReceita extends JFrame {
 			try {
 				listaAutores = autorDAO.listarTodosAutores();
 				autor = (Autor) listaAutores.get(cbAutor.getSelectedIndex() - 1);
-			} catch (DAOException e) {
-				e.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Selecione um autor.");
+			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 			return autor;
 		}
@@ -276,7 +278,8 @@ public class EditaReceita extends JFrame {
 				JOptionPane.showMessageDialog(null, "Receita editada com sucesso");
 				fecharTela();
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Occoreu um erro ao processar a sua requisição.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 		}
 
@@ -292,6 +295,7 @@ public class EditaReceita extends JFrame {
 					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				}
 			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 				e.printStackTrace();
 			}
 		}

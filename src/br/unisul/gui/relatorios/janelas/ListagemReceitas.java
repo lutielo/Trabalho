@@ -251,6 +251,7 @@ public class ListagemReceitas extends JFrame {
 					EditaReceita editaReceita = new EditaReceita(receitaIngrediente);
 					editaReceita.setVisible(true);
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e1) {
@@ -284,6 +285,7 @@ public class ListagemReceitas extends JFrame {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {

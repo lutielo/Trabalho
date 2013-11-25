@@ -105,6 +105,7 @@ public class CadastroIngrediente extends JFrame {
 				ingredienteDAO.cadastrarIngrediente(ingrediente);
 				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " cadastrado com sucesso.");
 			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
 				e.printStackTrace();
 			} finally {
 				fecharTela();

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.unisul.dados.Ingrediente;
+import br.unisul.dados.Receita;
 import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
@@ -36,8 +37,8 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 	private JLabel lblUnidade;
 	private JLabel lblQuantidade;
 
-	public CadastraNovoIngredienteReceita(ReceitaIngrediente receitaIngrediente) {
-		super("Cadastro de Ingrediente na receita " + "NOME DA RECEITA");
+	public CadastraNovoIngredienteReceita(Receita receita) {
+		super("Cadastro de Ingrediente na receita " + receita.getNome());
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -45,11 +46,11 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
-		this.abreTela(receitaIngrediente);
+		this.abreTela(receita);
 	}
 
-	private void abreTela(ReceitaIngrediente receitaIngrediente) {
-		lblAlteracaoDeIngredientes = new JLabel("Cadastro de Ingrediente na receita " + "NOME DA RECEITA");
+	private void abreTela(Receita receita) {
+		lblAlteracaoDeIngredientes = new JLabel("Cadastro de Ingrediente na receita " + receita);
 		lblAlteracaoDeIngredientes.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblAlteracaoDeIngredientes.setBounds(83, 11, 221, 31);
 
@@ -58,7 +59,7 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 
 		lblCamposObrigatrios = new JLabel("* campos obrigat\u00F3rios");
 		lblCamposObrigatrios.setBounds(10, 251, 128, 14);
-		
+
 		cbIngrediente = new JComboBox<String>();
 		cbIngrediente.setBounds(105, 63, 183, 20);
 		prencherComboBoxIngrediente(cbIngrediente);
@@ -68,7 +69,7 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 		prencherComboBoxUnidade(cbUnidade);
 
 		btnSalvar = new JButton("Salvar");
-		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar();
+		TrataEventoSalvar trataEventoSalvar = new TrataEventoSalvar(receita);
 		btnSalvar.addActionListener(trataEventoSalvar);
 		btnSalvar.setBounds(76, 195, 89, 23);
 
@@ -107,7 +108,7 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 		policy.addIndexedComponent(btnCancelar);
 		setFocusTraversalPolicy(policy);
 	}
-	
+
 	public void prencherComboBoxIngrediente(JComboBox<String> comboBox) {
 		IngredienteDAO ingredienteDAO = new IngredienteDAO();
 		try {
@@ -120,7 +121,7 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void prencherComboBoxUnidade(JComboBox<String> comboBox) {
 		UnidadeDAO unidadeDAO = new UnidadeDAO();
 		try {
@@ -139,72 +140,86 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 	}
 
 	private class TrataEventoSalvar implements ActionListener {
-			
-			
-		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!cbIngrediente.getSelectedItem().toString().contains(" -- Selecione -- ")) {
-					if (!cbUnidade.getSelectedItem().toString().contains(" -- Selecione -- ")) {
-						cadastrarIngredienteNaReceita();
-					} else {
-						JOptionPane.showMessageDialog(null, "Selecione uma unidade");
+
+		Receita receita = null;
+
+		public TrataEventoSalvar(Receita receita) {
+			this.receita = receita;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!cbIngrediente.getSelectedItem().toString().contains(" -- Selecione -- ")) {
+				if (!cbUnidade.getSelectedItem().toString().contains(" -- Selecione -- ")) {
+					cadastrarIngredienteNaReceita();
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione uma unidade");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione um ingrediente");
+			}
+		}
+
+		private void cadastrarIngredienteNaReceita() {
+			try {
+				IngredienteDAO ingredienteDAO = new IngredienteDAO();
+				UnidadeDAO unidadeDAO = new UnidadeDAO();
+				List<Unidade> listaUnidades;
+				List<Ingrediente> listaIngredientes;
+				listaUnidades = unidadeDAO.listeTodasUnidades();
+				Unidade unidade = (Unidade) listaUnidades.get(cbUnidade.getSelectedIndex() - 1);
+				listaIngredientes = ingredienteDAO.listeTodosIngredientes();
+				Ingrediente ingrediente = (Ingrediente) listaIngredientes.get(cbIngrediente.getSelectedIndex() - 1);
+				if (!StringUtils.isNuloOuBranco(tfQuantidade.getText())) {
+					Double quantidade = null;
+					if (validarValorQuantidade(quantidade)) {
+						cadastraIngrediente(unidade, ingrediente);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um ingrediente");
+					JOptionPane.showMessageDialog(null, "Digite a quantidade");
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
+			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
+		}
 
-			private void cadastrarIngredienteNaReceita() {
-				try {
-					IngredienteDAO ingredienteDAO = new IngredienteDAO();
-					UnidadeDAO unidadeDAO = new UnidadeDAO();
-					List<Unidade> listaUnidades;
-					List<Ingrediente> listaIngredientes;
-					listaUnidades = unidadeDAO.listeTodasUnidades();
-					Unidade unidade = (Unidade) listaUnidades.get(cbUnidade.getSelectedIndex() - 1);
-					listaIngredientes = ingredienteDAO.listeTodosIngredientes();
-					Ingrediente ingrediente = (Ingrediente) listaIngredientes.get(cbIngrediente.getSelectedIndex() - 1);
-					if (!StringUtils.isNuloOuBranco(tfQuantidade.getText())) {
-						Double quantidade = null;
-						if (validarValorQuantidade(quantidade)) {
-							cadastraIngrediente(unidade, ingrediente);
-						}
-					} else {
-						JOptionPane.showMessageDialog(null, "Digite a quantidade");
-					}
-				} catch (DAOException e) {
-					e.printStackTrace();
-				} catch (ArrayIndexOutOfBoundsException e) {
-					JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
-				}
-			}
+		private void cadastraIngrediente(Unidade unidade, Ingrediente ingrediente) {
 
-			private void cadastraIngrediente(Unidade unidade, Ingrediente ingrediente) {
+			ReceitaIngredienteDAO receitaIngredienteDAO = null;
+
+			try {
 				Double quantidade;
 				quantidade = Double.parseDouble(tfQuantidade.getText());
-				new ReceitaIngredienteDAO();
-				ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente(null, ingrediente, unidade, quantidade);
+				receitaIngredienteDAO = new ReceitaIngredienteDAO();
+				ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente(receita, ingrediente, unidade, quantidade);
 				int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja salvar este ingrediente? " + "\nIngrediente \t: "
-					+ receitaIngrediente.getIngrediente().getNome() + "\nQuantidade \t: " + receitaIngrediente.getQuantidade() + "\nUnidade \t: "
-					+ receitaIngrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
+					+ receitaIngrediente.getIngrediente().getNome() + "\nQuantidade \t: " + receitaIngrediente.getQuantidade()
+					+ "\nUnidade \t: " + receitaIngrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
 				if (dialogButton == JOptionPane.YES_OPTION) {
 					JOptionPane.showMessageDialog(null, "Ingrediente adiciona com sucesso.");
+					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				} else if (dialogButton == JOptionPane.NO_OPTION) {
 					JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.");
 				}
-			}
-
-			private boolean validarValorQuantidade(Double quantidade) {
-				try {
-					quantidade = Double.parseDouble(tfQuantidade.getText());
-					return true;
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.");
-					return false;
-				}
+			} catch (DAOException e) {
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				e.printStackTrace();
 			}
 		}
+
+		private boolean validarValorQuantidade(Double quantidade) {
+			try {
+				quantidade = Double.parseDouble(tfQuantidade.getText());
+				return true;
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.");
+				return false;
+			}
+		}
+	}
 
 	private class TrataEventoCancelar implements ActionListener {
 
