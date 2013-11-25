@@ -22,13 +22,13 @@ import javax.swing.SwingConstants;
 import br.unisul.dados.Autor;
 import br.unisul.dados.Ingrediente;
 import br.unisul.dados.Receita;
-import br.unisul.dados.Receita_Ingrediente;
+import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dados.Unidade;
 import br.unisul.dao.AutorDAO;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.IngredienteDAO;
 import br.unisul.dao.ReceitaDAO;
-import br.unisul.dao.Receita_IngredienteDAO;
+import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
 import br.unisul.gui.relatorios.janelas.ListagemIngredientesDaReceita;
 import br.unisul.util.StringUtils;
@@ -51,11 +51,11 @@ public class EditaReceita extends JFrame {
 	private JButton btnSalvar;
 	private JButton btnCancelar;
 	private JComboBox<String> cbAutor;
-	private List<Receita_Ingrediente> listaIngredientesAdicionados;
+	private List<ReceitaIngrediente> listaIngredientesAdicionados;
 	private JScrollPane spResumoDaReceita;
 	private JScrollPane spModoDePreparo;
 
-	public EditaReceita(Receita_Ingrediente receita_Ingrediente) {
+	public EditaReceita(ReceitaIngrediente receitaIngrediente) {
 		super("Edita Receita");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
@@ -64,10 +64,10 @@ public class EditaReceita extends JFrame {
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
-		this.abreTela(receita_Ingrediente);
+		this.abreTela(receitaIngrediente);
 	}
 
-	private void abreTela(Receita_Ingrediente receitaIngrediente) {
+	private void abreTela(ReceitaIngrediente receitaIngrediente) {
 
 		lblAlteracaoDeReceita = new JLabel("Altera\u00E7\u00E3o de Receita");
 		lblAlteracaoDeReceita.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -92,7 +92,7 @@ public class EditaReceita extends JFrame {
 		cbAutor.setBounds(65, 74, 257, 20);
 		prencherComboBoxAutor(cbAutor, receitaIngrediente.getReceita().getAutor());
 
-		listaIngredientesAdicionados = new ArrayList<Receita_Ingrediente>();
+		listaIngredientesAdicionados = new ArrayList<ReceitaIngrediente>();
 
 		btnEditarIngrediente = new JButton("<html><center>Editar<br>Ingredientes</center></html>");
 		btnEditarIngrediente.setBounds(103, 159, 162, 49);
@@ -158,20 +158,20 @@ public class EditaReceita extends JFrame {
 
 	}
 
-	private void populaResumoReceita(Receita_Ingrediente receita_Ingrediente) {
+	private void populaResumoReceita(ReceitaIngrediente receitaIngrediente) {
 		taResumoReceita.append("Nome da receita : " + tfNomeReceita.getText());
 		taResumoReceita.append("\nNome do autor : " + cbAutor.getSelectedItem().toString());
 		taResumoReceita.append("\n\nIngredientes : ");
-		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
+		ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
 		try {
-			List<Receita_Ingrediente> listaIngredientes = receita_IngredienteDAO.listarIngredientesDaReceita(receita_Ingrediente);
-			for (Receita_Ingrediente i : listaIngredientes) {
+			List<ReceitaIngrediente> listaIngredientes = receitaIngredienteDAO.listarIngredientesDaReceita(receitaIngrediente);
+			for (ReceitaIngrediente i : listaIngredientes) {
 				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngrediente().getNome());
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-		taResumoReceita.append("\n\nModo de preparo : " + receita_Ingrediente.getReceita().getModo_preparo());
+		taResumoReceita.append("\n\nModo de preparo : " + receitaIngrediente.getReceita().getModo_preparo());
 	}
 
 	public void fecharTela() {
@@ -221,9 +221,9 @@ public class EditaReceita extends JFrame {
 
 	private class TrataEventoEditarIngredientes implements ActionListener {
 
-		private Receita_Ingrediente receitaIngrediente;
+		private ReceitaIngrediente receitaIngrediente;
 
-		public TrataEventoEditarIngredientes(Receita_Ingrediente receitaIngrediente) {
+		public TrataEventoEditarIngredientes(ReceitaIngrediente receitaIngrediente) {
 			super();
 			this.receitaIngrediente = receitaIngrediente;
 		}
@@ -243,7 +243,7 @@ public class EditaReceita extends JFrame {
 				Autor autor = null;
 				autor = resgatarAutorSelecionado();
 				if (!StringUtils.isNuloOuBranco(taModoPreparo.getText())) {
-					this.cadastrarReceita(autor);
+					this.editarReceita(autor);
 					this.cadatrarIngredientesNaReceita();
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite o modo de preparo.");
@@ -268,14 +268,14 @@ public class EditaReceita extends JFrame {
 			return autor;
 		}
 
-		private void cadastrarReceita(Autor autor) {
+		private void editarReceita(Autor autor) {
 			Receita receita = new Receita(null, tfNomeReceita.getText(), new Date(), taModoPreparo.getText(), autor);
 			ReceitaDAO receitaDAO = new ReceitaDAO();
 			try {
-				receitaDAO.cadastreReceita(receita);
-				JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso");
+				receitaDAO.alterarReceita(receita);
+				JOptionPane.showMessageDialog(null, "Receita editada com sucesso");
 				fecharTela();
-			} catch (DAOException e1) {
+			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Occoreu um erro ao processar a sua requisição.");
 			}
 		}
@@ -284,12 +284,12 @@ public class EditaReceita extends JFrame {
 			try {
 				ReceitaDAO receitaDAO = new ReceitaDAO();
 				int codigoReceitaCriada = receitaDAO.resgatarUltimoRegistro();
-				Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
-				for (Receita_Ingrediente receita_Ingrediente : listaIngredientesAdicionados) {
+				ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
+				for (ReceitaIngrediente receitaIngrediente : listaIngredientesAdicionados) {
 					Receita receita = new Receita();
 					receita.setCodigo(codigoReceitaCriada);
-					receita_Ingrediente.setReceita(receita);
-					receita_IngredienteDAO.cadastreIngredienteNaReceita(receita_Ingrediente);
+					receitaIngrediente.setReceita(receita);
+					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				}
 			} catch (DAOException e) {
 				e.printStackTrace();

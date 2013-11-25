@@ -22,13 +22,13 @@ import javax.swing.SwingConstants;
 import br.unisul.dados.Autor;
 import br.unisul.dados.Ingrediente;
 import br.unisul.dados.Receita;
-import br.unisul.dados.Receita_Ingrediente;
+import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dados.Unidade;
 import br.unisul.dao.AutorDAO;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.IngredienteDAO;
 import br.unisul.dao.ReceitaDAO;
-import br.unisul.dao.Receita_IngredienteDAO;
+import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.dao.UnidadeDAO;
 import br.unisul.util.StringUtils;
 
@@ -57,7 +57,7 @@ public class CadastroReceita extends JFrame {
 	private JComboBox<String> cbAutor;
 	private JComboBox<String> cbUnidade;
 	private JComboBox<String> cbIngrediente;
-	private List<Receita_Ingrediente> listaIngredientesAdicionados;
+	private List<ReceitaIngrediente> listaIngredientesAdicionados;
 	private JScrollPane spResumoDaReceita;
 	private JScrollPane spModoDePreparo;
 
@@ -97,7 +97,7 @@ public class CadastroReceita extends JFrame {
 		cbAutor.setBounds(65, 74, 257, 20);
 		prencherComboBoxAutor(cbAutor);
 
-		listaIngredientesAdicionados = new ArrayList<Receita_Ingrediente>();
+		listaIngredientesAdicionados = new ArrayList<ReceitaIngrediente>();
 
 		btnAdicionarIngrediente = new JButton("<html><center>Adicionar<br>Ingrediente</center></html>");
 		btnAdicionarIngrediente.setBounds(209, 172, 162, 49);
@@ -287,13 +287,13 @@ public class CadastroReceita extends JFrame {
 		private void cadastraIngrediente(Unidade unidade, Ingrediente ingrediente) {
 			Double quantidade;
 			quantidade = Double.parseDouble(tfQuantidade.getText());
-			new Receita_IngredienteDAO();
-			Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(null, ingrediente, unidade, quantidade);
+			new ReceitaIngredienteDAO();
+			ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente(null, ingrediente, unidade, quantidade);
 			int dialogButton = JOptionPane.showConfirmDialog(null, "Deseja salvar este ingrediente? " + "\nIngrediente \t: "
-				+ receita_Ingrediente.getIngrediente().getNome() + "\nQuantidade \t: " + receita_Ingrediente.getQuantidade() + "\nUnidade \t: "
-				+ receita_Ingrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
+				+ receitaIngrediente.getIngrediente().getNome() + "\nQuantidade \t: " + receitaIngrediente.getQuantidade() + "\nUnidade \t: "
+				+ receitaIngrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
 			if (dialogButton == JOptionPane.YES_OPTION) {
-				listaIngredientesAdicionados.add(receita_Ingrediente);
+				listaIngredientesAdicionados.add(receitaIngrediente);
 				limparCamposIngrediente();
 			} else if (dialogButton == JOptionPane.NO_OPTION) {
 				JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.");
@@ -370,12 +370,12 @@ public class CadastroReceita extends JFrame {
 			try {
 				ReceitaDAO receitaDAO = new ReceitaDAO();
 				int codigoReceitaCriada = receitaDAO.resgatarUltimoRegistro();
-				Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
-				for (Receita_Ingrediente receita_Ingrediente : listaIngredientesAdicionados) {
+				ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
+				for (ReceitaIngrediente receitaIngrediente : listaIngredientesAdicionados) {
 					Receita receita = new Receita();
 					receita.setCodigo(codigoReceitaCriada);
-					receita_Ingrediente.setReceita(receita);
-					receita_IngredienteDAO.cadastreIngredienteNaReceita(receita_Ingrediente);
+					receitaIngrediente.setReceita(receita);
+					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				}
 			} catch (DAOException e) {
 				e.printStackTrace();
@@ -399,7 +399,7 @@ public class CadastroReceita extends JFrame {
 			taResumoReceita.append("Nome da receita : " + tfNomeReceita.getText());
 			taResumoReceita.append("\nNome do autor : " + cbAutor.getSelectedItem().toString());
 			taResumoReceita.append("\n\nIngredientes : ");
-			for (Receita_Ingrediente i : listaIngredientesAdicionados) {
+			for (ReceitaIngrediente i : listaIngredientesAdicionados) {
 				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngrediente().getNome());
 			}
 			taResumoReceita.append("\n\nModo de preparo : " + taModoPreparo.getText());

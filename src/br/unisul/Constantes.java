@@ -92,8 +92,11 @@ public interface Constantes {
 			 									 +" JOIN unidade u ON u.cd_unidade = ri.cd_unidade"
 			 									 +" WHERE r.cd_receita = (?)";
 		 
-		 String QUERY_ALTER_INGREDIENTE_DA_RECEITA = "UPDATE receita_ingrediente SET cd_ingrediente = (?), cd_unidade = (?), quantidade = (?)" + 
+		 String QUERY_ALTER_INGREDIENTE_DA_RECEITA = "UPDATE receita_ingrediente SET cd_unidade = (?), quantidade = (?)" + 
 													 " WHERE cd_receita = (?) AND cd_ingrediente = (?) AND cd_unidade = (?)";
+		 
+		 String QUERY_DELETE_RECEITA_INGREDIENTE = "DELETE FROM receita_ingrediente" +
+			 						   " WHERE cd_ingrediente = (?) AND cd_receita = (?) AND cd_unidade = (?)";
 	}
 	
 	public interface Receita {

@@ -16,10 +16,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
 import br.unisul.dados.Ingrediente;
-import br.unisul.dados.Receita_Ingrediente;
+import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
-import br.unisul.dao.Receita_IngredienteDAO;
+import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.IngredientesMaisUtilizadosTableModel;
 
@@ -27,7 +27,7 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Receita_Ingrediente> listaIngredientesMaisUtilizados;
+	private List<ReceitaIngrediente> listaIngredientesMaisUtilizados;
 	private IngredientesMaisUtilizadosTableModel imutm;
 	private JTable tblIngredientes;
 	private JScrollPane spListagemIngredientes;
@@ -67,7 +67,7 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 					JOptionPane.showMessageDialog(null, "Selecione um ingrediente");
 				} else {
 					int selectedRow = getTblIngredientes().getSelectedRow();
-					Receita_Ingrediente ri = listaIngredientesMaisUtilizados.get(selectedRow);
+					ReceitaIngrediente ri = listaIngredientesMaisUtilizados.get(selectedRow);
 					Integer codUnidade = ri.getUnidade().getCodigo();
 					String nomeUnidade = ri.getUnidade().getTipo();
 					Unidade unidade = new Unidade(codUnidade, nomeUnidade);
@@ -115,11 +115,11 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		return imutm;
 	}
 
-	private List<Receita_Ingrediente> getIngredientes() {
-		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
+	private List<ReceitaIngrediente> getIngredientes() {
+		ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
 		listaIngredientesMaisUtilizados = new ArrayList<>();
 		try {
-			listaIngredientesMaisUtilizados = receita_IngredienteDAO.listeIngredientesMaisUtilizados();
+			listaIngredientesMaisUtilizados = receitaIngredienteDAO.listarIngredientesMaisUtilizados();
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}

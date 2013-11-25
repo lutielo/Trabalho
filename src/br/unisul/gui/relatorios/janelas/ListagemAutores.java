@@ -59,9 +59,6 @@ public class ListagemAutores extends JFrame {
 		spListagemAutores = new JScrollPane(getTblAutores());
 		spListagemAutores.setBounds(30, 136, 481, 328);
 
-		getTblAutores().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		getTblAutores().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(219, 476, 89, 23);
 		TrataEventoExcluir trataEventoExcluir = new TrataEventoExcluir();
@@ -128,6 +125,9 @@ public class ListagemAutores extends JFrame {
 		TableColumn col2 = getTblAutores().getColumnModel().getColumn(2);
 		col2.setPreferredWidth(100);
 		getTblAutores().setDefaultRenderer(Object.class, new CellRenderer());
+
+		getTblAutores().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		getTblAutores().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		this.addAutores();
 	}

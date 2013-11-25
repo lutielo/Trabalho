@@ -8,7 +8,7 @@ import java.util.List;
 
 import br.gov.geracaotecsc.ui.console.GenericConsoleUI;
 import br.unisul.dao.DAOException;
-import br.unisul.dao.Receita_IngredienteDAO;
+import br.unisul.dao.ReceitaIngredienteDAO;
 
 public class ControleReceitaIngredienteApp {
 	
@@ -104,18 +104,18 @@ public class ControleReceitaIngredienteApp {
 	// }
 
 	private void abrirListagemIngredientesReceita() {
-		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
+		ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
 		try {
-			List<Receita_Ingrediente> listaReceita_Ingredientes = receita_IngredienteDAO.listeTodosIngredientesDasReceitas();
+			List<ReceitaIngrediente> listaReceita_Ingredientes = receitaIngredienteDAO.listarTodosIngredientesDasReceitas();
 			if (listaReceita_Ingredientes.isEmpty()) {
 				System.err.println("Não há registros");
 			} else {
 				System.out.println("Listando dados dos ingredientes cadastrados nas receitas:");
-				for (Receita_Ingrediente receita_Ingrediente : listaReceita_Ingredientes) {
-					System.out.println("\tNome Ingrediente:" + receita_Ingrediente.getIngrediente().getNome()
-								+ "\tNome Receita:" + receita_Ingrediente.getReceita().getNome()
-								+ "\tNome Receita:" + receita_Ingrediente.getUnidade().getTipo()
-								+ "\tQuantidade:" + receita_Ingrediente.getQuantidade());
+				for (ReceitaIngrediente receitaIngrediente : listaReceita_Ingredientes) {
+					System.out.println("\tNome Ingrediente:" + receitaIngrediente.getIngrediente().getNome()
+								+ "\tNome Receita:" + receitaIngrediente.getReceita().getNome()
+								+ "\tNome Receita:" + receitaIngrediente.getUnidade().getTipo()
+								+ "\tQuantidade:" + receitaIngrediente.getQuantidade());
 				}
 			}
 		} catch (DAOException e) {
@@ -126,16 +126,16 @@ public class ControleReceitaIngredienteApp {
 	}
 	
 	private void abrirListagemIngredientesMaisUtilizados() {
-		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
+		ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
 		try {
-			List<Receita_Ingrediente> listaReceita_Ingredientes = receita_IngredienteDAO.listeIngredientesMaisUtilizados();
+			List<ReceitaIngrediente> listaReceita_Ingredientes = receitaIngredienteDAO.listarIngredientesMaisUtilizados();
 			if (listaReceita_Ingredientes.isEmpty()) {
 				System.err.println("Não há registros");
 			} else {
 				System.out.println("Listando ingredientes mais utilizados nas receitas:");
-				for (Receita_Ingrediente receita_Ingrediente : listaReceita_Ingredientes) {
-					System.out.println("Nome Ingrediente:" + receita_Ingrediente.getIngrediente().getNome()
-									 + "\tQuantidade:" + receita_Ingrediente.getQuantidade());
+				for (ReceitaIngrediente receitaIngrediente : listaReceita_Ingredientes) {
+					System.out.println("Nome Ingrediente:" + receitaIngrediente.getIngrediente().getNome()
+									 + "\tQuantidade:" + receitaIngrediente.getQuantidade());
 				}
 			}
 		} catch (DAOException e) {
@@ -157,10 +157,10 @@ public class ControleReceitaIngredienteApp {
 		
 		Double quantidade = ui.facaPerguntaDouble("Digite a quantidade do ingrediente");
 
-		Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(receita, ingrediente, unidade, quantidade);
-		Receita_IngredienteDAO Receita_IngredienteDAO = new Receita_IngredienteDAO();
+		ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente(receita, ingrediente, unidade, quantidade);
+		ReceitaIngredienteDAO ReceitaIngredienteDAO = new ReceitaIngredienteDAO();
 		try {
-			Receita_IngredienteDAO.cadastreIngredienteNaReceita(receita_Ingrediente);
+			ReceitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 			System.out.println("Ingrediente cadastrado na receita com sucesso");
 		} catch (DAOException e) {
 			System.err.println("Prezado usuário, infelizmente occoreu um erro ao processar a sua requisição.");

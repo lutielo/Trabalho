@@ -17,7 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
 import br.unisul.dados.Receita;
-import br.unisul.dados.Receita_Ingrediente;
+import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dao.DAOException;
 import br.unisul.dao.ReceitaDAO;
 import br.unisul.gui.alteracoes.EditaReceita;
@@ -60,21 +60,18 @@ public class ListagemReceitas extends JFrame {
 		spListagemReceitas = new JScrollPane(getTblReceitas());
 		spListagemReceitas.setBounds(30, 136, 481, 328);
 
-		getTblReceitas().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		getTblReceitas().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(219, 476, 89, 23);
+		btnExcluir.setBounds(237, 475, 89, 23);
 		TrataEventoExcluir trataEventoExcluir = new TrataEventoExcluir();
 		btnExcluir.addActionListener(trataEventoExcluir);
 
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(120, 476, 89, 23);
+		btnEditar.setBounds(138, 475, 89, 23);
 		TrataEventoEditar trataEventoEditar = new TrataEventoEditar();
 		btnEditar.addActionListener(trataEventoEditar);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(318, 476, 89, 23);
+		btnCancelar.setBounds(336, 475, 89, 23);
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
 
@@ -131,8 +128,11 @@ public class ListagemReceitas extends JFrame {
 
 		TableColumn col3 = getTblReceitas().getColumnModel().getColumn(3);
 		col3.setPreferredWidth(150);
-		
+
 		getTblReceitas().setDefaultRenderer(Object.class, new CellRenderer());
+
+		getTblReceitas().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		getTblReceitas().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		this.addReceitas();
 	}
@@ -225,7 +225,7 @@ public class ListagemReceitas extends JFrame {
 			int codigoReceita = Integer.parseInt(tfCodigo.getText().toString());
 			try {
 				ReceitaDAO receitaDAO = new ReceitaDAO();
-				Receita receita = receitaDAO.listeDadosDaReceitaPeloCodigo(codigoReceita);
+				Receita receita = receitaDAO.listarDadosDaReceitaPeloCodigo(codigoReceita);
 				getModel().limpar();
 				getModel().addReceita(receita);
 			} catch (DAOException e) {
@@ -246,9 +246,9 @@ public class ListagemReceitas extends JFrame {
 				int codigoReceita = Integer.parseInt(getTblReceitas().getValueAt(selectedRow, 0).toString());
 				ReceitaDAO receitaDAO = new ReceitaDAO();
 				try {
-					Receita receita = receitaDAO.listeDadosDaReceitaPeloCodigo(codigoReceita);
-					Receita_Ingrediente receita_Ingrediente = new Receita_Ingrediente(receita, null, null, null);
-					EditaReceita editaReceita = new EditaReceita(receita_Ingrediente);
+					Receita receita = receitaDAO.listarDadosDaReceitaPeloCodigo(codigoReceita);
+					ReceitaIngrediente receitaIngrediente = new ReceitaIngrediente(receita, null, null, null);
+					EditaReceita editaReceita = new EditaReceita(receitaIngrediente);
 					editaReceita.setVisible(true);
 				} catch (DAOException e) {
 					e.printStackTrace();

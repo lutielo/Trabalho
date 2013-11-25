@@ -59,23 +59,20 @@ public class ListagemIngredientes extends JFrame {
 		spListagemIngredientes = new JScrollPane(getTblIngredientes());
 		spListagemIngredientes.setBounds(40, 139, 415, 328);
 
-		getTblIngredientes().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		getTblIngredientes().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 		btnExcluir = new JButton("Excluir");
 		TrataEventoExcluir trataEventoExcluir = new TrataEventoExcluir();
 		btnExcluir.addActionListener(trataEventoExcluir);
-		btnExcluir.setBounds(167, 478, 89, 23);
+		btnExcluir.setBounds(195, 478, 89, 23);
 
 		btnEditar = new JButton("Editar");
 		TrataEventoEditar trataEventoEditar = new TrataEventoEditar();
 		btnEditar.addActionListener(trataEventoEditar);
-		btnEditar.setBounds(68, 478, 89, 23);
+		btnEditar.setBounds(96, 478, 89, 23);
 
 		btnCancelar = new JButton("Cancelar");
 		TrataEventoCancelar trataEventoCancelar = new TrataEventoCancelar();
 		btnCancelar.addActionListener(trataEventoCancelar);
-		btnCancelar.setBounds(268, 478, 89, 23);
+		btnCancelar.setBounds(296, 478, 89, 23);
 
 		lblCodigo = new JLabel("C\u00F3digo:");
 		lblCodigo.setBounds(30, 98, 46, 23);
@@ -125,6 +122,9 @@ public class ListagemIngredientes extends JFrame {
 		TableColumn col1 = getTblIngredientes().getColumnModel().getColumn(1);
 		col1.setPreferredWidth(290);
 		getTblIngredientes().setDefaultRenderer(Object.class, new CellRenderer());
+		
+		getTblIngredientes().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		getTblIngredientes().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		this.addIngredientes();
 	}

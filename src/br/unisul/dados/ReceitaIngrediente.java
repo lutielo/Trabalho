@@ -1,6 +1,6 @@
 package br.unisul.dados;
 
-public class Receita_Ingrediente {
+public class ReceitaIngrediente {
 	
 	private Receita receita;
 	private Ingrediente ingrediente;
@@ -8,11 +8,11 @@ public class Receita_Ingrediente {
 	private Double quantidade;
 	
 	
-	public Receita_Ingrediente (){
+	public ReceitaIngrediente (){
 		
 	}
 	
-	public Receita_Ingrediente(Receita receita,	Ingrediente ingredientes, Unidade unidade, Double quantidade) {
+	public ReceitaIngrediente(Receita receita,	Ingrediente ingredientes, Unidade unidade, Double quantidade) {
 		this.receita = receita;
 		this.ingrediente = ingredientes;
 		this.unidade = unidade;

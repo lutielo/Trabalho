@@ -85,7 +85,7 @@ public class ControleReceitaApp {
 		ReceitaDAO receitaDAO = new ReceitaDAO();
 		int codigoRecebido = ui.facaPerguntaInt("Digite o codigo da receita para pesquisa");
 		try {
-			Receita receita = receitaDAO.listeDadosDaReceitaPeloCodigo(codigoRecebido);
+			Receita receita = receitaDAO.listarDadosDaReceitaPeloCodigo(codigoRecebido);
 			if (receita != null) {
 				System.out.println("Listando dados da receita com código = " + receita.getCodigo() + ":");
 				System.out.println("Codigo:" + receita.getCodigo() + "\tNome:" + receita.getNome() + "\tAutor: " + receita.getAutor().getNome() + "\tData de Criação: " + receita.getDataCriacaoFormatada() + "\tModo de Preparo: " + receita.getModo_preparo());

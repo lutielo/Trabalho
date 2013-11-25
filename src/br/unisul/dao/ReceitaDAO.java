@@ -140,7 +140,7 @@ public class ReceitaDAO extends GenericDAO {
 		}
 	}
 
-	public Receita listeDadosDaReceitaPeloCodigo(int codigoRecebido) throws DAOException {
+	public Receita listarDadosDaReceitaPeloCodigo(int codigoRecebido) throws DAOException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

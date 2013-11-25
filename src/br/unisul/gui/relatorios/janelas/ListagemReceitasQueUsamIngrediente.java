@@ -12,10 +12,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
 import br.unisul.dados.Ingrediente;
-import br.unisul.dados.Receita_Ingrediente;
+import br.unisul.dados.ReceitaIngrediente;
 import br.unisul.dados.Unidade;
 import br.unisul.dao.DAOException;
-import br.unisul.dao.Receita_IngredienteDAO;
+import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.ReceitasQueUsamIngredienteTableModel;
 import javax.swing.JTextField;
@@ -24,7 +24,7 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Receita_Ingrediente> listaIngredientesMaisUtilizados;
+	private List<ReceitaIngrediente> listaIngredientesMaisUtilizados;
 	private ReceitasQueUsamIngredienteTableModel rquitm;
 	private JTable tblIngredientes;
 	private JScrollPane spListagemIngredientes;
@@ -95,11 +95,11 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		return rquitm;
 	}
 
-	private List<Receita_Ingrediente> getIngredientes(Unidade unidade, Ingrediente ingrediente) {
-		Receita_IngredienteDAO receita_IngredienteDAO = new Receita_IngredienteDAO();
+	private List<ReceitaIngrediente> getIngredientes(Unidade unidade, Ingrediente ingrediente) {
+		ReceitaIngredienteDAO receitaIngredienteDAO = new ReceitaIngredienteDAO();
 		listaIngredientesMaisUtilizados = new ArrayList<>();
 		try {
-			listaIngredientesMaisUtilizados = receita_IngredienteDAO.listeReceitaQueUsamIngrediente(unidade, ingrediente);
+			listaIngredientesMaisUtilizados = receitaIngredienteDAO.listarReceitaQueUsamIngrediente(unidade, ingrediente);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
