@@ -12,6 +12,9 @@ import javax.swing.JOptionPane;
 import br.unisul.gui.cadastros.CadastroAutor;
 import br.unisul.gui.cadastros.CadastroIngrediente;
 import br.unisul.gui.cadastros.CadastroReceita;
+import br.unisul.gui.relatorios.janelas.ListagemAutores;
+import br.unisul.gui.relatorios.janelas.ListagemIngredientes;
+import br.unisul.gui.relatorios.janelas.ListagemReceitas;
 
 public class MenuPrincipal extends JFrame {
 
@@ -23,6 +26,12 @@ public class MenuPrincipal extends JFrame {
 	private JMenuItem miCadastroReceita;
 	private JMenuItem miCadastroAutor;
 	private JMenuItem miCadastroIngrediente;
+	private JMenu mnListagem;
+	private JMenuItem mntmListagemAutores;
+	private JMenuItem mntmListagemIngredientes;
+	private JMenuItem mntmListagemReceitas; 
+	private JMenu mnRelatorios;
+	
 	private JMenu mnSair;
 
 	public MenuPrincipal() {
@@ -61,9 +70,31 @@ public class MenuPrincipal extends JFrame {
 		TrataEventoCadastroReceita trataEventoCadastroReceita = new TrataEventoCadastroReceita();
 		miCadastroReceita.addActionListener(trataEventoCadastroReceita);
 		mnCadastro.add(miCadastroReceita);
+		
+		mnListagem = new JMenu("Listagem");
+		mnArquivo.add(mnListagem);
+		
+		mntmListagemAutores = new JMenuItem("Listagem Autores");
+		TrataEventoListagemAutores trataEventoListagemAutores = new TrataEventoListagemAutores();
+		mntmListagemAutores.addActionListener(trataEventoListagemAutores);
+		mnListagem.add(mntmListagemAutores);
+		
+		mntmListagemIngredientes = new JMenuItem("Listagem Ingredientes");
+		TrataEventoListagemIngredientes trataEventoListagemIngredientes = new TrataEventoListagemIngredientes();
+		mntmListagemIngredientes.addActionListener(trataEventoListagemIngredientes);
+		mnListagem.add(mntmListagemIngredientes);
+		
+		mntmListagemReceitas = new JMenuItem("Listagem Receitas");
+		TrataEventoListagemReceitas trataEventoListagemReceitas = new TrataEventoListagemReceitas();
+		mntmListagemReceitas.addActionListener(trataEventoListagemReceitas);
+		mnListagem.add(mntmListagemReceitas);
+		
+		mnRelatorios = new JMenu("Relat\u00F3rios");
+		mbMenuBarra.add(mnRelatorios);
 
 		mnSair = new JMenu("Sair");
 		mbMenuBarra.add(mnSair);
+		
 		mnSair.addMouseListener(new java.awt.event.MouseAdapter() {
 
 			@Override
@@ -106,6 +137,39 @@ public class MenuPrincipal extends JFrame {
 			CadastroReceita cadastroReceita = new CadastroReceita();
 			cadastroReceita.setVisible(true);
 		}
+	}
+	
+	private class TrataEventoListagemAutores implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			ListagemAutores listagemAutores = new ListagemAutores();
+			listagemAutores.setVisible(true);
+		}
+		
+	}
+	
+	private class TrataEventoListagemIngredientes implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			ListagemIngredientes listagemIngredientes = new ListagemIngredientes();
+			listagemIngredientes.setVisible(true);
+		}
+		
+	}
+	
+	private class TrataEventoListagemReceitas implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			ListagemReceitas listagemReceitas = new ListagemReceitas();
+			listagemReceitas.setVisible(true);
+		}
+		
 	}
 
 	public static void main(String[] args) {
