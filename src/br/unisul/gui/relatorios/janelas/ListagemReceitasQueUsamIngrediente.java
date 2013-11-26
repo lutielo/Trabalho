@@ -52,7 +52,6 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		spListagemIngredientes = new JScrollPane(getTblIngredientes());
 		spListagemIngredientes.setBounds(10, 75, 415, 328);
 
-
 		lblReceitasQueUsamIngrediente = new JLabel("Receitas Que Usam o Ingrediente:");
 		lblReceitasQueUsamIngrediente.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblReceitasQueUsamIngrediente.setBounds(69, 11, 331, 27);
