@@ -19,6 +19,9 @@ import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.ReceitasQueUsamIngredienteTableModel;
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListagemReceitasQueUsamIngrediente extends JFrame {
 
@@ -30,10 +33,11 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	private JScrollPane spListagemIngredientes;
 	private JLabel lblReceitasQueUsamIngrediente;
 	private JTextField tfNomeIngredienteUsado;
+	private JButton btnFechar;
 
 	public ListagemReceitasQueUsamIngrediente(Unidade unidade, Ingrediente ingrediente) {
 		super("Receitas que usam " + ingrediente.getNome().toLowerCase() + " em " + unidade.getTipo().toLowerCase());
-		this.setSize(443, 453);
+		this.setSize(443, 465);
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -63,6 +67,15 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		tfNomeIngredienteUsado.setText(ingrediente.getNome() + " em " + unidade.getTipo().toLowerCase());
 		getContentPane().add(tfNomeIngredienteUsado);
 		tfNomeIngredienteUsado.setColumns(10);
+		
+		btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO - LUTIELO arrumar action do botao fechar
+			}
+		});
+		btnFechar.setBounds(159, 414, 104, 23);
+		getContentPane().add(btnFechar);
 
 		configuraTable();
 	}

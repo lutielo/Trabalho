@@ -81,12 +81,21 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 				}
 			}
 		});
-		btnVisualizar.setBounds(147, 395, 104, 23);
+		btnVisualizar.setBounds(90, 395, 104, 23);
 		getContentPane().add(btnVisualizar);
 		
 		lblCliqueParaVisualizar = new JLabel("Clique para visualizar as receitas que usam o ingrediente selecionado");
 		lblCliqueParaVisualizar.setBounds(20, 370, 405, 14);
 		getContentPane().add(lblCliqueParaVisualizar);
+		
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO - LUTIELO arrumar action do botao fechar
+			}
+		});
+		btnFechar.setBounds(219, 395, 104, 23);
+		getContentPane().add(btnFechar);
 
 		TableColumn col0 = getTblIngredientes().getColumnModel().getColumn(0);
 		col0.setPreferredWidth(90);
