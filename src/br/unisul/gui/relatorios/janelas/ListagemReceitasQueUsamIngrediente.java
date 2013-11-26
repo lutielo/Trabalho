@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -50,37 +51,32 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 	private void abreTela(Unidade unidade, Ingrediente ingrediente) {
 		spListagemIngredientes = new JScrollPane(getTblIngredientes());
 		spListagemIngredientes.setBounds(10, 75, 415, 328);
-		getContentPane().add(spListagemIngredientes);
-		this.addIngredientes(unidade, ingrediente);
 
-		getTblIngredientes().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		getTblIngredientes().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		lblReceitasQueUsamIngrediente = new JLabel("Receitas Que Usam o Ingrediente:");
 		lblReceitasQueUsamIngrediente.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblReceitasQueUsamIngrediente.setBounds(69, 11, 331, 27);
-		getContentPane().add(lblReceitasQueUsamIngrediente);
 
 		tfNomeIngredienteUsado = new JTextField("");
 		tfNomeIngredienteUsado.setEditable(false);
 		tfNomeIngredienteUsado.setBounds(79, 44, 260, 20);
 		tfNomeIngredienteUsado.setText(ingrediente.getNome() + " em " + unidade.getTipo().toLowerCase());
-		getContentPane().add(tfNomeIngredienteUsado);
 		tfNomeIngredienteUsado.setColumns(10);
-		
-		btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO - LUTIELO arrumar action do botao fechar
-			}
-		});
-		btnFechar.setBounds(159, 414, 104, 23);
-		getContentPane().add(btnFechar);
 
-		configuraTable();
+		btnFechar = new JButton("Fechar");
+		TrataEventoFechar trataEventoFechar = new TrataEventoFechar();
+		btnFechar.addActionListener(trataEventoFechar);
+		btnFechar.setBounds(159, 414, 104, 23);
+
+		getContentPane().add(btnFechar);
+		getContentPane().add(tfNomeIngredienteUsado);
+		getContentPane().add(lblReceitasQueUsamIngrediente);
+		getContentPane().add(spListagemIngredientes);
+
+		configuraTable(unidade, ingrediente);
 	}
 
-	private void configuraTable() {
+	private void configuraTable(Unidade unidade, Ingrediente ingrediente) {
 		TableColumn col0 = getTblIngredientes().getColumnModel().getColumn(0);
 		col0.setPreferredWidth(150);
 
@@ -91,6 +87,10 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		col2.setPreferredWidth(80);
 
 		getTblIngredientes().setDefaultRenderer(Object.class, new CellRenderer());
+		getTblIngredientes().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		getTblIngredientes().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		this.addIngredientes(unidade, ingrediente);
 	}
 
 	private JTable getTblIngredientes() {
@@ -114,6 +114,7 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		try {
 			listaIngredientesMaisUtilizados = receitaIngredienteDAO.listarReceitaQueUsamIngrediente(unidade, ingrediente);
 		} catch (DAOException e) {
+			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada", "Erro", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		return listaIngredientesMaisUtilizados;
@@ -121,5 +122,17 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 
 	private void addIngredientes(Unidade unidade, Ingrediente ingrediente) {
 		getModel().addListaDeIngredientes(getIngredientes(unidade, ingrediente));
+	}
+
+	public void fecharTela() {
+		this.dispose();
+	}
+
+	private class TrataEventoFechar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			fecharTela();
+		}
 	}
 }
