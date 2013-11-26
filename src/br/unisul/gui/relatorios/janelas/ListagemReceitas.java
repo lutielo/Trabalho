@@ -187,7 +187,7 @@ public class ListagemReceitas extends JFrame {
 						}
 					}
 					if (numeroInvalido) {
-						JOptionPane.showMessageDialog(null, "Digite um código existente");
+						JOptionPane.showMessageDialog(null, "Digite um código existente", "Atenção", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			} else if (!StringUtils.isNuloOuBranco(tfNome.getText())) {
@@ -200,7 +200,7 @@ public class ListagemReceitas extends JFrame {
 				Integer.parseInt(tfCodigo.getText());
 				return true;
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Insira um valor válido");
+				JOptionPane.showMessageDialog(null, "Insira um valor válido", "Atenção", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 		}
@@ -217,7 +217,7 @@ public class ListagemReceitas extends JFrame {
 					JOptionPane.showMessageDialog(null, "Nenhum resultado encontrado");
 				}
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 			}
 		}
 
@@ -229,7 +229,7 @@ public class ListagemReceitas extends JFrame {
 				getModel().limpar();
 				getModel().addReceita(receita);
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 			}
 		}
 	}
@@ -251,11 +251,11 @@ public class ListagemReceitas extends JFrame {
 					EditaReceita editaReceita = new EditaReceita(receitaIngrediente);
 					editaReceita.setVisible(true);
 				} catch (DAOException e) {
-					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e1) {
-				JOptionPane.showMessageDialog(null, "Para editar selecione uma receita");
+				JOptionPane.showMessageDialog(null, "Para editar selecione uma receita", "Erro", JOptionPane.ERROR_MESSAGE); 
 			}
 		}
 	}
@@ -278,18 +278,18 @@ public class ListagemReceitas extends JFrame {
 						JOptionPane.YES_NO_OPTION);
 					if (dialogButton == JOptionPane.YES_OPTION) {
 						receitaDAO.deletarReceita(new Receita(codigoReceita, null, null, null, null));
-						JOptionPane.showMessageDialog(null, "Receita deletada com sucesso.");
+						JOptionPane.showMessageDialog(null, "Receita deletada com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 						getModel().limpar();
 						configuraTable();
 					} else if (dialogButton == JOptionPane.NO_OPTION) {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
-					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Para remover selecione uma receita");
+				JOptionPane.showMessageDialog(null, "Para remover selecione uma receita", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

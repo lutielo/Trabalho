@@ -153,10 +153,10 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 				if (!cbUnidade.getSelectedItem().toString().contains(" -- Selecione -- ")) {
 					cadastrarIngredienteNaReceita();
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione uma unidade");
+					JOptionPane.showMessageDialog(null, "Selecione uma unidade", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Selecione um ingrediente");
+				JOptionPane.showMessageDialog(null, "Selecione um ingrediente", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -176,12 +176,12 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 						cadastraIngrediente(unidade, ingrediente);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Digite a quantidade");
+					JOptionPane.showMessageDialog(null, "Digite a quantidade", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
+				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.", "Atenção", JOptionPane.WARNING_MESSAGE);
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -199,13 +199,13 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 					+ receitaIngrediente.getIngrediente().getNome() + "\nQuantidade \t: " + receitaIngrediente.getQuantidade()
 					+ "\nUnidade \t: " + receitaIngrediente.getUnidade().getTipo(), "Atenção", JOptionPane.YES_NO_OPTION);
 				if (dialogButton == JOptionPane.YES_OPTION) {
-					JOptionPane.showMessageDialog(null, "Ingrediente adiciona com sucesso.");
+					JOptionPane.showMessageDialog(null, "Ingrediente adiciona com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				} else if (dialogButton == JOptionPane.NO_OPTION) {
-					JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.");
+					JOptionPane.showMessageDialog(null, "Ingrediente não adicionado.", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -215,7 +215,7 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 				quantidade = Double.parseDouble(tfQuantidade.getText());
 				return true;
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.");
+				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.", "Atenção", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 		}

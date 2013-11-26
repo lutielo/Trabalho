@@ -174,7 +174,7 @@ public class ListagemIngredientesDaReceita extends JFrame {
 				EditaReceitaIngrediente editaReceitaIngrediente = new EditaReceitaIngrediente(listaIngredientesDaReceita.get(selectedRow));
 				editaReceitaIngrediente.setVisible(true);
 			} catch (IndexOutOfBoundsException e1) {
-				JOptionPane.showMessageDialog(null, "Para editar selecione um ingrediente");
+				JOptionPane.showMessageDialog(null, "Para editar selecione um ingrediente", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
@@ -197,18 +197,18 @@ public class ListagemIngredientesDaReceita extends JFrame {
 						+ "?", "Atenção", JOptionPane.YES_NO_OPTION);
 					if (dialogButton == JOptionPane.YES_OPTION) {
 						receitaIngredienteDAO.deletaReceitaIngrediente(listaIngredientesDaReceita.get(selectedRow));
-						JOptionPane.showMessageDialog(null, "Ingrediente deletado com sucesso.");
+						JOptionPane.showMessageDialog(null, "Ingrediente deletado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 						getModel().limpar();
 						// configuraTable();
 					} else if (dialogButton == JOptionPane.NO_OPTION) {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
-					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Para remover selecione um autor");
+				JOptionPane.showMessageDialog(null, "Para remover selecione um autor", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

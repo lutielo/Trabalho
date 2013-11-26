@@ -155,10 +155,10 @@ public class EditaReceitaIngrediente extends JFrame {
 				receitaIngredienteNEW.setUnidade(unidade);
 				receitaIngredienteNEW.setQuantidade(Double.parseDouble(tfQuantidade.getText()));
 				receitaIngredienteDAO.alterarIngredienteNaReceita(receitaIngredienteNEW, receitaIngredienteOLD);
-				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " editado com sucesso.");
+				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " editado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 				fecharTela();
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}

@@ -252,10 +252,10 @@ public class CadastroReceita extends JFrame {
 				if (!cbUnidade.getSelectedItem().toString().contains(" -- Selecione -- ")) {
 					cadastrarIngredienteNaReceita();
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione uma unidade");
+					JOptionPane.showMessageDialog(null, "Selecione uma unidade", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Selecione um ingrediente");
+				JOptionPane.showMessageDialog(null, "Selecione um ingrediente", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -275,12 +275,12 @@ public class CadastroReceita extends JFrame {
 						cadastraIngrediente(unidade, ingrediente);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Digite a quantidade");
+					JOptionPane.showMessageDialog(null, "Digite a quantidade", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.");
+				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.", "Atenção", JOptionPane.WARNING_MESSAGE);
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -312,7 +312,7 @@ public class CadastroReceita extends JFrame {
 				quantidade = Double.parseDouble(tfQuantidade.getText());
 				return true;
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.");
+				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.", "Atenção", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 		}
@@ -330,13 +330,13 @@ public class CadastroReceita extends JFrame {
 						this.cadastrarReceita(autor);
 						this.cadatrarIngredientesNaReceita();
 					} else {
-						JOptionPane.showMessageDialog(null, "Digite o modo de preparo.");
+						JOptionPane.showMessageDialog(null, "Digite o modo de preparo.", "Atenção", JOptionPane.WARNING_MESSAGE);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um Autor");
+					JOptionPane.showMessageDialog(null, "Selecione um Autor", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite o nome da receita");
+				JOptionPane.showMessageDialog(null, "Digite o nome da receita", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -348,7 +348,7 @@ public class CadastroReceita extends JFrame {
 				listaAutores = autorDAO.listarTodosAutores();
 				autor = (Autor) listaAutores.get(cbAutor.getSelectedIndex() - 1);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Selecione um autor.");
+				JOptionPane.showMessageDialog(null, "Selecione um autor.", "Atenção", JOptionPane.WARNING_MESSAGE);
 			} catch (DAOException e) {
 				e.printStackTrace();
 			}
@@ -360,10 +360,10 @@ public class CadastroReceita extends JFrame {
 			ReceitaDAO receitaDAO = new ReceitaDAO();
 			try {
 				receitaDAO.cadastreReceita(receita);
-				JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso");
+				JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 				fecharTela();
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -380,7 +380,7 @@ public class CadastroReceita extends JFrame {
 					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				}
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}

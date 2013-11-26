@@ -169,7 +169,7 @@ public class EditaReceita extends JFrame {
 				taResumoReceita.append("\n" + i.getQuantidade() + " " + i.getUnidade().getTipo() + " de " + i.getIngrediente().getNome());
 			}
 		} catch (DAOException e) {
-			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 			e.printStackTrace();
 		}
 		taResumoReceita.append("\n\nModo de preparo : " + receitaIngrediente.getReceita().getModo_preparo());
@@ -247,10 +247,10 @@ public class EditaReceita extends JFrame {
 					this.editarReceita(autor);
 					this.cadatrarIngredientesNaReceita();
 				} else {
-					JOptionPane.showMessageDialog(null, "Digite o modo de preparo.");
+					JOptionPane.showMessageDialog(null, "Digite o modo de preparo.", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite o nome da receita");
+				JOptionPane.showMessageDialog(null, "Digite o nome da receita", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -262,9 +262,9 @@ public class EditaReceita extends JFrame {
 				listaAutores = autorDAO.listarTodosAutores();
 				autor = (Autor) listaAutores.get(cbAutor.getSelectedIndex() - 1);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Selecione um autor.");
+				JOptionPane.showMessageDialog(null, "Selecione um autor.", "Atenção", JOptionPane.WARNING_MESSAGE);
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 			return autor;
@@ -275,10 +275,10 @@ public class EditaReceita extends JFrame {
 			ReceitaDAO receitaDAO = new ReceitaDAO();
 			try {
 				receitaDAO.alterarReceita(receita);
-				JOptionPane.showMessageDialog(null, "Receita editada com sucesso");
+				JOptionPane.showMessageDialog(null, "Receita editada com sucesso", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 				fecharTela();
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -295,7 +295,7 @@ public class EditaReceita extends JFrame {
 					receitaIngredienteDAO.cadastrarIngredienteNaReceita(receitaIngrediente);
 				}
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}

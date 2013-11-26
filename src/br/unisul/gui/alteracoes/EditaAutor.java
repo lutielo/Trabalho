@@ -146,10 +146,10 @@ public class EditaAutor extends JFrame {
 					Sexo sexo = new Sexo(sexoAutor, null);
 					editarAutor(sexo);
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um sexo.");
+					JOptionPane.showMessageDialog(null, "Selecione um sexo.", "Atenção", JOptionPane.WARNING_MESSAGE);  
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite um nome válido");
+				JOptionPane.showMessageDialog(null, "Digite um nome válido", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -161,7 +161,7 @@ public class EditaAutor extends JFrame {
 				autorDAO.alterarAutor(autor);
 				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " editado com sucesso.");
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			} finally {
 				fecharTela();

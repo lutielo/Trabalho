@@ -127,10 +127,10 @@ public class CadastroAutor extends JFrame {
 					Sexo sexo = new Sexo(sexoAutor, null);
 					cadastrarAutor(sexo);
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione um sexo.");
+					JOptionPane.showMessageDialog(null, "Selecione um sexo.", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite um nome válido");
+				JOptionPane.showMessageDialog(null, "Digite um nome válido", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -139,9 +139,9 @@ public class CadastroAutor extends JFrame {
 			AutorDAO autorDAO = new AutorDAO();
 			try {
 				autorDAO.cadastrarAutor(autor);
-				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.");
+				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			} finally {
 				fecharTela();

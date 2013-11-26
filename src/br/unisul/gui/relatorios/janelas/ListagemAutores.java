@@ -182,7 +182,7 @@ public class ListagemAutores extends JFrame {
 						}
 					}
 					if (numeroInvalido) {
-						JOptionPane.showMessageDialog(null, "Digite um código existente");
+						JOptionPane.showMessageDialog(null, "Digite um código existente", "Atenção", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			} else if (!StringUtils.isNuloOuBranco(tfNome.getText())) {
@@ -195,7 +195,7 @@ public class ListagemAutores extends JFrame {
 				Integer.parseInt(tfCodigo.getText());
 				return true;
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Insira um valor válido");
+				JOptionPane.showMessageDialog(null, "Insira um valor válido", "Atenção", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 		}
@@ -212,7 +212,7 @@ public class ListagemAutores extends JFrame {
 					JOptionPane.showMessageDialog(null, "Nenhum resultado encontrado");
 				}
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -225,7 +225,7 @@ public class ListagemAutores extends JFrame {
 				getModel().limpar();
 				getModel().addAutor(autor);
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
@@ -247,11 +247,11 @@ public class ListagemAutores extends JFrame {
 					EditaAutor editaAutor = new EditaAutor(autor);
 					editaAutor.setVisible(true);
 				} catch (DAOException e) {
-					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e1) {
-				JOptionPane.showMessageDialog(null, "Para editar selecione um autor");
+				JOptionPane.showMessageDialog(null, "Para editar selecione um autor", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
@@ -274,18 +274,18 @@ public class ListagemAutores extends JFrame {
 						JOptionPane.YES_NO_OPTION);
 					if (dialogButton == JOptionPane.YES_OPTION) {
 						autorDAO.deletarAutor(new Autor(codigoAutor, null, null));
-						JOptionPane.showMessageDialog(null, "Autor deletado com sucesso.");
+						JOptionPane.showMessageDialog(null, "Autor deletado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE); 
 						getModel().limpar();
 						configuraTable();
 					} else if (dialogButton == JOptionPane.NO_OPTION) {
 						JOptionPane.showMessageDialog(null, "Operação cancelada.");
 					}
 				} catch (DAOException e) {
-					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 					e.printStackTrace();
 				}
 			} catch (IndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Para remover selecione um autor");
+				JOptionPane.showMessageDialog(null, "Para remover selecione um autor", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

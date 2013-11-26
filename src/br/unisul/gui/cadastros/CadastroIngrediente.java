@@ -94,7 +94,7 @@ public class CadastroIngrediente extends JFrame {
 			if (!StringUtils.isNuloOuBranco(tfNomeIngrediente.getText())) {
 				this.cadastrarIngrediente();
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
+				JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -103,9 +103,9 @@ public class CadastroIngrediente extends JFrame {
 			IngredienteDAO ingredienteDAO = new IngredienteDAO();
 			try {
 				ingredienteDAO.cadastrarIngrediente(ingrediente);
-				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " cadastrado com sucesso.");
+				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " cadastrado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE); 
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			} finally {
 				fecharTela();

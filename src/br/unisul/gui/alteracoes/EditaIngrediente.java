@@ -108,7 +108,7 @@ public class EditaIngrediente extends JFrame {
 			if (!StringUtils.isNuloOuBranco(tfNomeIngrediente.getText())) {
 				this.editarIngrediente();
 			} else {
-				JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente");
+				JOptionPane.showMessageDialog(null, "Digite o nome do ingrediente", "Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -117,10 +117,10 @@ public class EditaIngrediente extends JFrame {
 			IngredienteDAO ingredienteDAO = new IngredienteDAO();
 			try {
 				ingredienteDAO.cadastrarIngrediente(ingrediente);
-				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " editado com sucesso.");
+				JOptionPane.showMessageDialog(null, "Ingrediente " + tfNomeIngrediente.getText() + " editado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 				fecharTela();
 			} catch (DAOException e) {
-				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.");
+				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace();
 			}
 		}
