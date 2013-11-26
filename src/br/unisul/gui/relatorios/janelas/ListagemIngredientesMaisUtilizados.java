@@ -51,28 +51,29 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 	private void abreTela() {
 		spListagemIngredientes = new JScrollPane(getTblIngredientes());
 		spListagemIngredientes.setBounds(10, 63, 415, 305);
-		getContentPane().add(spListagemIngredientes);
 
 		lblListagemIngredientesMaisUtilizados = new JLabel("Listagem de Ingredientes Mais Utilizados");
 		lblListagemIngredientesMaisUtilizados.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblListagemIngredientesMaisUtilizados.setBounds(36, 23, 389, 29);
-		getContentPane().add(lblListagemIngredientesMaisUtilizados);
 
 		btnVisualizar = new JButton("Visualizar");
 		TrataEventoVisualizar trataEventoVisualizar = new TrataEventoVisualizar();
 		btnVisualizar.addActionListener(trataEventoVisualizar);
 		btnVisualizar.setBounds(90, 395, 104, 23);
-		getContentPane().add(btnVisualizar);
 
 		lblCliqueParaVisualizar = new JLabel("Clique para visualizar as receitas que usam o ingrediente selecionado");
 		lblCliqueParaVisualizar.setBounds(20, 370, 405, 14);
-		getContentPane().add(lblCliqueParaVisualizar);
 
 		btnFechar = new JButton("Fechar");
 		TrataEventoFechar trataEventoFechar = new TrataEventoFechar();
 		btnFechar.addActionListener(trataEventoFechar);
 		btnFechar.setBounds(219, 395, 104, 23);
+
 		getContentPane().add(btnFechar);
+		getContentPane().add(lblCliqueParaVisualizar);
+		getContentPane().add(btnVisualizar);
+		getContentPane().add(spListagemIngredientes);
+		getContentPane().add(lblListagemIngredientesMaisUtilizados);
 
 		configuraTable();
 	}
@@ -120,6 +121,7 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		try {
 			listaIngredientesMaisUtilizados = receitaIngredienteDAO.listarIngredientesMaisUtilizados();
 		} catch (DAOException e) {
+			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada", "Erro", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		return listaIngredientesMaisUtilizados;
