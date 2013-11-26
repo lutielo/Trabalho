@@ -3,6 +3,10 @@ package br.unisul.gui.relatorios.janelas;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +31,8 @@ import br.unisul.util.StringUtils;
 public class ListagemIngredientes extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private PrintWriter logErro;
 	private List<Ingrediente> listaIngredientes;
 	private IngredienteTableModel itm;
 	private JTable tblIngredientes;
@@ -51,7 +56,13 @@ public class ListagemIngredientes extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela();
 	}
 
@@ -209,6 +220,8 @@ public class ListagemIngredientes extends JFrame {
 				}
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 
@@ -221,6 +234,8 @@ public class ListagemIngredientes extends JFrame {
 				getModel().addIngrediente(ingrediente);
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 	}
@@ -242,7 +257,8 @@ public class ListagemIngredientes extends JFrame {
 					editaIngrediente.setVisible(true);
 				} catch (DAOException e) {
 					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-					e.printStackTrace();
+					e.printStackTrace(logErro);
+					logErro.flush();
 				}
 			} catch (IndexOutOfBoundsException e1) {
 				JOptionPane.showMessageDialog(null, "Para editar selecione um ingrediente", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -276,7 +292,8 @@ public class ListagemIngredientes extends JFrame {
 					}
 				} catch (DAOException e) {
 					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 	
-					e.printStackTrace();
+					e.printStackTrace(logErro);
+					logErro.flush();
 				}
 			} catch (IndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Para remover selecione um autor", "Atenção", JOptionPane.WARNING_MESSAGE);

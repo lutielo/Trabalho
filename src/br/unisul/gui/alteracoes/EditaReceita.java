@@ -3,6 +3,10 @@ package br.unisul.gui.alteracoes;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +40,8 @@ import br.unisul.util.StringUtils;
 public class EditaReceita extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private PrintWriter logErro;
 	private JLabel lblAlteracaoDeReceita;
 	private JLabel lblNomeDaReceita;
 	private JLabel lblNomeDoAutor;
@@ -63,7 +68,13 @@ public class EditaReceita extends JFrame {
 		this.setSize(800, 508);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela(receitaIngrediente);
 	}
 
@@ -170,7 +181,8 @@ public class EditaReceita extends JFrame {
 			}
 		} catch (DAOException e) {
 			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-			e.printStackTrace();
+			e.printStackTrace(logErro);
+			logErro.flush();
 		}
 		taResumoReceita.append("\n\nModo de preparo : " + receitaIngrediente.getReceita().getModo_preparo());
 	}
@@ -265,7 +277,8 @@ public class EditaReceita extends JFrame {
 				JOptionPane.showMessageDialog(null, "Selecione um autor.", "Atenção", JOptionPane.WARNING_MESSAGE);
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 			return autor;
 		}
@@ -279,7 +292,8 @@ public class EditaReceita extends JFrame {
 				fecharTela();
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 
@@ -296,7 +310,8 @@ public class EditaReceita extends JFrame {
 				}
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 	}

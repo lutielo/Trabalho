@@ -3,6 +3,10 @@ package br.unisul.gui.relatorios.janelas;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +31,8 @@ import br.unisul.util.StringUtils;
 public class ListagemAutores extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private PrintWriter logErro;
 	private List<Autor> listaAutores;
 	private AutorTableModel atm;
 	private JTable tblAutores;
@@ -51,7 +56,13 @@ public class ListagemAutores extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela();
 	}
 
@@ -213,7 +224,8 @@ public class ListagemAutores extends JFrame {
 				}
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 
@@ -226,7 +238,8 @@ public class ListagemAutores extends JFrame {
 				getModel().addAutor(autor);
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 	}
@@ -248,7 +261,8 @@ public class ListagemAutores extends JFrame {
 					editaAutor.setVisible(true);
 				} catch (DAOException e) {
 					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-					e.printStackTrace();
+					e.printStackTrace(logErro);
+					logErro.flush();
 				}
 			} catch (IndexOutOfBoundsException e1) {
 				JOptionPane.showMessageDialog(null, "Para editar selecione um autor", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -282,7 +296,8 @@ public class ListagemAutores extends JFrame {
 					}
 				} catch (DAOException e) {
 					JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-					e.printStackTrace();
+					e.printStackTrace(logErro);
+					logErro.flush();
 				}
 			} catch (IndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Para remover selecione um autor", "Atenção", JOptionPane.WARNING_MESSAGE);

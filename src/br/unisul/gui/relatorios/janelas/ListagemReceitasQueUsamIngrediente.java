@@ -1,14 +1,22 @@
 package br.unisul.gui.relatorios.janelas;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
@@ -19,15 +27,12 @@ import br.unisul.dao.DAOException;
 import br.unisul.dao.ReceitaIngredienteDAO;
 import br.unisul.gui.relatorios.tablemodels.CellRenderer;
 import br.unisul.gui.relatorios.tablemodels.ReceitasQueUsamIngredienteTableModel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ListagemReceitasQueUsamIngrediente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private PrintWriter logErro;
 	private List<ReceitaIngrediente> listaIngredientesMaisUtilizados;
 	private ReceitasQueUsamIngredienteTableModel rquitm;
 	private JTable tblIngredientes;
@@ -44,7 +49,13 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela(unidade, ingrediente);
 	}
 
@@ -113,8 +124,9 @@ public class ListagemReceitasQueUsamIngrediente extends JFrame {
 		try {
 			listaIngredientesMaisUtilizados = receitaIngredienteDAO.listarReceitaQueUsamIngrediente(unidade, ingrediente);
 		} catch (DAOException e) {
-			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada", "Erro", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace(logErro);
+			logErro.flush();
 		}
 		return listaIngredientesMaisUtilizados;
 	}

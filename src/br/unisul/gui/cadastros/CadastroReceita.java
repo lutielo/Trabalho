@@ -3,6 +3,10 @@ package br.unisul.gui.cadastros;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +39,8 @@ import br.unisul.util.StringUtils;
 public class CadastroReceita extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private PrintWriter logErro;
 	private JLabel lblCadastro;
 	private JLabel lblNomeDaReceita;
 	private JLabel lblNomeDoAutor;
@@ -69,7 +74,13 @@ public class CadastroReceita extends JFrame {
 		this.setSize(800, 508);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela();
 	}
 
@@ -281,7 +292,8 @@ public class CadastroReceita extends JFrame {
 				JOptionPane.showMessageDialog(null, "Selecione todos os campos obrigatórios.", "Atenção", JOptionPane.WARNING_MESSAGE);
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 
@@ -364,7 +376,8 @@ public class CadastroReceita extends JFrame {
 				fecharTela();
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 
@@ -381,7 +394,8 @@ public class CadastroReceita extends JFrame {
 				}
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			}
 		}
 	}

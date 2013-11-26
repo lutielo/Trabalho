@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -24,6 +28,7 @@ public class CadastroAutor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	private PrintWriter logErro;
 	private JTextField tfNomeAutor;
 	private JLabel lblNomeAutor;
 	private JLabel lblSexo;
@@ -42,7 +47,13 @@ public class CadastroAutor extends JFrame {
 		this.setSize(400, 300);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela();
 	}
 
@@ -142,7 +153,8 @@ public class CadastroAutor extends JFrame {
 				JOptionPane.showMessageDialog(null, "Autor " + autor.getNome() + " cadastrado com sucesso.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
-				e.printStackTrace();
+				e.printStackTrace(logErro);
+				logErro.flush();
 			} finally {
 				fecharTela();
 			}

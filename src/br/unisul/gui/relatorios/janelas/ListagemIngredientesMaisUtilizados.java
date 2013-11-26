@@ -3,6 +3,10 @@ package br.unisul.gui.relatorios.janelas;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +30,8 @@ import br.unisul.gui.relatorios.tablemodels.IngredientesMaisUtilizadosTableModel
 public class ListagemIngredientesMaisUtilizados extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private PrintWriter logErro;
 	private List<ReceitaIngrediente> listaIngredientesMaisUtilizados;
 	private IngredientesMaisUtilizadosTableModel imutm;
 	private JTable tblIngredientes;
@@ -44,7 +49,13 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
+		try {
+			logErro = new PrintWriter(new FileOutputStream(new File("C:\\temp\\logAplicacaoTrabalhoProg2.txt"), true));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.abreTela();
 	}
 
@@ -121,8 +132,9 @@ public class ListagemIngredientesMaisUtilizados extends JFrame {
 		try {
 			listaIngredientesMaisUtilizados = receitaIngredienteDAO.listarIngredientesMaisUtilizados();
 		} catch (DAOException e) {
-			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada", "Erro", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace(logErro);
+			logErro.flush();
 		}
 		return listaIngredientesMaisUtilizados;
 	}
