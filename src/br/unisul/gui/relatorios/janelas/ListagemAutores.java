@@ -220,7 +220,7 @@ public class ListagemAutores extends JFrame {
 					getModel().limpar();
 					getModel().addListaDeAutores(autores);
 				} else {
-					JOptionPane.showMessageDialog(null, "Nenhum resultado encontrado");
+					JOptionPane.showMessageDialog(null, "Nenhum resultado encontrado", "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
