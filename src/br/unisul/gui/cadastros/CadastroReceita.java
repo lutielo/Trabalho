@@ -281,9 +281,22 @@ public class CadastroReceita extends JFrame {
 				listaIngredientes = ingredienteDAO.listeTodosIngredientes();
 				Ingrediente ingrediente = (Ingrediente) listaIngredientes.get(cbIngrediente.getSelectedIndex() - 1);
 				if (!StringUtils.isNuloOuBranco(tfQuantidade.getText())) {
-					Double quantidade = null;
+					String quantidade = tfQuantidade.getText().toString();
 					if (validarValorQuantidade(quantidade)) {
-						cadastraIngrediente(unidade, ingrediente);
+						if (listaIngredientesAdicionados.isEmpty()){
+							cadastraIngrediente(unidade, ingrediente);
+						} else {
+							for (ReceitaIngrediente ingredienteJaAdicionado : listaIngredientesAdicionados) {
+								if(ingredienteJaAdicionado.getIngrediente().getCodigo() == ingrediente.getCodigo()){
+									if(ingredienteJaAdicionado.getUnidade().getCodigo() == unidade.getCodigo()){
+										JOptionPane.showMessageDialog(null, "Este Ingrediente já foi adicionado", "Atenção", JOptionPane.WARNING_MESSAGE);
+										break;
+									} else {
+										cadastraIngrediente(unidade, ingrediente);
+									}
+								}
+							}
+						}
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite a quantidade", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -319,9 +332,9 @@ public class CadastroReceita extends JFrame {
 			cbUnidade.setSelectedIndex(0);
 		}
 
-		private boolean validarValorQuantidade(Double quantidade) {
+		private boolean validarValorQuantidade(String quantidade) {
 			try {
-				quantidade = Double.parseDouble(tfQuantidade.getText());
+				Double.parseDouble(quantidade);
 				return true;
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(null, "Digite um valor de quantidade válida.", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -341,6 +354,8 @@ public class CadastroReceita extends JFrame {
 					if (!StringUtils.isNuloOuBranco(taModoPreparo.getText())) {
 						this.cadastrarReceita(autor);
 						this.cadatrarIngredientesNaReceita();
+						JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
+						fecharTela();
 					} else {
 						JOptionPane.showMessageDialog(null, "Digite o modo de preparo.", "Atenção", JOptionPane.WARNING_MESSAGE);
 					}
@@ -372,8 +387,6 @@ public class CadastroReceita extends JFrame {
 			ReceitaDAO receitaDAO = new ReceitaDAO();
 			try {
 				receitaDAO.cadastreReceita(receita);
-				JOptionPane.showMessageDialog(null, "Receita cadastrada com sucesso", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);  
-				fecharTela();
 			} catch (DAOException e) {
 				JOptionPane.showMessageDialog(null, "Sua requisição não foi processada.", "Erro", JOptionPane.ERROR_MESSAGE); 
 				e.printStackTrace(logErro);
