@@ -203,6 +203,8 @@ public class ListagemReceitas extends JFrame {
 				}
 			} else if (!StringUtils.isNuloOuBranco(tfNome.getText())) {
 				listarReceitasNome();
+			} else {
+				addReceitas();
 			}
 		}
 

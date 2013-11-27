@@ -198,6 +198,8 @@ public class ListagemAutores extends JFrame {
 				}
 			} else if (!StringUtils.isNuloOuBranco(tfNome.getText())) {
 				listarAutoresNome();
+			} else {
+				addAutores();
 			}
 		}
 

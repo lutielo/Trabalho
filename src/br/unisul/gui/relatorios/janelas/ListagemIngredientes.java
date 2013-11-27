@@ -141,6 +141,7 @@ public class ListagemIngredientes extends JFrame {
 	}
 
 	private void addIngredientes() {
+		getModel().limpar();
 		getModel().addListaDeIngredientes(getIngredientes());
 	}
 
@@ -194,6 +195,8 @@ public class ListagemIngredientes extends JFrame {
 				}
 			} else if (!StringUtils.isNuloOuBranco(tfNome.getText())) {
 				listarIngredientesNome();
+			} else {
+				addIngredientes();
 			}
 		}
 
