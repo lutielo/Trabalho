@@ -1,9 +1,13 @@
 package br.unisul.gui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -42,7 +46,9 @@ public class MenuPrincipal extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1000, 700);
 		this.setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(new BorderLayout());
+		setContentPane(new JLabel(new ImageIcon("imagens\\menu.jpg")));
+		getContentPane().setLayout(new FlowLayout());
 
 		this.abreTela();
 	}
