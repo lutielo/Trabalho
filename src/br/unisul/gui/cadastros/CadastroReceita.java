@@ -286,15 +286,19 @@ public class CadastroReceita extends JFrame {
 						if (listaIngredientesAdicionados.isEmpty()){
 							cadastraIngrediente(unidade, ingrediente);
 						} else {
+							boolean repetido = false;
 							for (ReceitaIngrediente ingredienteJaAdicionado : listaIngredientesAdicionados) {
 								if(ingredienteJaAdicionado.getIngrediente().getCodigo() == ingrediente.getCodigo()){
 									if(ingredienteJaAdicionado.getUnidade().getCodigo() == unidade.getCodigo()){
+										repetido = true;
 										JOptionPane.showMessageDialog(null, "Este Ingrediente já foi adicionado", "Atenção", JOptionPane.WARNING_MESSAGE);
 										break;
-									} else {
-										cadastraIngrediente(unidade, ingrediente);
-									}
+									} 
 								}
+							}
+							//TODO Corrigido ;D
+							if(!repetido){
+								cadastraIngrediente(unidade, ingrediente);
 							}
 						}
 					}

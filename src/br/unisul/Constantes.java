@@ -112,8 +112,8 @@ public interface Constantes {
 		 String QUERY_LIST_RECEITAS_NOME = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" 
 			 							 + " FROM receita " 
 			 							 + " JOIN autor ON receita.cd_autor = autor.cd_autor " 
-			 							 + " WHERE upper(nm_receita) LIKE  upper(?) ORDER BY nm_receita "
-			 							 + " AND receita.status = 'D' ";
+			 							 + " WHERE upper(nm_receita) LIKE  upper(?)  AND receita.status = 'D' "
+			 							 + " ORDER BY nm_receita";
 		 
 		 String QUERY_LIST_RECEITA_COD = "SELECT cd_receita, nm_receita, dt_criacao, tx_modo_preparo, autor.cd_autor, autor.nm_autor" 
 			 						   + " FROM receita " 
