@@ -79,7 +79,6 @@ public class MenuPrincipal extends JFrame {
 		miCadastroReceita.addActionListener(trataEventoCadastroReceita);
 		mnCadastro.add(miCadastroReceita);
 		
-		
 		//RELATORIOS
 		mnRelatorio = new JMenu("Relatório");
 		mbMenuBarra.add(mnRelatorio);

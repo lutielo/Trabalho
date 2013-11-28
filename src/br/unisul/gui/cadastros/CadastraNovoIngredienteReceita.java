@@ -62,9 +62,9 @@ public class CadastraNovoIngredienteReceita extends JFrame {
 	}
 
 	private void abreTela(Receita receita) {
-		lblAlteracaoDeIngredientes = new JLabel("Cadastro de Ingrediente na receita " + receita);
+		lblAlteracaoDeIngredientes = new JLabel("Cadastro de Ingrediente");
 		lblAlteracaoDeIngredientes.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblAlteracaoDeIngredientes.setBounds(83, 11, 221, 31);
+		lblAlteracaoDeIngredientes.setBounds(77, 11, 225, 31);
 
 		lblIngrediente = new JLabel("Ingrediente*:");
 		lblIngrediente.setBounds(20, 66, 89, 14);

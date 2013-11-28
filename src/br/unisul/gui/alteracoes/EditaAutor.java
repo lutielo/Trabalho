@@ -42,7 +42,7 @@ public class EditaAutor extends JFrame {
 	private JTextField tfCodigo;
 
 	public EditaAutor(Autor autor) {
-		super("Edita Autor");
+		super("Alteração de Autor");
 		this.setResizable(false);
 		this.setType(Type.UTILITY);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
